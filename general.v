@@ -40,3 +40,4 @@ module MUX_21_16b (sel, i0, i1, out);
 		1'b0: out = i0;
 		1'b1: out = i1;
 	endcase
+endmodule
