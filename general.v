@@ -1,3 +1,13 @@
+module full_adder_1bit (a, b, cin, cout, s);
+
+	output s, cout;
+	input a, b, cin;
+
+	assign s = a ^ b ^ cin;
+	assign cout = (a & b) | ((a ^ b) & cin);
+
+endmodule
+
 module MUX_81_16b (sel, i0, i1, i3, i4, i5, i6, i7, out);
 	input	[2:0]	sel;
 	input	[15:0]	i0, i1, i3, i4, i5, i6, i7;
