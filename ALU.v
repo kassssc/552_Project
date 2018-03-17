@@ -10,11 +10,13 @@ module ALU (ALU_in1, ALU_in2, op, ALU_out, flag);
 	assign xor[15:0] = ALU_in1[15:0] ^ ALU_in2[15:0];
 
 	CLA_16b addsub_16b (
-		.A(ALU_in1[15:0]), .B(ALU_in2[15:0]), .sub(op[0]), .S(ADDSUB_out[15:0]), .flag(flag[2:0])
+		.A(ALU_in1[15:0]),		.B(ALU_in2[15:0]),	.sub(op[0]),
+		.S(ADDSUB_out[15:0]),	.flag(flag[2:0])
 	);
 
 	Shifter_16b shifter_16b (
-
+		.Shift_In(ALU_in1[15:0]),	.Shift_val(ALU_in2[15:0]),
+		.mode(op[1:0]), 			.Shift_out(SHIFTER_out[15:0])
 	);
 
 	RED_16b red_16b (

@@ -14,7 +14,7 @@ module CLA_4b (a, b, c_in, pg_out, gg_out, s);
 	input	[3:0] a, b;
 	input	c_in;
 	output	[3:0] s;
-	output	p_out, g_out;
+	output	pg_out, gg_out;
 
 	wire	[3:0] c, g, p;
 
@@ -27,16 +27,16 @@ module CLA_4b (a, b, c_in, pg_out, gg_out, s);
 	assign gg_out = g[3] | (g[2] & p[3]) | (g[1] & p[3] & p[2]) | (g[0] & p[3] & p[2] & p[1]);
 
 	CLA_1b cla0 (
-		.a(a[0]), .b(b[0]), .c_in(c[0]). .g_out(g[0]), .p_out(p[0]), .s(s[0])
+		.a(a[0]), .b(b[0]), .c_in(c[0]), .g_out(g[0]), .p_out(p[0]), .s(s[0])
 	);
 	CLA_1b cla1 (
-		.a(a[1]), .b(b[1]), .c_in(c[1]). .g_out(g[1]), .p_out(p[1]), .s(s[1])
+		.a(a[1]), .b(b[1]), .c_in(c[1]), .g_out(g[1]), .p_out(p[1]), .s(s[1])
 	);
 	CLA_1b cla2 (
-		.a(a[2]), .b(b[2]), .c_in(c[2]). .g_out(g[2]), .p_out(p[2]), .s(s[2])
+		.a(a[2]), .b(b[2]), .c_in(c[2]), .g_out(g[2]), .p_out(p[2]), .s(s[2])
 	);
 	CLA_1b cla3 (
-		.a(a[3]), .b(b[3]), .c_in(c[3]). .g_out(g[3]), .p_out(p[3]), .s(s[3])
+		.a(a[3]), .b(b[3]), .c_in(c[3]), .g_out(g[3]), .p_out(p[3]), .s(s[3])
 	);
 
 endmodule
@@ -61,16 +61,16 @@ module CLA_16b (A, B, sub, S, flag);
 	assign G = g[3] | (g[2] & p[3]) | (g[1] & p[3] & p[2]) | (g[0] & p[3] & p[2] & p[1]);
 
 	CLA_4b cla_0_3 (
-		.a(A[3:0]), .b(B[3:0]), .c_in(c[0]). .gg_out(g[0]), .pg_out(p[0]), .s(addsub_out[3:0])
+		.a(A[3:0]), .b(B[3:0]), .c_in(c[0]), .gg_out(g[0]), .pg_out(p[0]), .s(addsub_out[3:0])
 	);
 	CLA_4b cla_4_7 (
-		.a(A[7:4]), .b(B[7:4]), .c_in(c[1]). .gg_out(g[1]), .pg_out(p[1]), .s(addsub_out[7:4])
+		.a(A[7:4]), .b(B[7:4]), .c_in(c[1]), .gg_out(g[1]), .pg_out(p[1]), .s(addsub_out[7:4])
 	);
 	CLA_4b cla_8_11 (
-		.a(A[11:8]), .b(B[11:8]), .c_in(c[2]). .gg_out(g[2]), .pg_out(p[2]), .s(addsub_out[11:8])
+		.a(A[11:8]), .b(B[11:8]), .c_in(c[2]), .gg_out(g[2]), .pg_out(p[2]), .s(addsub_out[11:8])
 	);
 	CLA_4b cla_11_15 (
-		.a(A[15:11]), .b(B[15:11]), .c_in(c[3]). .gg_out(g[3]), .pg_out(p[3]), .s(addsub_out[15:11])
+		.a(A[15:11]), .b(B[15:11]), .c_in(c[3]), .gg_out(g[3]), .pg_out(p[3]), .s(addsub_out[15:11])
 	);
 
 	assign both_neg = A[15] & B[15];
@@ -80,8 +80,8 @@ module CLA_16b (A, B, sub, S, flag);
 
 	assign flag[0] = G | (P & c[0]);
 	assign flag[1] = |S[15:0];
-	assign flag[2] = sat_neg | pos_neg;
+	assign flag[2] = sat_neg | sat_pos;
 
-	assign S[15:0] = sat_neg? 16'h8000 : pos_neg? 16'h7FFF : addsub_out[15:0];
+	assign S[15:0] = sat_neg? 16'h8000 : sat_pos? 16'h7FFF : addsub_out[15:0];
 
 endmodule

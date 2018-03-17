@@ -71,6 +71,6 @@ module SATADD_4b (S, A, B);
 	assign sat_neg = both_neg & (~FA_out[3]);
 	assign sat_pos = both_pos & FA_out[3];
 
-	assign S[3:0] = sat_neg? 4'b1000 : pos_neg? 4'b0111 : FA_out[3:0];
+	assign S[3:0] = sat_neg? 4'b1000 : sat_pos? 4'b0111 : FA_out[3:0];
 
 endmodule
