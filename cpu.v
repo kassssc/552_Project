@@ -25,6 +25,9 @@ wire MemWrite;
 wire RegDst;
 wire ALUsrc;
 wire MemtoReg;
+wire hlt_internal;
+
+assign hlt = hlt_internal;
 
 memory instrucion_mem(
 	.data_out(instruction), 
@@ -41,6 +44,7 @@ PC_control pc_control(
 	.C(C),
 	.I(instruction[8:0]), 
 	.F(F), 
+	.hlt(hlt),
 	.PC_in(PC_in),
 	.PC_out(pc_out)
 );
@@ -59,7 +63,7 @@ RegisterFile RegisterFile(
 	.SrcData2(Read_data_2)
 );
 
-assign signextend = {{7{instruction[8]}}, instruction[8:0]};
+assign signextend = {{12{instruction[8]}}, instruction[3:0]};
 assign muxtoalu = (ALUsrc) ? signextend: Read_data_2;
 
 ALU alu(
