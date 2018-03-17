@@ -16,3 +16,28 @@ module MUX_81_16b (sel, i0, i1, i3, i4, i5, i6, i7, out);
 		3'b111: out = i7;
 	endcase
 endmodule // mux_81_16b
+
+module MUX_21_1b (sel, i0, i1, out);
+	input	sel, i0, i1;
+	output	out;
+	reg		out;
+
+	always @(*)
+	case (sel)
+		1'b0: out = i0;
+		1'b1: out = i1;
+	endcase
+endmodule
+
+module MUX_21_16b (sel, i0, i1, out);
+	input	sel;
+	input	[15:0]	i0, i1;
+	output	[15:0]	out;
+	reg		[15:0]	out;
+
+	always @(*)
+	case (sel)
+		1'b0: out = i0;
+		1'b1: out = i1;
+	endcase
+endmodule
