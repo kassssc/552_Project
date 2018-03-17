@@ -1,7 +1,7 @@
 module CLA_1b (a, b, c_in, g_out, p_out, s);
 
 	input	a, b, c_in;
-	output	g_put, p_out, s;
+	output	g_out, p_out, s;
 
 	assign s = a ^ b ^ c_in;
 	assign p_out = a | b;
