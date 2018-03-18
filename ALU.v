@@ -8,7 +8,7 @@ module ALU (ALU_in1, ALU_in2, op, ALU_out, flag, flag_write);
 	wire	[15:0]	ADDSUB_out, SHIFTER_out, xor_out, red, paddsb;
 
 	assign flag_write[0] = ~op[2] & ~op[1]; 		// Write V flag?
-	assign flag_write[1] = ~op[1] | ((~op[0] & op[2]) | (op[0] & ~op[2]));	// Write Z flag?
+	assign flag_write[1] = (~op[1]) | ((~op[0] & op[2]) | (op[0] & ~op[2]));	// Write Z flag?
 	assign flag_write[2] = ~op[2] & ~op[1];			// Write N flag?
 
 	assign flag[1] = ~(|ALU_out[15:0]);			// Set Z flag
