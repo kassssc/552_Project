@@ -13,7 +13,7 @@ module t_Shifter;
 
 	wire    [15:0]	shifted;
 
-	Shifter_16b S (
+	SHIFTER_16b S (
 		.Shift_In	(test[15:0]),
 		.Shift_Out	(shifted[15:0]),
 		.Shift_Val	(shift_val[3:0]),

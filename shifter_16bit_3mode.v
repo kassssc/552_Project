@@ -1,4 +1,4 @@
-module Shifter_16b(Shift_Out, Shift_In, Shift_Val, Mode);
+module SHIFTER_16b(Shift_Out, Shift_In, Shift_Val, Mode);
 
 //This is the number to perform shift operation on
 input[15:0] Shift_In; 
