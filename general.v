@@ -33,21 +33,6 @@ module MUX_21_1b (sel, i0, i1, out);
 	end
 endmodule
 
-module MUX_21_16b (sel, i0, i1, out);
-	input	sel;
-	input	[15:0]	i0, i1;
-	output	[15:0]	out;
-	reg		[15:0]	out;
-
-	always @(*) begin
-		case (sel)
-			1'b0: out = i0;
-			1'b1: out = i1;
-			default: out = i0;
-		endcase
-	end
-endmodule
-
 module MUX_41_1b (sel, i0, i1, i2, i3, out);
 	input[1:0]	sel;
 	input		i0, i1, i2, i3;
