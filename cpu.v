@@ -5,6 +5,8 @@ module cpu(
 	output [15:0] pc
 );
 
+wire rst;
+assign rst = ~rst_n;
 // pc control inputs - Flag
 wire [2:0]F;
 
@@ -95,7 +97,7 @@ assign hlt = hlt_internal;
 PC_Register pc_reg(
 	.PC_new(PC_out),
 	.clk(clk),
-	.rst(rst_n),
+	.rst(rst),
 	.PC_current(pc_current)
 );
 
@@ -119,7 +121,7 @@ memory1c instrucion_mem(
 	.enable(1'b1), 
 	.wr(1'b0), 
 	.clk(clk), 
-	.rst(rst_n)
+	.rst(rst)
 );
 
 // instantiate control unit
@@ -144,7 +146,7 @@ assign write_reg = instruction[11:8];
 // instantiate RegisterFile
 RegisterFile RegisterFile(
 	.clk(clk), 
-	.rst(rst_n), 
+	.rst(rst), 
 	.SrcReg1(instruction[7:4]), 
 	.SrcReg2(instruction[3:0]), 
 	.DstReg(write_reg), 
@@ -175,7 +177,7 @@ flag_register flag_reg(
 	.flag_new(f_internal),
 	.wen(flag_write),
 	.clk(clk),
-	.rst(rst_n),
+	.rst(rst),
 	.flag_current(F)
 );
 
@@ -189,7 +191,7 @@ memory1c Data_memory(
 	.enable(memory_enable), 
 	.wr(MemWrite), 
 	.clk(clk), 
-	.rst(rst_n)
+	.rst(rst)
 );
 
 // instantiate 16 bit adder for pcs instruction 
