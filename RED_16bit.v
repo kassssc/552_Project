@@ -5,8 +5,9 @@ wire[3:0] reg11, reg22, reg33, reg44, reg12, reg34, reg1234;
 wire[5:0] cout_csa;
 wire[3:0] sum_1bcsa;
 wire[1:0] sum_2bcsa;
-wire[3:0] sum_4bcsa;
-wire[6:0] cout;
+wire[3:0] sum_4bcsa, final_sum;
+wire cout;
+
 
 //
 // Tree of CLAs
@@ -49,6 +50,6 @@ full_adder_2b FA20(.A({{1'b0},cout_csa[2]}<<1), .B({{1'b0},{sum_1bcsa[2]}}), .ci
 //
 full_adder_4b FA40(.A({{3'b0},{cout_csa[4]}}<<2), .B({{2'b0},{sum_2bcsa}}<<1), .cin(sum_1bcsa[3]), .S(sum_4bcsa), .cout(cout_csa[5]));
 
-assign DesData = {16{sum_4bcsa}};
+assign DesData = {{9{sum_4bcsa[3]}},{sum_4bcsa[2:0]},{reg1234}};
 
 endmodule // RED_16b
