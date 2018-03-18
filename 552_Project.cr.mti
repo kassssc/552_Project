@@ -1,4 +1,20 @@
-C:/Users/William/Documents/552_Project/fulladder_16bit.v {1 {vlog -work work -stats=none C:/Users/William/Documents/552_Project/fulladder_16bit.v
+C:/Users/William/Documents/552_Project/RED_16bit.v {1 {vlog -work work -stats=none C:/Users/William/Documents/552_Project/RED_16bit.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module RED_16b
+
+Top level modules:
+	RED_16b
+
+} {} {}} C:/Users/William/Documents/552_Project/PCctrl.v {1 {vlog -work work -stats=none C:/Users/William/Documents/552_Project/PCctrl.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module PC_control
+-- Compiling module full_adder_1bit
+-- Compiling module add_16bit
+
+Top level modules:
+	PC_control
+
+} {} {}} C:/Users/William/Documents/552_Project/fulladder_16bit.v {1 {vlog -work work -stats=none C:/Users/William/Documents/552_Project/fulladder_16bit.v
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
 -- Compiling module full_adder_16bit
 
@@ -60,22 +76,14 @@ Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 
 Top level modules:
 	CLA_16b
 
-} {} {}} C:/Users/William/Documents/552_Project/ALU.v {0 {vlog -work work -stats=none C:/Users/William/Documents/552_Project/ALU.v
+} {} {}} C:/Users/William/Documents/552_Project/ALU.v {1 {vlog -work work -stats=none C:/Users/William/Documents/552_Project/ALU.v
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
 -- Compiling module ALU
-** Error: (vlog-13069) C:/Users/William/Documents/552_Project/ALU.v(8): near "xor": syntax error, unexpected xor, expecting IDENTIFIER or TYPE_IDENTIFIER or NETTYPE_IDENTIFIER.
 
-** Error: C:/Users/William/Documents/552_Project/ALU.v(13): (vlog-2730) Undefined variable: 'ALU_in2'.
+Top level modules:
+	ALU
 
-** Error: C:/Users/William/Documents/552_Project/ALU.v(25): (vlog-2730) Undefined variable: 'paddsb'.
-
-** Error: C:/Users/William/Documents/552_Project/ALU.v(32): (vlog-2730) Undefined variable: 'red'.
-
-** Error: (vlog-13069) C:/Users/William/Documents/552_Project/ALU.v(33): near "xor": syntax error, unexpected xor, expecting ')'.
-
-** Error: C:/Users/William/Documents/552_Project/ALU.v(1): Identifier must be declared with a port mode: ALU_in2.
-
-} {4.0 5.0 6.0 7.0 8.0 9.0 10.0 11.0 12.0 13.0 14.0 15.0} {}} C:/Users/William/Documents/552_Project/fulladder_1bit.v {1 {vlog -work work -stats=none C:/Users/William/Documents/552_Project/fulladder_1bit.v
+} {} {}} C:/Users/William/Documents/552_Project/fulladder_1bit.v {1 {vlog -work work -stats=none C:/Users/William/Documents/552_Project/fulladder_1bit.v
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
 -- Compiling module full_adder_1bit
 
@@ -103,14 +111,15 @@ Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 
 Top level modules:
 	Register
 
-} {} {}} C:/Users/William/Documents/552_Project/general.v {0 {vlog -work work -stats=none C:/Users/William/Documents/552_Project/general.v
+} {} {}} C:/Users/William/Documents/552_Project/general.v {1 {vlog -work work -stats=none C:/Users/William/Documents/552_Project/general.v
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
 -- Compiling module MUX_81_16b
-** Error: C:/Users/William/Documents/552_Project/general.v(11): (vlog-2730) Undefined variable: 'i2'.
-
 -- Compiling module MUX_21_1b
 -- Compiling module MUX_21_16b
-** Error: (vlog-13069) C:/Users/William/Documents/552_Project/general.v(42): near "EOF": syntax error, unexpected end of source code.
 
+Top level modules:
+	MUX_81_16b
+	MUX_21_1b
+	MUX_21_16b
 
-} {4.0 5.0 8.0 9.0} {}}
+} {} {}}

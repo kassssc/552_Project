@@ -9,7 +9,7 @@ z2
 cModel Technology
 dC:/Users/William/Documents/ECE552
 vadd_16bit
-Z0 !s110 1521332895
+Z0 !s110 1521334129
 !i10b 1
 !s100 kd??QMn>`C1M?B:4e63@n2
 IcPz1U:UBLljee]YDQj>T12
@@ -23,20 +23,42 @@ Z6 OP;L;10.4a;61
 r1
 !s85 0
 31
-Z7 !s108 1521332895.000000
+Z7 !s108 1521334129.000000
 Z8 !s107 C:/Users/William/Documents/552_Project/PCctrl.v|
 Z9 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/William/Documents/552_Project/PCctrl.v|
 !s101 -O0
 !i113 1
 Z10 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact -O0
+vALU
+Z11 !s110 1521334127
+!i10b 1
+!s100 UoKS4nJX5S_eEFhS<Qe_51
+Ic]^SecEnnd1?3KiFkDUQ;1
+R1
+R2
+w1521334105
+8C:/Users/William/Documents/552_Project/ALU.v
+FC:/Users/William/Documents/552_Project/ALU.v
+L0 1
+R6
+r1
+!s85 0
+31
+Z12 !s108 1521334127.000000
+!s107 C:/Users/William/Documents/552_Project/ALU.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/William/Documents/552_Project/ALU.v|
+!s101 -O0
+!i113 1
+R10
+n@a@l@u
 vBitCell
-Z11 !s110 1521328722
+R11
 !i10b 1
 !s100 YTL[^1i2IEAgJ>k<T@S>Y3
 I=D]:T9I5c9X;fJlioATk20
 R1
 R2
-Z12 w1521323656
+Z13 w1521323656
 8C:/Users/William/Documents/552_Project/BitCell.v
 FC:/Users/William/Documents/552_Project/BitCell.v
 L0 1
@@ -44,7 +66,7 @@ R6
 r1
 !s85 0
 31
-Z13 !s108 1521328722.000000
+R12
 !s107 C:/Users/William/Documents/552_Project/BitCell.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/William/Documents/552_Project/BitCell.v|
 !s101 -O0
@@ -52,67 +74,67 @@ Z13 !s108 1521328722.000000
 R10
 n@bit@cell
 vCLA_16b
-Z14 !s110 1521330507
+R11
 !i10b 1
 !s100 3aXHnaVA?GKEGSE?5Wfng3
 I73k63GhI]GL8KVPOgeV6e2
 R1
 R2
-Z15 w1521330488
-Z16 8C:/Users/William/Documents/552_Project/CLA.v
-Z17 FC:/Users/William/Documents/552_Project/CLA.v
+Z14 w1521330488
+Z15 8C:/Users/William/Documents/552_Project/CLA.v
+Z16 FC:/Users/William/Documents/552_Project/CLA.v
 L0 44
 R6
 r1
 !s85 0
 31
-Z18 !s108 1521330507.000000
-Z19 !s107 C:/Users/William/Documents/552_Project/CLA.v|
-Z20 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/William/Documents/552_Project/CLA.v|
+R12
+Z17 !s107 C:/Users/William/Documents/552_Project/CLA.v|
+Z18 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/William/Documents/552_Project/CLA.v|
 !s101 -O0
 !i113 1
 R10
 n@c@l@a_16b
 vCLA_1b
-R14
+R11
 !i10b 1
 !s100 3D>[I>zSl0I[d0QjOB>JQ1
 ImWki]<GFgLJf`<l@`d3gA3
 R1
 R2
+R14
 R15
 R16
-R17
 L0 1
 R6
 r1
 !s85 0
 31
+R12
+R17
 R18
-R19
-R20
 !s101 -O0
 !i113 1
 R10
 n@c@l@a_1b
 vCLA_4b
-R14
+R11
 !i10b 1
 !s100 ]lc>A3P;KB1Ea_jSSZm1z1
 IGMHaV=1ADM8O<JXfal12S3
 R1
 R2
+R14
 R15
 R16
-R17
 L0 12
 R6
 r1
 !s85 0
 31
+R12
+R17
 R18
-R19
-R20
 !s101 -O0
 !i113 1
 R10
@@ -120,11 +142,11 @@ n@c@l@a_4b
 vcpu
 R11
 !i10b 1
-!s100 aedTm0JLOnzCGMR8<eYM72
-IP60Ul?JNUL89ajR6zXeh03
+!s100 nL6lIHhbP^^eD@fBW^R8z1
+IDHl<CPU8fA<`NIIc@8MjX3
 R1
 R2
-w1521326317
+w1521332745
 8C:/Users/William/Documents/552_Project/cpu.v
 FC:/Users/William/Documents/552_Project/cpu.v
 L0 1
@@ -132,20 +154,20 @@ R6
 r1
 !s85 0
 31
-R13
+R12
 !s107 C:/Users/William/Documents/552_Project/cpu.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/William/Documents/552_Project/cpu.v|
 !s101 -O0
 !i113 1
 R10
 vdff
-Z21 !s110 1521328723
+Z19 !s110 1521334128
 !i10b 1
 !s100 PV_CoVVQ]?nI;J@mj=Gn=3
 ICVVLIm>fS=JgE;?RoI2O43
 R1
 R2
-R12
+R13
 8C:/Users/William/Documents/552_Project/D-Flip-Flop.v
 FC:/Users/William/Documents/552_Project/D-Flip-Flop.v
 L0 3
@@ -153,14 +175,14 @@ R6
 r1
 !s85 0
 31
-Z22 !s108 1521328723.000000
+Z20 !s108 1521334128.000000
 !s107 C:/Users/William/Documents/552_Project/D-Flip-Flop.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/William/Documents/552_Project/D-Flip-Flop.v|
 !s101 -O0
 !i113 1
 R10
 vfull_adder_16bit
-R21
+R19
 !i10b 1
 !s100 @V3zNPHTLEE8Kl3klHoOZ2
 IG^jl`6:OZm^UefI@WjDmd1
@@ -174,30 +196,30 @@ R6
 r1
 !s85 0
 31
-R22
+R20
 !s107 C:/Users/William/Documents/552_Project/fulladder_16bit.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/William/Documents/552_Project/fulladder_16bit.v|
 !s101 -O0
 !i113 1
 R10
 vfull_adder_1b
-Z23 !s110 1521330517
+R19
 !i10b 1
 !s100 CSiFmHTlU@eFG;X9m^SN[1
 IFKn0eb<JZBfMjT0o8<l?R1
 R1
 R2
-Z24 w1521330212
-Z25 8C:/Users/William/Documents/552_Project/paddsb.v
-Z26 FC:/Users/William/Documents/552_Project/paddsb.v
+Z21 w1521330212
+Z22 8C:/Users/William/Documents/552_Project/paddsb.v
+Z23 FC:/Users/William/Documents/552_Project/paddsb.v
 L0 21
 R6
 r1
 !s85 0
 31
-Z27 !s108 1521330516.000000
-Z28 !s107 C:/Users/William/Documents/552_Project/paddsb.v|
-Z29 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/William/Documents/552_Project/paddsb.v|
+R20
+Z24 !s107 C:/Users/William/Documents/552_Project/paddsb.v|
+Z25 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/William/Documents/552_Project/paddsb.v|
 !s101 -O0
 !i113 1
 R10
@@ -223,7 +245,7 @@ R9
 !i113 1
 R10
 vfull_adder_4bit
-R21
+R19
 !i10b 1
 !s100 4OBJ@K@BQeW@b733??0MK3
 INWfMNgMG=^eFFX_[m35Yj0
@@ -237,96 +259,118 @@ R6
 r1
 !s85 0
 31
-R22
+R20
 !s107 C:/Users/William/Documents/552_Project/fulladder_4bit.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/William/Documents/552_Project/fulladder_4bit.v|
 !s101 -O0
 !i113 1
 R10
 vMUX_21_16b
-Z30 !s110 1521328724
+R0
 !i10b 1
 !s100 5zMN;ZUNc[=VH:EfY4=6z1
 I^n:VCk5n1`l1RI^U>Hz_c0
 R1
 R2
-Z31 w1521326973
-Z32 8C:/Users/William/Documents/552_Project/shifter_16bit_3mode.v
-Z33 FC:/Users/William/Documents/552_Project/shifter_16bit_3mode.v
+Z26 w1521326973
+Z27 8C:/Users/William/Documents/552_Project/shifter_16bit_3mode.v
+Z28 FC:/Users/William/Documents/552_Project/shifter_16bit_3mode.v
 L0 288
 R6
 r1
 !s85 0
 31
-Z34 !s108 1521328724.000000
-Z35 !s107 C:/Users/William/Documents/552_Project/shifter_16bit_3mode.v|
-Z36 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/William/Documents/552_Project/shifter_16bit_3mode.v|
+R7
+Z29 !s107 C:/Users/William/Documents/552_Project/shifter_16bit_3mode.v|
+Z30 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/William/Documents/552_Project/shifter_16bit_3mode.v|
 !s101 -O0
 !i113 1
 R10
 n@m@u@x_21_16b
 vMUX_21_1b
-R21
+R19
 !i10b 1
 !s100 6^WXL;j8l]B7]W2a`9EW13
 IchH:0@88IS3B>=eWl2^Qa2
 R1
 R2
-w1521328231
-8C:/Users/William/Documents/552_Project/general.v
-FC:/Users/William/Documents/552_Project/general.v
+Z31 w1521334123
+Z32 8C:/Users/William/Documents/552_Project/general.v
+Z33 FC:/Users/William/Documents/552_Project/general.v
 L0 20
 R6
 r1
 !s85 0
 31
-R22
-!s107 C:/Users/William/Documents/552_Project/general.v|
-!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/William/Documents/552_Project/general.v|
+R20
+Z34 !s107 C:/Users/William/Documents/552_Project/general.v|
+Z35 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/William/Documents/552_Project/general.v|
 !s101 -O0
 !i113 1
 R10
 n@m@u@x_21_1b
 vMUX_41_1b
-R30
+R0
 !i10b 1
 !s100 O?gK:E@MDHgOA_WhQ^joe0
 ICa<RT2A[S`zAUn3zDkOS?2
 R1
 R2
-R31
-R32
-R33
+R26
+R27
+R28
 L0 266
 R6
 r1
 !s85 0
 31
-R34
-R35
-R36
+R7
+R29
+R30
 !s101 -O0
 !i113 1
 R10
 n@m@u@x_41_1b
-vPADDSB_16b
-R23
+vMUX_81_16b
+R19
 !i10b 1
-!s100 _2g[g7S9i2^:P[I1FAf?<3
-I6cU6l>c]c>?E89T_3b`Ro0
+!s100 >ODJo^YNE0Ucj5lLj>;MT3
+IM7QeGlPH2<3[NZVJzmag[1
 R1
 R2
-R24
-R25
-R26
+R31
+R32
+R33
 L0 1
 R6
 r1
 !s85 0
 31
-R27
-R28
-R29
+R20
+R34
+R35
+!s101 -O0
+!i113 1
+R10
+n@m@u@x_81_16b
+vPADDSB_16b
+R19
+!i10b 1
+!s100 _2g[g7S9i2^:P[I1FAf?<3
+I6cU6l>c]c>?E89T_3b`Ro0
+R1
+R2
+R21
+R22
+R23
+L0 1
+R6
+r1
+!s85 0
+31
+R20
+R24
+R25
 !s101 -O0
 !i113 1
 R10
@@ -354,13 +398,13 @@ R9
 R10
 n@p@c_control
 vReadDecoder_4_16
-R30
+R0
 !i10b 1
 !s100 oN2il_LQJW_Jl7cNVga`X1
 I<EPQleD=:6AfWhFn3oO;l3
 R1
 R2
-R12
+R13
 8C:/Users/William/Documents/552_Project/ReadDecoder.v
 FC:/Users/William/Documents/552_Project/ReadDecoder.v
 L0 1
@@ -368,21 +412,43 @@ R6
 r1
 !s85 0
 31
-R34
+R7
 !s107 C:/Users/William/Documents/552_Project/ReadDecoder.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/William/Documents/552_Project/ReadDecoder.v|
 !s101 -O0
 !i113 1
 R10
 n@read@decoder_4_16
+vRED_16b
+!s110 1521334130
+!i10b 1
+!s100 [ee7oJk_B@eIK^j69NHl^1
+I]d1ad8C`_ah4_6E7gS7ma2
+R1
+R2
+w1521333944
+8C:/Users/William/Documents/552_Project/RED_16bit.v
+FC:/Users/William/Documents/552_Project/RED_16bit.v
+L0 1
+R6
+r1
+!s85 0
+31
+R7
+!s107 C:/Users/William/Documents/552_Project/RED_16bit.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/William/Documents/552_Project/RED_16bit.v|
+!s101 -O0
+!i113 1
+R10
+n@r@e@d_16b
 vRegister
-R30
+R0
 !i10b 1
 !s100 LUozl<bQgPPCJ5Uo`Dd8M2
 I31[dSVSl:5OANkBz@DOaz0
 R1
 R2
-R12
+R13
 8C:/Users/William/Documents/552_Project/Register.v
 FC:/Users/William/Documents/552_Project/Register.v
 L0 1
@@ -390,7 +456,7 @@ R6
 r1
 !s85 0
 31
-R34
+R7
 !s107 C:/Users/William/Documents/552_Project/Register.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/William/Documents/552_Project/Register.v|
 !s101 -O0
@@ -398,13 +464,13 @@ R34
 R10
 n@register
 vRegisterFile
-R30
+R0
 !i10b 1
 !s100 j9Ul^]7IZYEF5mJnci2D:0
 I:a3UNXc9C[RHI@6ZzNDzk0
 R1
 R2
-R12
+R13
 8C:/Users/William/Documents/552_Project/RegisterFile.v
 FC:/Users/William/Documents/552_Project/RegisterFile.v
 L0 1
@@ -412,7 +478,7 @@ R6
 r1
 !s85 0
 31
-R34
+R7
 !s107 C:/Users/William/Documents/552_Project/RegisterFile.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/William/Documents/552_Project/RegisterFile.v|
 !s101 -O0
@@ -420,45 +486,45 @@ R34
 R10
 n@register@file
 vSATADD_4b
-R23
+R19
 !i10b 1
 !s100 91:DO1LHC80jjOU2oQBK@0
 I=i^O1ndNYATQSQeF8D<id3
 R1
 R2
-R24
-R25
-R26
+R21
+R22
+R23
 L0 31
 R6
 r1
 !s85 0
 31
-R27
-R28
-R29
+R20
+R24
+R25
 !s101 -O0
 !i113 1
 R10
 n@s@a@t@a@d@d_4b
 vShifter_16b
-R30
+R0
 !i10b 1
 !s100 QG8a>K4YcLo<7PE^e6zhj0
 I75i_EBC4EJzkDcP3cP02d2
 R1
 R2
-R31
-R32
-R33
+R26
+R27
+R28
 L0 1
 R6
 r1
 !s85 0
 31
-R34
-R35
-R36
+R7
+R29
+R30
 !s101 -O0
 !i113 1
 R10
@@ -470,7 +536,7 @@ R11
 IhBb[^o7H79AF]e6SEE9Vf1
 R1
 R2
-R12
+R13
 8C:/Users/William/Documents/552_Project/WriteDecoder_4_16.v
 FC:/Users/William/Documents/552_Project/WriteDecoder_4_16.v
 L0 1
@@ -478,7 +544,7 @@ R6
 r1
 !s85 0
 31
-R13
+R12
 !s107 C:/Users/William/Documents/552_Project/WriteDecoder_4_16.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/William/Documents/552_Project/WriteDecoder_4_16.v|
 !s101 -O0
