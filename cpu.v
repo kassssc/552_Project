@@ -77,6 +77,12 @@ wire ALUOp;
 // decide if this is LHB or LLB
 wire tophalf;
 
+// wire for flag
+wire f_internal;
+
+//flag write from alu
+wire [2:0]flag_write;
+
 // make the output = current pc
 assign pc = pc_current;
 assign hlt = hlt_internal;
@@ -92,7 +98,7 @@ PC_Register pc_reg(
 
 
 // instantiate pc control unit
-PC_control pc_control(
+PC_control PC_control(
 	.C(C),
 	.I(instruction[8:0]), 
 	.F(F), 
@@ -103,7 +109,7 @@ PC_control pc_control(
 
 
 // instantiate instruction mem
-memory instrucion_mem(
+memory1c instrucion_mem(
 	.data_out(instruction), 
 	.data_in({15{1'b0}}), 
 	.addr(pc_current), 
@@ -114,7 +120,7 @@ memory instrucion_mem(
 );
 
 // instantiate control unit
-Control_Unit(
+Control_Unit  control_unit(
 	.instruction(instruction[15:12]),
 	//.RegDst(RegDst),
 	.MemRead(MemRead), 
@@ -155,8 +161,19 @@ ALU alu(
 	.ALU_in2(muxtoalu), 
 	.op(instruction[14:12]), 
 	.ALU_out(ALU_out), 
-	.flag(F)
+	.flag(f_internal),
+	.flag_write(flag_write)
 );
+
+// instantiate flag_reg
+flag_register flag_reg(
+	.flag_new(f_internal),
+	.wen(flag_write),
+	.clk(clk),
+	.rst(rst_n),
+	.flag_current(F)
+);
+
 
 // instantiate data memory
 memory1c Data_memory(

@@ -45,8 +45,8 @@ assign SrcData2 = (WriteReg & (SrcReg1 == DstReg)) ? DstData : Bitline_all2;
     Register reg_0(
         .clk(clk),  
         .rst(rst), 
-        .D(DstData), 
-        .WriteReg(WriteWordline[0]),
+        .D(16'h0000), 
+        .WriteReg(1'b0),
         .ReadEnable1(ReadWordline1[0]), 
         .ReadEnable2(ReadWordline2[0]), 
         .Bitline1(Bitline1[0]), 

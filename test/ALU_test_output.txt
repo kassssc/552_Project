@@ -1,5 +1,6 @@
 0000
 ffff
+
 # ALU_out : ffff 
 #  flag: 100 
 #  flag_write : 101 
