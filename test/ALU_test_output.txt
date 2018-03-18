@@ -1,13 +1,12 @@
-input 0000
-input ffff
-
+0000
+ffff
 # ALU_out : ffff 
 #  flag: 100 
-#  flag_write : 111 
+#  flag_write : 101 
 # 
-# ALU_out : 0000 
-#  flag: 010 
-#  flag_write : 010 
+# ALU_out : 0001 
+#  flag: 000 
+#  flag_write : 111 
 # 
 # ALU_out : zzzz 
 #  flag: 1x0 
@@ -19,17 +18,52 @@ input ffff
 # 
 # ALU_out : 0000 
 #  flag: 110 
-#  flag_write : 111 
+#  flag_write : 010 
 # 
 # ALU_out : 0000 
 #  flag: 010 
-#  flag_write : 010 
+#  flag_write : 000 
 # 
 # ALU_out : 0000 
 #  flag: 110 
 #  flag_write : 010 
 # 
 # ALU_out : ffff 
+#  flag: 000 
+#  flag_write : 010 
+# 
+
+8fff
+8fff
+# ALU_out : 8000 
+#  flag: 101 
+#  flag_write : 101 
+# 
+# ALU_out : 0000 
+#  flag: 010 
+#  flag_write : 111 
+# 
+# ALU_out : zzzz 
+#  flag: 1x1 
+#  flag_write : 010 
+# 
+# ALU_out : 0000 
+#  flag: 010 
+#  flag_write : 010 
+# 
+# ALU_out : 8000 
+#  flag: 101 
+#  flag_write : 010 
+# 
+# ALU_out : ffff 
+#  flag: 000 
+#  flag_write : 000 
+# 
+# ALU_out : 1fff 
+#  flag: 101 
+#  flag_write : 010 
+# 
+# ALU_out : 8eee 
 #  flag: 000 
 #  flag_write : 010 
 # 
