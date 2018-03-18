@@ -61,7 +61,7 @@ MUX_41_1b m1_14 (
 	.sel(Mode),	.i0(Shift_In[13]), .i1(Shift_In[15]), .i2(Shift_In[15]), .i3(Shift_In[13]), .out(shift1[14])
 );
 MUX_41_1b m1_15 (
-	.sel(Mode),	.i0(Shift_In[14]), .i1(Shift_In[15]), .i2(Shift_In[1]), .i3(Shift_In[14]), .out(shift1[15])
+	.sel(Mode),	.i0(Shift_In[14]), .i1(Shift_In[15]), .i2(Shift_In[0]), .i3(Shift_In[14]), .out(shift1[15])
 );
 
 //
