@@ -87,28 +87,28 @@ module full_adder_16b(A, B, cin, Sum, cout);
 	full_adder_4b FA0(.A(A[3:0]),
 						.B(B[3:0]), 
 						.cin(cin), 
-						.Sum(Sum[3:0]), 
+						.S(Sum[3:0]), 
 						.cout(inter[0])
 						);
 
 	full_adder_4b FA1(.A(A[7:4]),
 						.B(B[7:4]), 
 						.cin(inter[0]), 
-						.Sum(Sum[7:4]), 
+						.S(Sum[7:4]), 
 						.cout(inter[1])
 						);
 
 	full_adder_4b FA2(.A(A[11:8]),
 						.B(B[11:8]), 
 						.cin(inter[1]), 
-						.Sum(Sum[11:8]), 
+						.S(Sum[11:8]), 
 						.cout(inter[2])
 						);
 
 	full_adder_4b FA3(.A(A[15:12]),
 						.B(B[15:12]), 
 						.cin(inter[2]), 
-						.Sum(Sum[15:12]), 
+						.S(Sum[15:12]), 
 						.cout(inter[3])
 						);
 

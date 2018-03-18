@@ -78,7 +78,7 @@ wire ALUOp;
 wire tophalf;
 
 // wire for flag
-wire f_internal;
+wire [2:0] f_internal;
 
 //flag write from alu
 wire [2:0]flag_write;
@@ -189,10 +189,10 @@ memory1c Data_memory(
 // instantiate 16 bit adder for pcs instruction 
 full_adder_16b pcs_adder (
 	.A(pc_current), 
-	.B(2), 
-	.Cin(1'b0), 
+	.B(16'h0002), 
+	.cin(1'b0), 
 	.Sum(pcs_sum), 
-	.Cout()
+	.cout()
 );
 
 // logic for decide which data to write
