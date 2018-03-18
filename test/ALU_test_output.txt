@@ -67,3 +67,4 @@ ffff
 #  flag: 000 
 #  flag_write : 010 
 # 
+
