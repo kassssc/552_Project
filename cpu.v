@@ -5,9 +5,6 @@ module cpu(
 	output [15:0] pc
 );
 
-// pc control inputs - condition
-wire [2:0]C; 
-
 // pc control inputs - Flag
 wire [2:0]F;
 
