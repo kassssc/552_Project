@@ -4,7 +4,7 @@ module CLA_1b (a, b, c_in, g_out, p_out, s);
 	output	g_out, p_out, s;
 
 	assign s = a ^ b ^ c_in;
-	assign p_out = a | b;
+	assign p_out = a ^ b;
 	assign g_out = a & b;
 
 endmodule
@@ -44,7 +44,7 @@ endmodule
 module CLA_16b (A, B, sub, S, flag);
 
 	input [15:0] A, B;
-	input	sub;
+	input sub;
 	output [15:0] S;
 	output [2:0] flag; // N Z V
 
@@ -69,8 +69,8 @@ module CLA_16b (A, B, sub, S, flag);
 	CLA_4b cla_8_11 (
 		.a(A[11:8]), .b(B[11:8]), .c_in(c[2]), .gg_out(g[2]), .pg_out(p[2]), .s(addsub_out[11:8])
 	);
-	CLA_4b cla_11_15 (
-		.a(A[15:11]), .b(B[15:11]), .c_in(c[3]), .gg_out(g[3]), .pg_out(p[3]), .s(addsub_out[15:11])
+	CLA_4b cla_12_15 (
+		.a(A[15:12]), .b(B[15:12]), .c_in(c[3]), .gg_out(g[3]), .pg_out(p[3]), .s(addsub_out[15:12])
 	);
 
 	assign both_neg = A[15] & B[15];
@@ -81,7 +81,7 @@ module CLA_16b (A, B, sub, S, flag);
 	assign S[15:0] = sat_neg? 16'h8000 : (sat_pos? 16'h7FFF : addsub_out[15:0]);
 	
 	assign flag[0] = sat_neg | sat_pos;
-	assign flag[1] = |S[15:0];
+	assign flag[1] = ~(|S[15:0]);
 	assign flag[2] = S[15];
 
 
