@@ -420,13 +420,13 @@ R25
 R10
 n@read@decoder_4_16
 vRED_16b
-R0
+!s110 1521394353
 !i10b 1
-!s100 [ee7oJk_B@eIK^j69NHl^1
-I]d1ad8C`_ah4_6E7gS7ma2
+!s100 HR3B?b_GZ==BZ`g1[jfB02
+Ij4XcjP3PTN3iSPhF52IGK1
 R1
 R2
-w1521333944
+w1521394341
 8C:/Users/William/Documents/552_Project/RED_16bit.v
 FC:/Users/William/Documents/552_Project/RED_16bit.v
 L0 1
@@ -434,7 +434,7 @@ R6
 r1
 !s85 0
 31
-R7
+!s108 1521394353.000000
 !s107 C:/Users/William/Documents/552_Project/RED_16bit.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/William/Documents/552_Project/RED_16bit.v|
 !s101 -O0
