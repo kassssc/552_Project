@@ -41,12 +41,12 @@ module CLA_4b (a, b, c_in, pg_out, gg_out, s);
 
 endmodule
 
-module CLA_16b (A, B, sub, S, flag);
+module CLA_16b (A, B, sub, S, ovfl, neg);
 
 	input [15:0] A, B;
 	input sub;
 	output [15:0] S;
-	output [2:0] flag; // N Z V
+	output ovfl, neg;
 
 	wire [15:0] addsub_out;
 	wire [3:0] c, g, p;
@@ -80,9 +80,7 @@ module CLA_16b (A, B, sub, S, flag);
 
 	assign S[15:0] = sat_neg? 16'h8000 : (sat_pos? 16'h7FFF : addsub_out[15:0]);
 	
-	assign flag[0] = sat_neg | sat_pos;
-	assign flag[1] = ~(|S[15:0]);
-	assign flag[2] = S[15];
-
+	assign ovfl = sat_neg | sat_pos;
+	assign neg = S[15];
 
 endmodule
