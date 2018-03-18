@@ -181,6 +181,9 @@ module cpu_tb();
    // Is processor halted (1 bit signal)
    
    /* Add anything else you want here */
-
+	assign flag = DUT.F; 
+	
+	assign pc_current = DUT.pc_to_instruct;
+	assign PC_out = DUT.PC_out;
    
 endmodule
