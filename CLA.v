@@ -78,10 +78,11 @@ module CLA_16b (A, B, sub, S, flag);
 	assign sat_neg = both_neg & (~addsub_out[15]);
 	assign sat_pos = both_pos & addsub_out[15];
 
-	assign flag[0] = G | (P & c[0]);
-	assign flag[1] = |S[15:0];
-	assign flag[2] = sat_neg | sat_pos;
-
 	assign S[15:0] = sat_neg? 16'h8000 : sat_pos? 16'h7FFF : addsub_out[15:0];
+	
+	assign flag[0] = sat_neg | sat_pos;
+	assign flag[1] = |S[15:0];
+	assign flag[2] = S[15];
+
 
 endmodule
