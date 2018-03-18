@@ -7,24 +7,24 @@ module flag_register(
 );
 
 dff PC_bit0(
-	.q(flag_new[0]), 
-	.d(flag_current[0]), 
+	.d(flag_new[0]), 
+	.q(flag_current[0]), 
 	.wen(wen[0]), 
 	.clk(clk), 
 	.rst(rst_n)
 );
 
 dff PC_bit1(
-	.q(flag_new[1]), 
-	.d(flag_current[1]), 
+	.d(flag_new[1]), 
+	.q(flag_current[1]), 
 	.wen(wen[1]), 
 	.clk(clk), 
 	.rst(rst_n)
 );
 
 dff PC_bit2(
-	.q(flag_new[2]), 
-	.d(flag_current[2]), 
+	.d(flag_new[2]), 
+	.q(flag_current[2]), 
 	.wen(wen[2]), 
 	.clk(clk), 
 	.rst(rst_n)
