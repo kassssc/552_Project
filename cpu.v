@@ -109,7 +109,7 @@ PC_control pc_control(
 
 
 // instantiate instruction mem
-memory instrucion_mem(
+memory1c instrucion_mem(
 	.data_out(instruction), 
 	.data_in({15{1'b0}}), 
 	.addr(pc_current), 
@@ -120,7 +120,7 @@ memory instrucion_mem(
 );
 
 // instantiate control unit
-Control_Unit(
+Control_Unit  control_unit(
 	.instruction(instruction[15:12]),
 	//.RegDst(RegDst),
 	.MemRead(MemRead), 
@@ -172,7 +172,7 @@ flag_register flag_reg(
 	.clk(clk),
 	.rst(rst_n),
 	.flag_current(F)
-)
+);
 
 
 // instantiate data memory
