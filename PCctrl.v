@@ -47,6 +47,6 @@ module PC_control(C, I, F, PC_in, PC_out, hlt);
 		.A(PC_plus_2), .B(shifted_I), .sub(1'b0), .S(target), .ovfl(), .neg()
 	);
 
-	assign PC_out = (hlt)? PC_in : (branch)? target : PC_plus_2;
+	assign PC_out = (hlt)? PC_in : ((branch)? target : PC_plus_2);
 
 endmodule
