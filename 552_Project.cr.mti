@@ -67,15 +67,6 @@ Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 
 Top level modules:
 	BitCell
 
-} {} {}} C:/Users/William/Documents/552_Project/CLA.v {1 {vlog -work work -stats=none C:/Users/William/Documents/552_Project/CLA.v
-Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
--- Compiling module CLA_1b
--- Compiling module CLA_4b
--- Compiling module CLA_16b
-
-Top level modules:
-	CLA_16b
-
 } {} {}} C:/Users/William/Documents/552_Project/ALU.v {1 {vlog -work work -stats=none C:/Users/William/Documents/552_Project/ALU.v
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
 -- Compiling module ALU

@@ -1,15 +1,18 @@
 module RED_16b(input[15:0] SrcData1, input[15:0] SrcData2, output[15:0] DesData);
 
-wire[15:0] reg10, reg14, reg18, reg112;
-wire[3:0] reg20, reg24;
+wire[6:0] pg, gg;
+wire[3:0] reg11, reg22, reg33, reg44, reg12, reg34, reg1234;
+wire[]
 wire[6:0] cout;
 
-full_adder_16bit FA0(.A({16{SrcData1[3:0]}}), .B({16{SrcData2[3:0]}}), .Cin(1'b0), .Sum(reg10), .Cout(cout[0]));
-full_adder_16bit FA1(.A({16{SrcData1[7:4]}}), .B({16{SrcData2[7:4]}}), .Cin(1'b0), .Sum(reg14), .Cout(cout[1]));
-full_adder_16bit FA2(.A({16{SrcData1[11:8]}}), .B({16{SrcData2[11:8]}}), .Cin(1'b0), .Sum(reg18), .Cout(cout[2]));
-full_adder_16bit FA3(.A({16{SrcData1[15:12]}}), .B({16{SrcData2[15:12]}}), .Cin(1'b0), .Sum(reg112), .Cout(cout[3]));
-full_adder_16bit FA4(.A(reg10), .B(reg14), .Cin(1'b0), .Sum(reg20), .Cout(cout[4]));
-full_adder_16bit FA5(.A(reg18), .B(reg112), .Cin(1'b0), .Sum(reg24), .Cout(cout[5]));
-full_adder_16bit FA6(.A(reg20), .B(reg24), .Cin(1'b0), .Sum(DesData), .Cout(cout[6]));
+
+CLA_4b add0(.a(SrcData1[3:0]), .b(SrcData2[3:0]), .c_in(1'b0), .pg_out(pg[0]), .gg_out(gg[0]), .s(reg11));
+CLA_4b add1(.a(SrcData1[7:4]), .b(SrcData2[7:4]), .c_in(1'b0), .pg_out(pg[1]), .gg_out(gg[1]), .s(reg22));
+CLA_4b add2(.a(SrcData1[11:8]), .b(SrcData2[11:8]), .c_in(1'b0), .pg_out(pg[2]), .gg_out(gg[2]), .s(reg33));
+CLA_4b add3(.a(SrcData1[15:12]), .b(SrcData2[15:12]), .c_in(1'b0), .pg_out(pg[3]), .gg_out(gg[3]), .s(reg44));
+CLA_4b add4(.a(reg11), .b(reg22), .c_in(1'b0), .pg_out(pg[4]), .gg_out(gg[4]), .s(reg12));
+CLA_4b add5(.a(reg33), .b(reg44), .c_in(1'b0), .pg_out(pg[5]), .gg_out(gg[5]), .s(reg34));
+CLA_4b add4(.a(reg12), .b(reg34), .c_in(1'b0), .pg_out(pg[6]), .gg_out(gg[6]), .s(reg1234));
+
 
 endmodule // RED_16b
