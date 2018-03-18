@@ -1,5 +1,6 @@
 module PC_control(C, I, F, PC_in, PC_out);
 
+	input hlt;
 	input	[2:0]	C;	// Condition Encoding
 	input	[2:0]	F;	// [ N V Z ]
 	input	[8:0]	I;
@@ -46,7 +47,7 @@ module PC_control(C, I, F, PC_in, PC_out);
 		.Sum(target),		.Ovfl(dummy2),	.A(PC_plus_2),	.B(shifted_I)
 	);
 
-	assign PC_out = branch? target : PC_plus_2;
+	assign PC_out = (hlt)? pc_in : (branch)? target : PC_plus_2;
 
 endmodule
 
