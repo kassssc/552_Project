@@ -187,7 +187,7 @@ memory1c Data_memory(
 );
 
 // instantiate 16 bit adder for pcs instruction 
-full_adder_16bit pcs_adder (
+full_adder_16b pcs_adder (
 	.A(pc_current), 
 	.B(2), 
 	.Cin(1'b0), 
