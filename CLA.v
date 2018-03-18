@@ -48,9 +48,11 @@ module CLA_16b (A, B, sub, S, ovfl, neg);
 	output [15:0] S;
 	output ovfl, neg;
 
-	wire [15:0] addsub_out;
+	wire [15:0] B_in, addsub_out;
 	wire [3:0] c, g, p;
 	wire G, P, both_neg, both_pos, sat_neg, sat_pos;
+
+	assign B_in[15:0] = sub? ~B[15:0] : B[15:0];
 
 	assign c[0] = sub;
 	assign c[1] = g[0] | (p[0] & c[0]);
@@ -61,20 +63,20 @@ module CLA_16b (A, B, sub, S, ovfl, neg);
 	assign G = g[3] | (g[2] & p[3]) | (g[1] & p[3] & p[2]) | (g[0] & p[3] & p[2] & p[1]);
 
 	CLA_4b cla_0_3 (
-		.a(A[3:0]), .b(B[3:0]), .c_in(c[0]), .gg_out(g[0]), .pg_out(p[0]), .s(addsub_out[3:0])
+		.a(A[3:0]), .b(B_in[3:0]), .c_in(c[0]), .gg_out(g[0]), .pg_out(p[0]), .s(addsub_out[3:0])
 	);
 	CLA_4b cla_4_7 (
-		.a(A[7:4]), .b(B[7:4]), .c_in(c[1]), .gg_out(g[1]), .pg_out(p[1]), .s(addsub_out[7:4])
+		.a(A[7:4]), .b(B_in[7:4]), .c_in(c[1]), .gg_out(g[1]), .pg_out(p[1]), .s(addsub_out[7:4])
 	);
 	CLA_4b cla_8_11 (
-		.a(A[11:8]), .b(B[11:8]), .c_in(c[2]), .gg_out(g[2]), .pg_out(p[2]), .s(addsub_out[11:8])
+		.a(A[11:8]), .b(B_in[11:8]), .c_in(c[2]), .gg_out(g[2]), .pg_out(p[2]), .s(addsub_out[11:8])
 	);
 	CLA_4b cla_12_15 (
-		.a(A[15:12]), .b(B[15:12]), .c_in(c[3]), .gg_out(g[3]), .pg_out(p[3]), .s(addsub_out[15:12])
+		.a(A[15:12]), .b(B_in[15:12]), .c_in(c[3]), .gg_out(g[3]), .pg_out(p[3]), .s(addsub_out[15:12])
 	);
 
-	assign both_neg = A[15] & B[15];
-	assign both_pos = ~A[15] & ~B[15];
+	assign both_neg = A[15] & B_in[15];
+	assign both_pos = ~A[15] & ~B_in[15];
 	assign sat_neg = both_neg & (~addsub_out[15]);
 	assign sat_pos = both_pos & addsub_out[15];
 

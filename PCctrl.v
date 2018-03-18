@@ -10,7 +10,6 @@ module PC_control(C, I, F, PC_in, PC_out, hlt);
 	wire neg_flag, ovfl_flag, zero_flag, branch;
 	wire NEQ, EQ, GT, LT, GEQ, LEQ, OVFL, UNCOND;
 	wire [15:0] target, shifted_I, PC_plus_2;
-	wire [3:0] dummy;	 // Dummy for unused adder
 
 	assign neg_flag = F[2];
 	assign ovfl_flag = F[1];
@@ -39,12 +38,12 @@ module PC_control(C, I, F, PC_in, PC_out, hlt);
 
 	// PC_plus_2 = PC + 2
 	CLA_16b PC_adder (
-		.A(PC_in), .B(16'h0002), .sub(1'b0), .S(PC_plus_2), .ovfl(dummy[0]), .neg(dummy[1])
+		.A(PC_in), .B(16'h0002), .sub(1'b0), .S(PC_plus_2), .ovfl(), .neg()
 	);
 
 	// Target = PC + 2 + (I << 1)
 	CLA_16b target_adder (
-		.A(PC_plus_2), .B(shifted_I), .sub(1'b0), .S(target), .ovfl(dummy[2]), .neg(dummy[3])
+		.A(PC_plus_2), .B(shifted_I), .sub(1'b0), .S(target), .ovfl(), .neg()
 	);
 
 	assign PC_out = (hlt)? PC_in : (branch)? target : PC_plus_2;
