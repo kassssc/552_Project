@@ -2,7 +2,7 @@
 // TEST CLA
 //--------------------------------------------------------------------
 
-// PASSED
+// PASSED PASSED PASSED PASSED PASSED PASSED PASSED PASSED PASSED
 module t_CLA_1b;
 
 	reg	[2:0] test;
@@ -45,7 +45,7 @@ module t_CLA_1b;
 
 endmodule
 
-// PASSED
+// PASSED PASSED PASSED PASSED PASSED PASSED PASSED PASSED PASSED
 module t_CLA_4b;
 
 	reg	[8:0] test;
