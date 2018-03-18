@@ -12,13 +12,6 @@ Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 
 Top level modules:
 	cpu
 
-} {} {}} C:/Users/William/Documents/552_Project/RED_16bit.v {1 {vlog -work work -stats=none C:/Users/William/Documents/552_Project/RED_16bit.v
-Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
--- Compiling module RED_16b
-
-Top level modules:
-	RED_16b
-
 } {} {}} C:/Users/William/Documents/552_Project/shifter_16bit_3mode.v {1 {vlog -work work -stats=none C:/Users/William/Documents/552_Project/shifter_16bit_3mode.v
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
 -- Compiling module SHIFTER_16b
@@ -64,13 +57,6 @@ Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 
 Top level modules:
 	CLA_16b
 
-} {} {}} C:/Users/William/Documents/552_Project/t_CLA_16bit.v {1 {vlog -work work -stats=none C:/Users/William/Documents/552_Project/t_CLA_16bit.v
-Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
--- Compiling module t_CLA_16b
-
-Top level modules:
-	t_CLA_16b
-
 } {} {}} C:/Users/William/Documents/552_Project/ALU.v {1 {vlog -work work -stats=none C:/Users/William/Documents/552_Project/ALU.v
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
 -- Compiling module ALU
@@ -105,6 +91,17 @@ Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 
 
 Top level modules:
 	Register
+
+} {} {}} C:/Users/William/Documents/552_Project/fulladders.v {1 {vlog -work work -stats=none C:/Users/William/Documents/552_Project/fulladders.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module full_adder_1b
+-- Compiling module full_adder_2b
+-- Compiling module full_adder_4b
+-- Compiling module full_adder_16b
+
+Top level modules:
+	full_adder_2b
+	full_adder_16b
 
 } {} {}} C:/Users/William/Documents/552_Project/general.v {1 {vlog -work work -stats=none C:/Users/William/Documents/552_Project/general.v
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
