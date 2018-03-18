@@ -22,11 +22,13 @@ wire [15:0]signextend;
 wire [15:0]muxtoalu;
 wire [15:0]ALU_out;
 wire [15:0]Data_memory_out;
+wire [15:0]pcs_sum;
 wire MemWrite;
 wire RegDst;
 wire ALUsrc;
 wire MemtoReg;
 wire hlt_internal;
+wire pcs;
 
 assign hlt = hlt_internal;
 
@@ -55,7 +57,8 @@ Control_Unit(
 	.MemWrite(MemWrite),
 	.ALUSrc(ALUSrc),
 	.RegWrite(RegWrite),
-	.hlt(hlt_internal)
+	.hlt(hlt_internal),
+	.pcs(pcs)
 );
 
 PC_control pc_control(
@@ -104,8 +107,15 @@ memory1c Data_memory(
 	.rst(rst_n)
 );
 
+full_adder_16bit pcs_adder (
+	.A(pc_current), 
+	.B(2), 
+	.Cin(1'b0), 
+	.Sum(pcs_sum), 
+	.Cout()
+);
 
-assign Write_data = (MemtoReg)? Data_memory_out:ALU_out;
+assign Write_data = (pcs)? pcs_sum : ((MemtoReg)? Data_memory_out:ALU_out);
 
 endmodule
 
