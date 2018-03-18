@@ -129,7 +129,9 @@ Control_Unit  control_unit(
 	.ALUSrc(ALUSrc),
 	.RegWrite(RegWrite),
 	.hlt(hlt_internal),
-	.pcs(pcs)
+	.pcs(pcs),
+	.ALUOp(ALUOp),
+	.tophalf(tophalf)
 );
 
 // make write register always the first reg in instruction 
