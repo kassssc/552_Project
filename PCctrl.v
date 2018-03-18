@@ -9,7 +9,7 @@ module PC_control(C, I, F, PC_in, PC_out, hlt);
 
 	wire neg_flag, ovfl_flag, zero_flag, branch;
 	wire NEQ, EQ, GT, LT, GEQ, LEQ, OVFL, UNCOND;
-	wire [15:0] target, shifted_I, PC_plus_2;
+	wire [15:0] target, sign_extend_I, shifted_I, PC_plus_2;
 
 	assign neg_flag = F[2];
 	assign ovfl_flag = F[1];
@@ -34,7 +34,8 @@ module PC_control(C, I, F, PC_in, PC_out, hlt);
 					  UNCOND
 					);
 
-	assign shifted_I[15:0] = {16{I[8:0] << 1}};
+	assign sign_extend_I[15:0] = {{7{I[8]}}, (I[8:0])};
+	assign shifted_I[15:0] = sign_extend_I[15:0] << 1;
 
 	// PC_plus_2 = PC + 2
 	CLA_16b PC_adder (
