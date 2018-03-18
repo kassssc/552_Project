@@ -24,7 +24,8 @@ module cpu_tb();
    reg clk; /* Clock input */
    reg rst_n; /* (Active low) Reset input */
 
-     
+    wire [15:0] pc_current;
+	wire [15:0] pc_out;
 
    cpu DUT(.clk(clk), .rst_n(rst_n), .pc(PC), .hlt(Halt)); /* Instantiate your processor */
    
@@ -183,7 +184,7 @@ module cpu_tb();
    /* Add anything else you want here */
 	assign flag = DUT.F; 
 	
-	assign pc_current = DUT.pc_to_instruct;
+	assign pc_current = DUT.pc_current;
 	assign PC_out = DUT.PC_out;
    
 endmodule
