@@ -1,0 +1,116 @@
+C:/Users/William/Documents/552_Project/fulladder_16bit.v {1 {vlog -work work -stats=none C:/Users/William/Documents/552_Project/fulladder_16bit.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module full_adder_16bit
+
+Top level modules:
+	full_adder_16bit
+
+} {} {}} C:/Users/William/Documents/552_Project/shifter_16bit_3mode.v {1 {vlog -work work -stats=none C:/Users/William/Documents/552_Project/shifter_16bit_3mode.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module Shifter_16b
+-- Compiling module MUX_41_1b
+-- Compiling module MUX_21_16b
+
+Top level modules:
+	Shifter_16b
+
+} {} {}} C:/Users/William/Documents/552_Project/WriteDecoder_4_16.v {1 {vlog -work work -stats=none C:/Users/William/Documents/552_Project/WriteDecoder_4_16.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module WriteDecoder_4_16
+
+Top level modules:
+	WriteDecoder_4_16
+
+} {} {}} C:/Users/William/Documents/552_Project/D-Flip-Flop.v {1 {vlog -work work -stats=none C:/Users/William/Documents/552_Project/D-Flip-Flop.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module dff
+
+Top level modules:
+	dff
+
+} {} {}} C:/Users/William/Documents/552_Project/fulladder_4bit.v {1 {vlog -work work -stats=none C:/Users/William/Documents/552_Project/fulladder_4bit.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module full_adder_4bit
+
+Top level modules:
+	full_adder_4bit
+
+} {} {}} C:/Users/William/Documents/552_Project/paddsb.v {1 {vlog -work work -stats=none C:/Users/William/Documents/552_Project/paddsb.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module PADDSB_16b
+-- Compiling module full_adder_1b
+-- Compiling module SATADD_4b
+
+Top level modules:
+	PADDSB_16b
+
+} {} {}} C:/Users/William/Documents/552_Project/BitCell.v {1 {vlog -work work -stats=none C:/Users/William/Documents/552_Project/BitCell.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module BitCell
+
+Top level modules:
+	BitCell
+
+} {} {}} C:/Users/William/Documents/552_Project/CLA.v {1 {vlog -work work -stats=none C:/Users/William/Documents/552_Project/CLA.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module CLA_1b
+-- Compiling module CLA_4b
+-- Compiling module CLA_16b
+
+Top level modules:
+	CLA_16b
+
+} {} {}} C:/Users/William/Documents/552_Project/ALU.v {0 {vlog -work work -stats=none C:/Users/William/Documents/552_Project/ALU.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module ALU
+** Error: (vlog-13069) C:/Users/William/Documents/552_Project/ALU.v(8): near "xor": syntax error, unexpected xor, expecting IDENTIFIER or TYPE_IDENTIFIER or NETTYPE_IDENTIFIER.
+
+** Error: C:/Users/William/Documents/552_Project/ALU.v(13): (vlog-2730) Undefined variable: 'ALU_in2'.
+
+** Error: C:/Users/William/Documents/552_Project/ALU.v(25): (vlog-2730) Undefined variable: 'paddsb'.
+
+** Error: C:/Users/William/Documents/552_Project/ALU.v(32): (vlog-2730) Undefined variable: 'red'.
+
+** Error: (vlog-13069) C:/Users/William/Documents/552_Project/ALU.v(33): near "xor": syntax error, unexpected xor, expecting ')'.
+
+** Error: C:/Users/William/Documents/552_Project/ALU.v(1): Identifier must be declared with a port mode: ALU_in2.
+
+} {4.0 5.0 6.0 7.0 8.0 9.0 10.0 11.0 12.0 13.0 14.0 15.0} {}} C:/Users/William/Documents/552_Project/fulladder_1bit.v {1 {vlog -work work -stats=none C:/Users/William/Documents/552_Project/fulladder_1bit.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module full_adder_1bit
+
+Top level modules:
+	full_adder_1bit
+
+} {} {}} C:/Users/William/Documents/552_Project/ReadDecoder.v {1 {vlog -work work -stats=none C:/Users/William/Documents/552_Project/ReadDecoder.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module ReadDecoder_4_16
+
+Top level modules:
+	ReadDecoder_4_16
+
+} {} {}} C:/Users/William/Documents/552_Project/RegisterFile.v {1 {vlog -work work -stats=none C:/Users/William/Documents/552_Project/RegisterFile.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module RegisterFile
+
+Top level modules:
+	RegisterFile
+
+} {} {}} C:/Users/William/Documents/552_Project/Register.v {1 {vlog -work work -stats=none C:/Users/William/Documents/552_Project/Register.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module Register
+
+Top level modules:
+	Register
+
+} {} {}} C:/Users/William/Documents/552_Project/general.v {0 {vlog -work work -stats=none C:/Users/William/Documents/552_Project/general.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module MUX_81_16b
+** Error: C:/Users/William/Documents/552_Project/general.v(11): (vlog-2730) Undefined variable: 'i2'.
+
+-- Compiling module MUX_21_1b
+-- Compiling module MUX_21_16b
+** Error: (vlog-13069) C:/Users/William/Documents/552_Project/general.v(42): near "EOF": syntax error, unexpected end of source code.
+
+
+} {4.0 5.0 8.0 9.0} {}}
