@@ -1,6 +1,6 @@
 module Control_Unit(
 	input  [3:0]instruction,
-	output reg RegDst,
+	// output reg RegDst,
 	output reg MemRead, 
 	output reg MemtoReg, 
 	output reg MemWrite,
@@ -19,7 +19,7 @@ always@(*) begin
 	case(instruction)
 		// Add
 		4'b0000: begin 
-			RegDst = Asserted;
+			//RegDst = Asserted;
 			MemRead = Not_Asserted;
 			MemtoReg = Not_Asserted;
 			MemWrite = Not_Asserted;
@@ -33,7 +33,7 @@ always@(*) begin
 		
 		// Sub
 		4'b0001: begin 
-			RegDst = Asserted;
+			//RegDst = Asserted;
 			MemRead = Not_Asserted;
 			MemtoReg = Not_Asserted;
 			MemWrite = Not_Asserted;
@@ -47,7 +47,7 @@ always@(*) begin
 		
 		// Red
 		4'b0010: begin 
-			RegDst = Asserted;
+			//RegDst = Asserted;
 			MemRead = Not_Asserted;
 			MemtoReg = Not_Asserted;
 			MemWrite = Not_Asserted;
@@ -61,7 +61,7 @@ always@(*) begin
 		
 		// XOR
 		4'b0011: begin 
-			RegDst = Asserted;
+			//RegDst = Asserted;
 			MemRead = Not_Asserted;
 			MemtoReg = Not_Asserted;
 			MemWrite = Not_Asserted;
@@ -75,7 +75,7 @@ always@(*) begin
 		
 		// SLL
 		4'b0100: begin 
-			RegDst = Asserted;
+			//RegDst = Asserted;
 			MemRead = Not_Asserted;
 			MemtoReg = Not_Asserted;
 			MemWrite = Not_Asserted;
@@ -89,7 +89,7 @@ always@(*) begin
 		
 		// SRA
 		4'b0101: begin 
-			RegDst = Asserted;
+			//RegDst = Asserted;
 			MemRead = Not_Asserted;
 			MemtoReg = Not_Asserted;
 			MemWrite = Not_Asserted;
@@ -103,7 +103,7 @@ always@(*) begin
 		
 		// ROR
 		4'b0110: begin 
-			RegDst = Asserted;
+			//RegDst = Asserted;
 			MemRead = Not_Asserted;
 			MemtoReg = Not_Asserted;
 			MemWrite = Not_Asserted;
@@ -117,7 +117,7 @@ always@(*) begin
 		
 		// PADDSB
 		4'b0111: begin 
-			RegDst = Asserted;
+			//RegDst = Asserted;
 			MemRead = Not_Asserted;
 			MemtoReg = Not_Asserted;
 			MemWrite = Not_Asserted;
@@ -131,7 +131,7 @@ always@(*) begin
 		
 		// LW
 		4'b1000: begin 
-			RegDst = Asserted;
+			//RegDst = Asserted;
 			MemRead = Asserted;
 			MemtoReg = Asserted;
 			MemWrite = Not_Asserted;
@@ -145,7 +145,7 @@ always@(*) begin
 		
 		// SW
 		4'b1001: begin 
-			RegDst = Not_Asserted;
+			//RegDst = Not_Asserted;
 			MemRead = Not_Asserted;
 			MemtoReg = Not_Asserted;
 			MemWrite = Asserted;
@@ -159,7 +159,7 @@ always@(*) begin
 		
 		// LHB
 		4'b1010: begin 
-			RegDst = Asserted;
+			//RegDst = Asserted;
 			MemRead = Not_Asserted;
 			MemtoReg = Not_Asserted;
 			MemWrite = Not_Asserted;
@@ -173,7 +173,7 @@ always@(*) begin
 		
 		// LLB
 		4'b1011: begin 
-			RegDst = Asserted;
+			//RegDst = Asserted;
 			MemRead = Not_Asserted;
 			MemtoReg = Not_Asserted;
 			MemWrite = Not_Asserted;
@@ -187,7 +187,7 @@ always@(*) begin
 		
 		// B
 		4'b1100: begin 
-			RegDst = Not_Asserted;
+			//RegDst = Not_Asserted;
 			MemRead = Not_Asserted;
 			MemtoReg = Not_Asserted;
 			MemWrite = Not_Asserted;
@@ -201,7 +201,7 @@ always@(*) begin
 		
 		// BR
 		4'b1101: begin 
-			RegDst = Not_Asserted;
+			//RegDst = Not_Asserted;
 			MemRead = Not_Asserted;
 			MemtoReg = Not_Asserted;
 			MemWrite = Not_Asserted;
@@ -215,7 +215,7 @@ always@(*) begin
 		
 		// PCS
 		4'b1110: begin 
-			RegDst = Asserted;
+			//RegDst = Asserted;
 			MemRead = Not_Asserted;
 			MemtoReg = Not_Asserted;
 			MemWrite = Not_Asserted;
@@ -229,7 +229,7 @@ always@(*) begin
 		
 		// HLT
 		4'b1111: begin 
-			RegDst = Not_Asserted;
+			//RegDst = Not_Asserted;
 			MemRead = Not_Asserted;
 			MemtoReg = Not_Asserted;
 			MemWrite = Not_Asserted;

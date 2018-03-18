@@ -5,35 +5,84 @@ module cpu(
 	output [15:0] pc
 );
 
-
+// pc control inputs - condition
 wire [2:0]C; 
+
+// pc control inputs - Flag
 wire [2:0]F;
+
+// old pc
 wire [15:0]PC_in;
+
+// new pc after calculation
 wire [15:0]PC_out;
+
+// instruction fetched from Instruction-memory
 wire [15:0]instruction;
+
+// Mux output to Registers file
 wire [3:0]write_reg;
+
+// Data input to Registers file
 wire [15:0]Read_data_1;
 wire [15:0]Read_data_2;
+
+// Data to be written to Registers
 wire [15:0]Write_data;
+
+// control for writing to reg 
 wire RegWrite;
+
+// current pc
 wire [15:0]pc_current;
-assign pc = pc_current;
+
+// signextend value for immediate 
 wire [15:0]signextend;
+
+// wire connect mux to alu 
 wire [15:0]muxtoalu;
+
+// wire connect alu to data memory
 wire [15:0]ALU_out;
+
+// data memory output to select mux
 wire [15:0]Data_memory_out;
+
+// pcs instruction only
+// sum of current pc + 2
 wire [15:0]pcs_sum;
+
+// control signal for writing to memory
 wire MemWrite;
-wire RegDst;
+
+// control signal for immediate or reg 
+// no need to use this???
+// wire RegDst;
+
+// control signal for using immediate or reg
 wire ALUsrc;
+
+// control signal for assert writing from mem to reg
 wire MemtoReg;
+
+// hlt internal connect signal, assert when hlt is called
 wire hlt_internal;
+
+// pcs internal signal, assert when pcs is called
 wire pcs;
+
+// decide if this is a ALU operation
 wire ALUOp;
+
+// decide if this is LHB or LLB
 wire tophalf;
 
+// make the output = current pc
+assign pc = pc_current;
 assign hlt = hlt_internal;
 
+
+// instantiate pc register
 PC_Register pc_reg(
 	.PC_new(PC_out),
 	.clk(clk),
@@ -41,6 +90,19 @@ PC_Register pc_reg(
 	.PC_current(pc_current)
 );
 
+
+// instantiate pc control unit
+PC_control pc_control(
+	.C(C),
+	.I(instruction[8:0]), 
+	.F(F), 
+	.hlt(hlt_internal),
+	.PC_in(PC_in),
+	.PC_out(pc_out)
+);
+
+
+// instantiate instruction mem
 memory instrucion_mem(
 	.data_out(instruction), 
 	.data_in({15{1'b0}}), 
@@ -51,9 +113,10 @@ memory instrucion_mem(
 	.rst(rst_n)
 );
 
+// instantiate control unit
 Control_Unit(
 	.instruction(instruction[15:12]),
-	.RegDst(RegDst),
+	//.RegDst(RegDst),
 	.MemRead(MemRead), 
 	.MemtoReg(MemtoReg), 
 	.MemWrite(MemWrite),
@@ -63,32 +126,30 @@ Control_Unit(
 	.pcs(pcs)
 );
 
-PC_control pc_control(
-	.C(C),
-	.I(instruction[8:0]), 
-	.F(F), 
-	.hlt(hlt_internal),
-	.PC_in(PC_in),
-	.PC_out(pc_out)
-);
+// make write register always the first reg in instruction 
+assign write_reg = instruction[11:8];
 
-assign write_reg = (RegDst)? instruction[3:0]: instruction[7:4];
 
+// instantiate RegisterFile
 RegisterFile RegisterFile(
 	.clk(clk), 
 	.rst(rst_n), 
-	.SrcReg1(instruction[11:8]), 
-	.SrcReg2(instruction[7:4]), 
-	.DstReg(instruction[3:0]), 
+	.SrcReg1(instruction[7:4]), 
+	.SrcReg2(instruction[3:0]), 
+	.DstReg(instruction[11:8]), 
 	.WriteReg(RegWrite), 
 	.DstData(Write_data), 
 	.SrcData1(Read_data_1), 
 	.SrcData2(Read_data_2)
 );
 
+// sign extended immediate
 assign signextend = {{12{instruction[8]}}, instruction[3:0]};
+
+// is the last 4bit reg or immediate
 assign muxtoalu = (ALUsrc) ? signextend: Read_data_2;
 
+// instantiate ALU
 ALU alu(
 	.ALU_in1(Read_data_1), 
 	.ALU_in2(muxtoalu), 
@@ -97,8 +158,7 @@ ALU alu(
 	.flag(F)
 );
 
-
-
+// instantiate data memory
 memory1c Data_memory(
 	.data_out(Data_memory_out), 
 	.data_in(Read_data_2), 
@@ -109,6 +169,7 @@ memory1c Data_memory(
 	.rst(rst_n)
 );
 
+// instantiate 16 bit adder for pcs instruction 
 full_adder_16bit pcs_adder (
 	.A(pc_current), 
 	.B(2), 
@@ -117,6 +178,7 @@ full_adder_16bit pcs_adder (
 	.Cout()
 );
 
+// logic for decide which data to write
 assign Write_data = (pcs)? pcs_sum : 
 					(MemtoReg)? Data_memory_out:
 					(ALUOp)? ALU_out:
