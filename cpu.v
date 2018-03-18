@@ -155,7 +155,7 @@ RegisterFile RegisterFile(
 );
 
 // sign extended immediate
-assign signextend = {{12{instruction[8]}}, instruction[3:0]};
+assign signextend = {{12{instruction[3]}}, instruction[3:0]};
 
 // is the last 4bit reg or immediate
 assign muxtoalu = (ALUsrc) ? signextend: Read_data_2;
@@ -205,8 +205,8 @@ full_adder_16b pcs_adder (
 assign Write_data = (pcs)? pcs_sum : 
 					(MemtoReg)? Data_memory_out:
 					(ALUOp)? ALU_out:
-					(tophalf) ? (ALU_out | instruction[7:0]):
-					(ALU_out | (instruction[7:0] << 8));
+					(tophalf) ? (ALU_out | {8'h00, instruction[7:0]}):
+					(ALU_out | {instruction[7:0], 8'h00});
 					
 
 endmodule
