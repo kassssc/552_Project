@@ -98,7 +98,7 @@ PC_Register pc_reg(
 
 
 // instantiate pc control unit
-PC_control pc_control(
+PC_control PC_control(
 	.C(C),
 	.I(instruction[8:0]), 
 	.F(F), 
