@@ -1,6 +1,7 @@
 module ALU (ALU_in1, ALU_in2, op, ALU_out, flag, flag_write);
 
 	input	[15:0]	ALU_in1, ALU_in2;
+	input	[]
 	input	[2:0]	op;
 	output	[15:0]	ALU_out;
 	output	[2:0]	flag, flag_write;	// [ N Z V ]
@@ -30,7 +31,7 @@ module ALU (ALU_in1, ALU_in2, op, ALU_out, flag, flag_write);
 	// SRA: 101
 	// ROR: 110
 	SHIFTER_16b shifter_16b (
-		.Shift_In(ALU_in1[15:0]),	.Shift_Val(ALU_in2[15:0]),
+		.Shift_In(ALU_in1[15:0]),	.Shift_Val(ALU_in2[3:0]),
 		.Mode(op[1:0]), 			.Shift_Out(SHIFTER_out[15:0])
 	);
 
