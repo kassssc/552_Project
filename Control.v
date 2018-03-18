@@ -7,7 +7,9 @@ module Control_Unit(
 	output reg ALUSrc,
 	output reg RegWrite,
 	output reg hlt,
-	output reg pcs
+	output reg pcs,
+	output reg ALUOp,
+	output reg tophalf
 );
 
 localparam Asserted = 1'b1;
@@ -25,6 +27,8 @@ always@(*) begin
 			RegWrite = Asserted;
 			hlt = Not_Asserted;
 			pcs = Not_Asserted;
+			ALUOp = Asserted;
+			tophalf = Not_Asserted;
 		end
 		
 		// Sub
@@ -37,6 +41,8 @@ always@(*) begin
 			RegWrite = Asserted;
 			hlt = Not_Asserted;
 			pcs = Not_Asserted;
+			ALUOp = Asserted;
+			tophalf = Not_Asserted;
 		end
 		
 		// Red
@@ -49,6 +55,8 @@ always@(*) begin
 			RegWrite = Asserted;
 			hlt = Not_Asserted;
 			pcs = Not_Asserted;
+			ALUOp = Asserted;
+			tophalf = Not_Asserted;
 		end
 		
 		// XOR
@@ -61,6 +69,8 @@ always@(*) begin
 			RegWrite = Asserted;
 			hlt = Not_Asserted;
 			pcs = Not_Asserted;
+			ALUOp = Asserted;
+			tophalf = Not_Asserted;
 		end
 		
 		// SLL
@@ -73,6 +83,8 @@ always@(*) begin
 			RegWrite = Asserted;
 			hlt = Not_Asserted;
 			pcs = Not_Asserted;
+			ALUOp = Asserted;
+			tophalf = Not_Asserted;
 		end
 		
 		// SRA
@@ -85,6 +97,8 @@ always@(*) begin
 			RegWrite = Asserted;
 			hlt = Not_Asserted;
 			pcs = Not_Asserted;
+			ALUOp = Asserted;
+			tophalf = Not_Asserted;
 		end
 		
 		// ROR
@@ -97,6 +111,8 @@ always@(*) begin
 			RegWrite = Asserted;
 			hlt = Not_Asserted;
 			pcs = Not_Asserted;
+			ALUOp = Asserted;
+			tophalf = Not_Asserted;
 		end
 		
 		// PADDSB
@@ -109,6 +125,8 @@ always@(*) begin
 			RegWrite = Asserted;
 			hlt = Not_Asserted;
 			pcs = Not_Asserted;
+			ALUOp = Asserted;
+			tophalf = Not_Asserted;
 		end
 		
 		// LW
@@ -121,6 +139,8 @@ always@(*) begin
 			RegWrite = Asserted;
 			hlt = Not_Asserted;
 			pcs = Not_Asserted;
+			ALUOp = Not_Asserted;
+			tophalf = Not_Asserted;
 		end
 		
 		// SW
@@ -133,30 +153,36 @@ always@(*) begin
 			RegWrite = Not_Asserted;
 			hlt = Not_Asserted;
 			pcs = Not_Asserted;
+			ALUOp = Not_Asserted;
+			tophalf = Not_Asserted;
 		end
 		
 		// LHB
 		4'b1010: begin 
 			RegDst = Asserted;
-			MemRead = Asserted;
-			MemtoReg = Asserted;
+			MemRead = Not_Asserted;
+			MemtoReg = Not_Asserted;
 			MemWrite = Not_Asserted;
 			ALUSrc = Asserted;
 			RegWrite = Asserted;
 			hlt = Not_Asserted;
 			pcs = Not_Asserted;
+			ALUOp = Not_Asserted;
+			tophalf = Asserted;
 		end
 		
 		// LLB
 		4'b1011: begin 
 			RegDst = Asserted;
-			MemRead = Asserted;
-			MemtoReg = Asserted;
+			MemRead = Not_Asserted;
+			MemtoReg = Not_Asserted;
 			MemWrite = Not_Asserted;
 			ALUSrc = Asserted;
 			RegWrite = Asserted;
 			hlt = Not_Asserted;
 			pcs = Not_Asserted;
+			ALUOp = Not_Asserted;
+			tophalf = Not_Asserted;
 		end
 		
 		// B
@@ -169,6 +195,8 @@ always@(*) begin
 			RegWrite = Not_Asserted;
 			hlt = Not_Asserted;
 			pcs = Not_Asserted;
+			ALUOp = Not_Asserted;
+			tophalf = Not_Asserted;
 		end
 		
 		// BR
@@ -181,6 +209,8 @@ always@(*) begin
 			RegWrite = Not_Asserted;
 			hlt = Not_Asserted;
 			pcs = Not_Asserted;
+			ALUOp = Not_Asserted;
+			tophalf = Not_Asserted;
 		end
 		
 		// PCS
@@ -193,9 +223,11 @@ always@(*) begin
 			RegWrite = Asserted;
 			hlt = Not_Asserted;
 			pcs = Asserted;
+			ALUOp = Not_Asserted;
+			tophalf = Not_Asserted;
 		end
 		
-		// HLS
+		// HLT
 		4'b1111: begin 
 			RegDst = Not_Asserted;
 			MemRead = Not_Asserted;
@@ -205,6 +237,8 @@ always@(*) begin
 			RegWrite = Not_Asserted;
 			hlt = Asserted;
 			pcs = Not_Asserted;
+			ALUOp = Not_Asserted;
+			tophalf = Not_Asserted;
 		end
 	endcase
 end

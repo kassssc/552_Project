@@ -29,6 +29,8 @@ wire ALUsrc;
 wire MemtoReg;
 wire hlt_internal;
 wire pcs;
+wire ALUOp;
+wire tophalf;
 
 assign hlt = hlt_internal;
 
@@ -115,7 +117,12 @@ full_adder_16bit pcs_adder (
 	.Cout()
 );
 
-assign Write_data = (pcs)? pcs_sum : ((MemtoReg)? Data_memory_out:ALU_out);
+assign Write_data = (pcs)? pcs_sum : 
+					(MemtoReg)? Data_memory_out:
+					(ALUOp)? ALU_out:
+					(tophalf) ? (ALU_out | instruction[7:0]):
+					(ALU_out | (instruction[7:0] << 8));
+					
 
 endmodule
 
