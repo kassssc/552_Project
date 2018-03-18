@@ -1,4 +1,4 @@
-module ALU (clk, ALU_in1, ALU_in2, op, ALU_out, flag, flag_write);
+module ALU (ALU_in1, ALU_in2, op, ALU_out, flag, flag_write);
 
 	input	[15:0]	ALU_in1, ALU_in2;
 	input	[2:0]	op;
