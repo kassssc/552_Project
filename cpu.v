@@ -10,9 +10,6 @@ assign rst = ~rst_n;
 // pc control inputs - Flag
 wire [2:0]F;
 
-// old pc
-wire [15:0]PC_in;
-
 // new pc after calculation
 wire [15:0]PC_out;
 
@@ -108,7 +105,7 @@ PC_control PC_control(
 	.I(instruction[8:0]), 
 	.F(F), 
 	.hlt(hlt_internal),
-	.PC_in(PC_in),
+	.PC_in(PC_current),
 	.PC_out(PC_out)
 );
 
