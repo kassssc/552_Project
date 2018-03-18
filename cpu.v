@@ -52,7 +52,7 @@ PC_control pc_control(
 	.C(C),
 	.I(instruction[8:0]), 
 	.F(F), 
-	.hlt(hlt),
+	.hlt(hlt_internal),
 	.PC_in(PC_in),
 	.PC_out(pc_out)
 );
