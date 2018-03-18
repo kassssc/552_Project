@@ -8,6 +8,32 @@ module full_adder_1b (a, b, cin, cout, s);
 
 endmodule
 
+module full_adder_2b (A, B, cin, S, cout);
+
+	input cin;
+	input[1:0] A, B;
+	output[1:0] S;
+	output cout;
+
+	wire[1:0] inter;
+	assign cout = inter[1];
+
+	full_adder_1b FA0(.a(A[0]),
+						.b(B[0]), 
+						.cin(cin), 
+						.s(S[0]), 
+						.cout(inter[0])
+						);
+						
+	full_adder_1b FA1(.a(A[1]),
+						.b(B[1]), 
+						.cin(inter[0]), 
+						.s(S[1]), 
+						.cout(inter[1])
+						);				
+
+endmodule
+
 module full_adder_4b (A, B, cin, S, cout);
 
 	input cin;
