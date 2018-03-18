@@ -5,9 +5,6 @@ module cpu(
 	output [15:0] pc
 );
 
-// pc control inputs - condition
-wire [2:0]C; 
-
 // pc control inputs - Flag
 wire [2:0]F;
 
@@ -52,6 +49,9 @@ wire [15:0]Data_memory_out;
 // sum of current pc + 2
 wire [15:0]pcs_sum;
 
+// control singal for red from memory1c
+wire MemRead;
+
 // control signal for writing to memory
 wire MemWrite;
 
@@ -64,6 +64,9 @@ wire ALUsrc;
 
 // control signal for assert writing from mem to reg
 wire MemtoReg;
+
+// datamemory enable
+wire memory_enable;
 
 // hlt internal connect signal, assert when hlt is called
 wire hlt_internal;
@@ -99,19 +102,19 @@ PC_Register pc_reg(
 
 // instantiate pc control unit
 PC_control PC_control(
-	.C(C),
+	.C(instruction[11:9]),
 	.I(instruction[8:0]), 
 	.F(F), 
 	.hlt(hlt_internal),
 	.PC_in(PC_in),
-	.PC_out(pc_out)
+	.PC_out(PC_out)
 );
 
 
 // instantiate instruction mem
 memory1c instrucion_mem(
 	.data_out(instruction), 
-	.data_in({15{1'b0}}), 
+	.data_in({16{1'b0}}), 
 	.addr(pc_current), 
 	.enable(1'b1), 
 	.wr(1'b0), 
@@ -144,7 +147,7 @@ RegisterFile RegisterFile(
 	.rst(rst_n), 
 	.SrcReg1(instruction[7:4]), 
 	.SrcReg2(instruction[3:0]), 
-	.DstReg(instruction[11:8]), 
+	.DstReg(write_reg), 
 	.WriteReg(RegWrite), 
 	.DstData(Write_data), 
 	.SrcData1(Read_data_1), 
@@ -176,13 +179,14 @@ flag_register flag_reg(
 	.flag_current(F)
 );
 
+assign memory_enable = MemRead|MemWrite;
 
 // instantiate data memory
 memory1c Data_memory(
 	.data_out(Data_memory_out), 
 	.data_in(Read_data_2), 
 	.addr(ALU_out), 
-	.enable(1'b1), 
+	.enable(memory_enable), 
 	.wr(MemWrite), 
 	.clk(clk), 
 	.rst(rst_n)
