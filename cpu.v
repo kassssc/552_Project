@@ -5,7 +5,7 @@ module cpu(
 	output [15:0] pc
 );
 
-reg [15:0] pc_current;
+
 wire [2:0]C; 
 wire [2:0]F;
 wire [15:0]PC_in;
@@ -16,6 +16,7 @@ wire [15:0]Read_data_1;
 wire [15:0]Read_data_2;
 wire [15:0]Write_data;
 wire RegWrite;
+wire [15:0]pc_current;
 assign pc = pc_current;
 wire [15:0]signextend;
 wire [15:0]muxtoalu;
@@ -28,6 +29,13 @@ wire MemtoReg;
 wire hlt_internal;
 
 assign hlt = hlt_internal;
+
+PC_Register pc_reg(
+	.PC_new(PC_out),
+	.clk(clk),
+	.rst(rst_n),
+	.PC_current(pc_current)
+);
 
 memory instrucion_mem(
 	.data_out(instruction), 
