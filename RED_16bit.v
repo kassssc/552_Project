@@ -33,13 +33,13 @@ CLA_4b add6(.a(reg12), .b(reg34), .c_in(1'b0), .pg_out(pg[6]), .gg_out(gg[6]), .
 //
 // Level 1, two 1bit FAs
 //
-full_adder_1bit FA10(.A(gg[0]), .B(gg[1]), .Cin(gg[2]), .S(sum_1bcsa[0]), .Cout(cout_csa[0]));
-full_adder_1bit FA11(.A(gg[3]), .B(gg[4]), .Cin(gg[5]), .S(sum_1bcsa[1]), .Cout(cout_csa[1]));
+full_adder_1b FA10(.A(gg[0]), .B(gg[1]), .Cin(gg[2]), .S(sum_1bcsa[0]), .Cout(cout_csa[0]));
+full_adder_1b FA11(.A(gg[3]), .B(gg[4]), .Cin(gg[5]), .S(sum_1bcsa[1]), .Cout(cout_csa[1]));
 //
 // Level 2, two 1bit FAs
 //
-full_adder_1bit FA12(.A(cout_csa[0]), .B(sum_1bcsa[0]), .Cin(gg[6]), .S(sum_1bcsa[2]), .Cout(cout_csa[2]));
-full_adder_1bit FA13(.A(cout_csa[1]), .B(sum_1bcsa[1]), .Cin(1'b0), .S(sum_1bcsa[3]), .Cout(cout_csa[3]));
+full_adder_1b FA12(.A(cout_csa[0]), .B(sum_1bcsa[0]), .Cin(gg[6]), .S(sum_1bcsa[2]), .Cout(cout_csa[2]));
+full_adder_1b FA13(.A(cout_csa[1]), .B(sum_1bcsa[1]), .Cin(1'b0), .S(sum_1bcsa[3]), .Cout(cout_csa[3]));
 //
 // Level 3, one 2bit FA
 //
