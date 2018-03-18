@@ -18,16 +18,6 @@ module PADDSB_16b (S, A, B);
 
 endmodule
 
-module full_adder_1b (a, b, cin, cout, s);
-
-	output s, cout;
-	input a, b, cin;
-
-	assign s = a ^ b ^ cin;
-	assign cout = (a & b) | ((a ^ b) & cin);
-
-endmodule
-
 module SATADD_4b (S, A, B);
 
 	input [3:0] A, B; 	// Input values
