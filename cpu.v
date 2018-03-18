@@ -47,6 +47,16 @@ memory instrucion_mem(
 	.rst(rst_n)
 );
 
+Control_Unit(
+	.instruction(instruction[15:12]),
+	.RegDst(RegDst),
+	.MemRead(MemRead), 
+	.MemtoReg(MemtoReg), 
+	.MemWrite(MemWrite),
+	.ALUSrc(ALUSrc),
+	.RegWrite(RegWrite),
+	.hlt(hlt_internal)
+);
 
 PC_control pc_control(
 	.C(C),
