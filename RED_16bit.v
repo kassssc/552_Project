@@ -60,18 +60,18 @@ endmodule // RED_16b
 
 module CSA_2b(input[1:0] x,y,z, output[1:0] s, output[1:0] cout);          
 
-full_adder_1b fa_inst10(x[0],y[0],z[0],s[0],cout[0]);
-full_adder_1b fa_inst11(x[1],y[1],z[1],s[1],cout[1]);
+full_adder_1b fa_inst10(x[0],y[0],z[0],cout[0],s[0]);
+full_adder_1b fa_inst11(x[1],y[1],z[1],cout[1],s[1]);
 
 endmodule
 
 
 module CSA_4b(input[3:0] x,y,z, output[3:0] s, output[3:0] cout);
 
-full_adder_1b fa_inst10(x[0],y[0],z[0],s[0],cout[0]);
-full_adder_1b fa_inst11(x[1],y[1],z[1],s[1],cout[1]);
-full_adder_1b fa_inst12(x[2],y[2],z[2],s[2],cout[2]);
-full_adder_1b fa_inst13(x[3],y[3],z[3],s[3],cout[3]); 
+full_adder_1b fa_inst10(x[0],y[0],z[0],cout[0],s[0]);
+full_adder_1b fa_inst11(x[1],y[1],z[1],cout[1],s[1]);
+full_adder_1b fa_inst12(x[2],y[2],z[2],cout[2],s[2]);
+full_adder_1b fa_inst13(x[3],y[3],z[3],cout[3],s[3]); 
 
 endmodule
 
