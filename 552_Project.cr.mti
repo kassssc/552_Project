@@ -58,6 +58,16 @@ Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 
 Top level modules:
 	t_CLA_16b
 
+<<<<<<< Updated upstream
+=======
+} {} {}} C:/Users/William/Documents/552_Project/fulladder_1bit.v {1 {vlog -work work -stats=none C:/Users/William/Documents/552_Project/fulladder_1bit.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module full_adder_1bit
+
+Top level modules:
+	full_adder_1bit
+
+>>>>>>> Stashed changes
 } {} {}} C:/Users/William/Documents/552_Project/ReadDecoder.v {1 {vlog -work work -stats=none C:/Users/William/Documents/552_Project/ReadDecoder.v
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
 -- Compiling module ReadDecoder_4_16
