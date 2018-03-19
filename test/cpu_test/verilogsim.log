@@ -1,7 +1,0 @@
-SIMLOG:: Cycle           4 PC:     0000 I:     0412 R: 1   4     000X M: 0 0     0002     0000
-SIMLOG:: Cycle           5 PC:     0002 I:     7123 R: 1   1     000X M: 0 0     0003     0000
-SIMLOG:: Cycle           6 PC:     0004 I:     1501 R: 1   5     xxxx M: 0 0     0001     000X
-SIMLOG:: Cycle           7 PC:     0006 I:     3653 R: 1   6     xxxx M: 0 0     xxxx     0000
-SIMLOG:: Cycle           8 PC:     0008 I:     2789 R: 1   7     00Xx M: 0 0     fff9     0000
-SIMLOG:: Cycle           9 PC:     000a I:     a124 R: 1   1     002X M: 0 0     0004     000X
-SIMLOG:: Cycle          10 PC:     000c I:     b258 R: 1   2     XXxx M: 0 0     xxxx     0000
