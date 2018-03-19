@@ -32,6 +32,7 @@ module cpu_tb();
 	wire [15:0] muxtoalu;
 	wire [15:0] singextended;
 	wire alusrc;
+  wire tophalf;
 
    cpu DUT(.clk(clk), .rst_n(rst_n), .pc(PC), .hlt(Halt)); /* Instantiate your processor */
    
@@ -197,5 +198,6 @@ module cpu_tb();
 	assign muxtoalu = DUT.muxtoalu;
 	assign singextended = DUT.signextend;
 	assign alusrc = DUT.ALUsrc;
+  assign tophalf =DUT.tophalf;
    
 endmodule

@@ -88,6 +88,9 @@ wire [2:0]flag_write;
 // Addr for memory write
 wire [15:0] mem_addr;
 
+wire [3:0] bit_select1;
+wire [3:0] bit_select2;
+
 
 // make the output = current pc
 assign pc = pc_current;
@@ -144,14 +147,16 @@ Control_Unit  control_unit(
 
 // make write register always the first reg in instruction 
 assign write_reg = instruction[11:8];
+assign bit_select1 = (pcs | MemtoReg | ALUOp)? instruction[7:4]:instruction[11:8];
+assign bit_select2 = (instruction[15] & instruction[14] & ~instruction[13] & instruction[12])? instruction[7:4] : instruction[3:0];
 
 
 // instantiate RegisterFile
 RegisterFile RegisterFile(
 	.clk(clk), 
 	.rst(rst), 
-	.SrcReg1(instruction[7:4]), 
-	.SrcReg2(instruction[3:0]), 
+	.SrcReg1(bit_select1), 
+	.SrcReg2(bit_select2), 
 	.DstReg(write_reg), 
 	.WriteReg(RegWrite), 
 	.DstData(Write_data), 
@@ -218,7 +223,7 @@ full_adder_16b pcs_adder (
 assign Write_data = (pcs)? pcs_sum : 
 					(MemtoReg)? Data_memory_out:
 					(ALUOp)? ALU_out:
-					(tophalf) ? ( {instruction[7:0], Read_data_1[7:0]}):
+					(tophalf)? ({instruction[7:0], Read_data_1[7:0]}):
 					({Read_data_1[15:8], instruction[7:0]});
 					
 

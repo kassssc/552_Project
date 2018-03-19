@@ -24,8 +24,8 @@ module PC_control(C, I, F, PC_in, PC_out, hlt, B, branch_reg_in);
 	assign branch_to_imm = branch & is_branch_imm;
 
 	assign neg_flag = F[2];
-	assign ovfl_flag = F[1];
-	assign zero_flag = F[0];
+	assign ovfl_flag = F[0];
+	assign zero_flag = F[1];
 
 	assign NEQ    = ~C[2] & ~C[1] & ~C[0];
 	assign EQ     = ~C[2] & ~C[1] &  C[0];
