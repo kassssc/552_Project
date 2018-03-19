@@ -12,13 +12,16 @@ module PC_control(C, I, F, PC_in, PC_out, hlt, B, branch_reg_in);
 
 	wire neg_flag, ovfl_flag, zero_flag, branch;
 	wire NEQ, EQ, GT, LT, GEQ, LEQ, OVFL, UNCOND;
-	wire [15:0] target, sign_extend_I, shifted_I, PC_plus_2;
+	wire [15:0] target, sign_extend_I, shifted_I, PC_plus_2, imm_target;
 
-	wire is_branch_imm;
-	wire is_branch_reg;
+
+	wire is_branch_imm, is_branch_reg, branch_to_reg, branch_to_imm;
 
 	assign is_branch_imm = B[3] & B[2] & ~B[1] & ~B[0];
 	assign is_branch_reg = B[3] & B[2] & ~B[1] & B[0];
+
+	assign branch_to_reg = branch & is_branch_reg;
+	assign branch_to_imm = branch & is_branch_imm;
 
 	assign neg_flag = F[2];
 	assign ovfl_flag = F[1];
@@ -53,13 +56,11 @@ module PC_control(C, I, F, PC_in, PC_out, hlt, B, branch_reg_in);
 
 	// Target = PC + 2 + (I << 1)
 	CLA_16b target_adder (
-		.A(PC_plus_2), .B(shifted_I), .sub(1'b0), .S(target), .ovfl(), .neg()
+		.A(PC_plus_2), .B(shifted_I), .sub(1'b0), .S(imm_target), .ovfl(), .neg()
 	);
 
 	assign PC_out = (hlt)? PC_in :
-					(~branch)? PC_plus_2: 
-					(is_branch_imm)? target:
-					(is_branch_reg)? branch_reg_in:
-					PC_plus_2;
+					(branch_to_imm)? imm_target :
+					(branch_to_reg)? branch_reg_in : PC_plus_2;
 					
 endmodule
