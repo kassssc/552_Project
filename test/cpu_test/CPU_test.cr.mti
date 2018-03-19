@@ -1,18 +1,4 @@
-C:/Users/liuya/Desktop/CPU_Stage1/552_Project/PC_Register.v {1 {vlog -work work -stats=none C:/Users/liuya/Desktop/CPU_Stage1/552_Project/PC_Register.v
-Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
--- Compiling module PC_Register
-
-Top level modules:
-	PC_Register
-
-} {} {}} C:/Users/liuya/Desktop/CPU_Stage1/552_Project/cpu.v {1 {vlog -work work -stats=none C:/Users/liuya/Desktop/CPU_Stage1/552_Project/cpu.v
-Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
--- Compiling module cpu
-
-Top level modules:
-	cpu
-
-} {} {}} C:/Users/liuya/Desktop/CPU_Stage1/552_Project/RED_16bit.v {1 {vlog -work work -stats=none C:/Users/liuya/Desktop/CPU_Stage1/552_Project/RED_16bit.v
+C:/Users/liuya/Desktop/CPU_Stage1/552_Project/RED_16bit.v {1 {vlog -work work -stats=none C:/Users/liuya/Desktop/CPU_Stage1/552_Project/RED_16bit.v
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
 -- Compiling module RED_16b
 -- Compiling module CSA_2b
@@ -20,6 +6,20 @@ Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 
 
 Top level modules:
 	RED_16b
+
+} {} {}} C:/Users/liuya/Desktop/CPU_Stage1/552_Project/PCctrl.v {1 {vlog -work work -stats=none {C:\Users\liuya\Desktop\CPU_Stage1\552_Project\PCctrl.v}
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module PC_control
+
+Top level modules:
+	PC_control
+
+} {} {}} C:/Users/liuya/Desktop/CPU_Stage1/552_Project/cpu.v {1 {vlog -work work -stats=none C:/Users/liuya/Desktop/CPU_Stage1/552_Project/cpu.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module cpu
+
+Top level modules:
+	cpu
 
 } {} {}} C:/Users/liuya/Desktop/CPU_Stage1/552_Project/shifter_16bit_3mode.v {1 {vlog -work work -stats=none C:/Users/liuya/Desktop/CPU_Stage1/552_Project/shifter_16bit_3mode.v
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
@@ -49,13 +49,6 @@ Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 
 Top level modules:
 	dff
 
-} {} {}} C:/Users/liuya/Desktop/CPU_Stage1/552_Project/flag_register.v {1 {vlog -work work -stats=none C:/Users/liuya/Desktop/CPU_Stage1/552_Project/flag_register.v
-Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
--- Compiling module flag_register
-
-Top level modules:
-	flag_register
-
 } {} {}} C:/Users/liuya/Desktop/CPU_Stage1/552_Project/paddsb.v {1 {vlog -work work -stats=none C:/Users/liuya/Desktop/CPU_Stage1/552_Project/paddsb.v
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
 -- Compiling module PADDSB_16b
@@ -63,6 +56,13 @@ Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 
 
 Top level modules:
 	PADDSB_16b
+
+} {} {}} C:/Users/liuya/Desktop/CPU_Stage1/552_Project/flag_register.v {1 {vlog -work work -stats=none C:/Users/liuya/Desktop/CPU_Stage1/552_Project/flag_register.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module flag_register
+
+Top level modules:
+	flag_register
 
 } {} {}} C:/Users/liuya/Desktop/CPU_Stage1/552_Project/BitCell.v {1 {vlog -work work -stats=none C:/Users/liuya/Desktop/CPU_Stage1/552_Project/BitCell.v
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
@@ -94,19 +94,19 @@ Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 
 Top level modules:
 	Control_Unit
 
-} {} {}} C:/Users/liuya/Desktop/CPU_Stage1/552_Project/ALU.v {1 {vlog -work work -stats=none C:/Users/liuya/Desktop/CPU_Stage1/552_Project/ALU.v
-Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
--- Compiling module ALU
-
-Top level modules:
-	ALU
-
 } {} {}} C:/Users/liuya/Desktop/CPU_Stage1/552_Project/ReadDecoder.v {1 {vlog -work work -stats=none C:/Users/liuya/Desktop/CPU_Stage1/552_Project/ReadDecoder.v
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
 -- Compiling module ReadDecoder_4_16
 
 Top level modules:
 	ReadDecoder_4_16
+
+} {} {}} C:/Users/liuya/Desktop/CPU_Stage1/552_Project/ALU.v {1 {vlog -work work -stats=none C:/Users/liuya/Desktop/CPU_Stage1/552_Project/ALU.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module ALU
+
+Top level modules:
+	ALU
 
 } {} {}} C:/Users/liuya/Desktop/CPU_Stage1/552_Project/RegisterFile.v {1 {vlog -work work -stats=none C:/Users/liuya/Desktop/CPU_Stage1/552_Project/RegisterFile.v
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
@@ -121,13 +121,6 @@ Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 
 
 Top level modules:
 	Register
-
-} {} {}} C:/Users/liuya/Desktop/CPU_Stage1/552_Project/test/cpu_test/pc_reg_tb.sv {1 {vlog -work work -sv -stats=none C:/Users/liuya/Desktop/CPU_Stage1/552_Project/test/cpu_test/pc_reg_tb.sv
-Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
--- Compiling module pc_reg_tb
-
-Top level modules:
-	pc_reg_tb
 
 } {} {}} C:/Users/liuya/Desktop/CPU_Stage1/552_Project/general.v {1 {vlog -work work -stats=none C:/Users/liuya/Desktop/CPU_Stage1/552_Project/general.v
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
