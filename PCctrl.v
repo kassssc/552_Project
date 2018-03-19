@@ -1,15 +1,24 @@
-module PC_control(C, I, F, PC_in, PC_out, hlt);
+module PC_control(C, I, F, PC_in, PC_out, hlt, B, branch_reg_in);
 
 	input hlt;
+	input	[3:0]	B;	// branch instr
 	input	[2:0]	C;	// Condition Encoding
 	input	[2:0]	F;	// [ N V Z ]
 	input	[8:0]	I;
 	input	[15:0]	PC_in;
+	input 	[15:0] 	branch_reg_in;
 	output	[15:0]	PC_out;
+
 
 	wire neg_flag, ovfl_flag, zero_flag, branch;
 	wire NEQ, EQ, GT, LT, GEQ, LEQ, OVFL, UNCOND;
 	wire [15:0] target, sign_extend_I, shifted_I, PC_plus_2;
+
+	wire is_branch_imm;
+	wire is_branch_reg;
+
+	assign is_branch_imm = B[3] & B[2] & ~B[1] & ~B[0];
+	assign is_branch_reg = B[3] & B[2] & ~B[1] & B[0];
 
 	assign neg_flag = F[2];
 	assign ovfl_flag = F[1];
@@ -24,7 +33,8 @@ module PC_control(C, I, F, PC_in, PC_out, hlt);
 	assign OVFL   =  C[2] &  C[1] & ~C[0];
 	assign UNCOND =  C[2] &  C[1] &  C[0];
 
-	assign branch = ( (NEQ & ~zero_flag) |
+	assign branch = ( (B[0] & B[1]) 
+					  (NEQ & ~zero_flag) |
 					  (EQ & zero_flag) |
 					  (GT & ~zero_flag & ~neg_flag) |
 					  (LT & neg_flag) |
@@ -47,6 +57,6 @@ module PC_control(C, I, F, PC_in, PC_out, hlt);
 		.A(PC_plus_2), .B(shifted_I), .sub(1'b0), .S(target), .ovfl(), .neg()
 	);
 
-	assign PC_out = (hlt)? PC_in : ((branch)? target : PC_plus_2);
+	assign PC_out = (hlt)? PC_in : ((is_branch_imm)? ( (branch)? target : PC_plus_2) : ((is_branch_reg)? ( (branch)? branch_reg_in : PC_plus_2)));
 
 endmodule
