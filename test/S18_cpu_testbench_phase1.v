@@ -11,7 +11,7 @@ module cpu_tb();
    wire        MemWrite;       /* Similar as above but for memory */
    wire        MemRead;
    wire [15:0] MemAddress;
-   wire [15:0] MemData;
+   wire [15:0] MemData_Rd2;
 
    wire        Halt;         /* Halt executed and in Memory or writeback stage */
         
@@ -99,7 +99,7 @@ module cpu_tb();
                   MemRead,
                   MemWrite,
                   MemAddress,
-                  MemData);
+                  MemData_Rd2);
          if (RegWrite) begin
             if (MemRead) begin
                // ld
@@ -135,7 +135,7 @@ module cpu_tb();
                          (inst_count-1),
                         PC,
                         MemAddress,
-                        MemData);
+                        MemData_Rd2);
             end else begin
                // conditional branch or NOP
                // Need better checking in pipelined testbench
@@ -178,7 +178,7 @@ module cpu_tb();
    assign MemAddress = DUT.mem_addr;
    // Address to access memory with (for both reads and writes to memory, 16 bits)
    
-   assign MemData = DUT.Read_data_2;
+   assign MemData_Rd2 = DUT.Read_data_2;
    // Data to be written to memory for memory writes (16 bits)
    
 //   assign Halt = DUT.memory0.halt; //You won't need this because it's part of the main cpu interface
@@ -190,6 +190,6 @@ module cpu_tb();
 	assign pc_current = DUT.pc_current;
 	assign pc_out = DUT.PC_out;
 	assign alu_out = DUT.ALU_out;
-	assign read_data_1 = DUT.Read_data_2;
+	assign read_data_1 = DUT.Read_data_1;
    
 endmodule
