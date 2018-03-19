@@ -33,8 +33,7 @@ module PC_control(C, I, F, PC_in, PC_out, hlt, B, branch_reg_in);
 	assign OVFL   =  C[2] &  C[1] & ~C[0];
 	assign UNCOND =  C[2] &  C[1] &  C[0];
 
-	assign branch = ( (B[0] & B[1]) 
-					  (NEQ & ~zero_flag) |
+	assign branch = ( (NEQ & ~zero_flag) |
 					  (EQ & zero_flag) |
 					  (GT & ~zero_flag & ~neg_flag) |
 					  (LT & neg_flag) |
@@ -57,6 +56,10 @@ module PC_control(C, I, F, PC_in, PC_out, hlt, B, branch_reg_in);
 		.A(PC_plus_2), .B(shifted_I), .sub(1'b0), .S(target), .ovfl(), .neg()
 	);
 
-	assign PC_out = (hlt)? PC_in : ((is_branch_imm)? ( (branch)? target : PC_plus_2) : ((is_branch_reg)? ( (branch)? branch_reg_in : PC_plus_2)));
-
+	assign PC_out = (hlt)? PC_in :
+					(~branch)? PC_plus_2: 
+					(is_branch_imm)? target:
+					(is_branch_reg)? branch_reg_in:
+					PC_plus_2;
+					
 endmodule
