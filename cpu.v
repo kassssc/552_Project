@@ -85,6 +85,9 @@ wire [2:0] f_internal;
 //flag write from alu
 wire [2:0]flag_write;
 
+// Addr for memory write
+wire [15:0] mem_addr;
+
 // make the output = current pc
 assign pc = pc_current;
 assign hlt = hlt_internal;
@@ -186,11 +189,19 @@ assign memory_enable = MemRead|MemWrite;
 memory1c Data_memory(
 	.data_out(Data_memory_out), 
 	.data_in(Read_data_2), 
-	.addr(ALU_out), 
+	.addr(mem_addr), 
 	.enable(memory_enable), 
 	.wr(MemWrite), 
 	.clk(clk), 
 	.rst(rst)
+);
+
+full_adder_16b mem_addr_adder (
+	.A(Read_data_1), 
+	.B(instruction[3:0]),
+	.cin(1'b0), 
+	.Sum(mem_addr), 
+	.cout()
 );
 
 // instantiate 16 bit adder for pcs instruction 
