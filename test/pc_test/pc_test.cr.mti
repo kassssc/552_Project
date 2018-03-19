@@ -1,0 +1,24 @@
+C:/Users/liuya/Desktop/CPU_Stage1/552_Project/PC_Register.v {1 {vlog -work work -stats=none {C:\Users\liuya\Desktop\CPU_Stage1\552_Project\PC_Register.v}
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module PC_Register
+
+Top level modules:
+	PC_Register
+
+} {} {}} C:/Users/liuya/Desktop/CPU_Stage1/552_Project/PCctrl.v {1 {vlog -work work -stats=none {C:\Users\liuya\Desktop\CPU_Stage1\552_Project\PCctrl.v}
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module PC_control
+
+Top level modules:
+	PC_control
+
+} {} {}} C:/Users/liuya/Desktop/CPU_Stage1/552_Project/CLA.v {1 {vlog -work work -stats=none C:/Users/liuya/Desktop/CPU_Stage1/552_Project/CLA.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module CLA_1b
+-- Compiling module CLA_4b
+-- Compiling module CLA_16b
+
+Top level modules:
+	CLA_16b
+
+} {} {}}

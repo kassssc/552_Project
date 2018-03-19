@@ -1,0 +1,120 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/Users/liuya/Desktop/CPU_Stage1/552_Project/test/cpu_test
+vCLA_16b
+Z0 !s110 1521413326
+!i10b 1
+!s100 ;WL7mJYE5OCbkjFC>dd^X0
+I22`c[FoA=FBzO:h1F?0_S2
+Z1 VDg1SIo80bB@j0V0VzS_@n1
+Z2 dC:/Users/liuya/Desktop/CPU_Stage1/552_Project/test/pc_test
+Z3 w1521394642
+Z4 8C:/Users/liuya/Desktop/CPU_Stage1/552_Project/CLA.v
+Z5 FC:/Users/liuya/Desktop/CPU_Stage1/552_Project/CLA.v
+L0 44
+Z6 OP;L;10.4a;61
+r1
+!s85 0
+31
+Z7 !s108 1521413326.000000
+Z8 !s107 C:/Users/liuya/Desktop/CPU_Stage1/552_Project/CLA.v|
+Z9 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/liuya/Desktop/CPU_Stage1/552_Project/CLA.v|
+!s101 -O0
+!i113 1
+Z10 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact -O0
+n@c@l@a_16b
+vCLA_1b
+R0
+!i10b 1
+!s100 W:60gk9P?@Kl>cmXVm9_h1
+IPk:GbcFk[7?;nFZehJ`a=0
+R1
+R2
+R3
+R4
+R5
+L0 1
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!s101 -O0
+!i113 1
+R10
+n@c@l@a_1b
+vCLA_4b
+R0
+!i10b 1
+!s100 ]lc>A3P;KB1Ea_jSSZm1z1
+IM^9eC`cN]BnChIo0n:K671
+R1
+R2
+R3
+R4
+R5
+L0 12
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!s101 -O0
+!i113 1
+R10
+n@c@l@a_4b
+vPC_control
+R0
+!i10b 1
+!s100 ZE3cj]MF6hcV9N3[H3Y_F2
+IeBHh4eoO1mlTbSA?d3YG30
+R1
+R2
+w1521413192
+8C:\Users\liuya\Desktop\CPU_Stage1\552_Project\PCctrl.v
+FC:\Users\liuya\Desktop\CPU_Stage1\552_Project\PCctrl.v
+L0 1
+R6
+r1
+!s85 0
+31
+R7
+!s107 C:\Users\liuya\Desktop\CPU_Stage1\552_Project\PCctrl.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:\Users\liuya\Desktop\CPU_Stage1\552_Project\PCctrl.v|
+!s101 -O0
+!i113 1
+R10
+n@p@c_control
+vPC_Register
+R0
+!i10b 1
+!s100 J`TiTLid25g7<`5AglU<m1
+IM?;mmRSnR0n>]RCWf]@L03
+R1
+R2
+w1521408074
+8C:\Users\liuya\Desktop\CPU_Stage1\552_Project\PC_Register.v
+FC:\Users\liuya\Desktop\CPU_Stage1\552_Project\PC_Register.v
+L0 1
+R6
+r1
+!s85 0
+31
+R7
+!s107 C:\Users\liuya\Desktop\CPU_Stage1\552_Project\PC_Register.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:\Users\liuya\Desktop\CPU_Stage1\552_Project\PC_Register.v|
+!s101 -O0
+!i113 1
+R10
+n@p@c_@register

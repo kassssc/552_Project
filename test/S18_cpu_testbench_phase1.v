@@ -185,6 +185,6 @@ module cpu_tb();
 	assign flag = DUT.F; 
 	
 	assign pc_current = DUT.pc_current;
-	assign PC_out = DUT.PC_out;
+	assign pc_out = DUT.PC_out;
    
 endmodule

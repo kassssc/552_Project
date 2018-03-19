@@ -9,7 +9,7 @@ z2
 cModel Technology
 dC:/Users/liuya/Desktop/CPU_Stage1/552_Project
 vALU
-Z0 !s110 1521413061
+Z0 !s110 1521419631
 !i10b 1
 !s100 fFbaNZTB[XEcPFhznc0YT3
 I??R2:DVGN0PSUIL4Gi]g61
@@ -23,7 +23,7 @@ Z3 OP;L;10.4a;61
 r1
 !s85 0
 31
-Z4 !s108 1521413061.000000
+Z4 !s108 1521419631.000000
 !s107 C:/Users/liuya/Desktop/CPU_Stage1/552_Project/ALU.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/liuya/Desktop/CPU_Stage1/552_Project/ALU.v|
 !s101 -O0
@@ -143,11 +143,11 @@ n@control_@unit
 vcpu
 R0
 !i10b 1
-!s100 odE^^YH<i^fWA<=ZaRI=U2
-IP<QO[KN^GFBT@QaQ?MXeO2
+!s100 g@;hT01mPDY7W=JAj`S<m3
+IThHcK2<O4Y?`DZ]0F2dYP1
 R1
 R2
-w1521412651
+w1521419192
 8C:/Users/liuya/Desktop/CPU_Stage1/552_Project/cpu.v
 FC:/Users/liuya/Desktop/CPU_Stage1/552_Project/cpu.v
 L0 1
@@ -162,13 +162,13 @@ R4
 !i113 1
 R5
 vcpu_tb
-Z11 !s110 1521413063
+Z11 !s110 1521419633
 !i10b 1
-!s100 Gf^[ZDcbP?leRi_DZOR6n0
-IO=G1@1GgTdCOlkX@cm`DH1
+!s100 5nZOJRJ]j=AB[OE<RLXbb2
+ICM9z=gW7<]Oez8ZBeC[<M2
 R1
 R2
-w1521412734
+w1521416987
 8C:/Users/liuya/Desktop/CPU_Stage1/552_Project/test/S18_cpu_testbench_phase1.v
 FC:/Users/liuya/Desktop/CPU_Stage1/552_Project/test/S18_cpu_testbench_phase1.v
 L0 1
@@ -176,14 +176,14 @@ R3
 r1
 !s85 0
 31
-Z12 !s108 1521413063.000000
+Z12 !s108 1521419633.000000
 !s107 C:/Users/liuya/Desktop/CPU_Stage1/552_Project/test/S18_cpu_testbench_phase1.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/liuya/Desktop/CPU_Stage1/552_Project/test/S18_cpu_testbench_phase1.v|
 !s101 -O0
 !i113 1
 R5
 vCSA_2b
-Z13 !s110 1521413062
+Z13 !s110 1521419632
 !i10b 1
 !s100 k]<km^GU0FLX@bn4oOhNK3
 IAE3ee1I4lhz`obmAkPDRZ0
@@ -197,7 +197,7 @@ R3
 r1
 !s85 0
 31
-Z17 !s108 1521413062.000000
+Z17 !s108 1521419632.000000
 Z18 !s107 C:/Users/liuya/Desktop/CPU_Stage1/552_Project/RED_16bit.v|
 Z19 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/liuya/Desktop/CPU_Stage1/552_Project/RED_16bit.v|
 !s101 -O0
@@ -269,7 +269,7 @@ R4
 !i113 1
 R5
 vfull_adder_16b
-R13
+R0
 !i10b 1
 !s100 1GiaSH5jJEWO5;agVlm8^2
 IE5_5PYfHMmUVkj]dSU5DE1
@@ -283,14 +283,14 @@ R3
 r1
 !s85 0
 31
-R17
+R4
 Z23 !s107 C:/Users/liuya/Desktop/CPU_Stage1/552_Project/fulladders.v|
 Z24 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/liuya/Desktop/CPU_Stage1/552_Project/fulladders.v|
 !s101 -O0
 !i113 1
 R5
 vfull_adder_1b
-R13
+R0
 !i10b 1
 !s100 R7RZ;S6Dj42mf5lI2mPJ91
 Im8NXT@Qz=DZo>XaSX_0R[1
@@ -304,14 +304,14 @@ R3
 r1
 !s85 0
 31
-R17
+R4
 R23
 R24
 !s101 -O0
 !i113 1
 R5
 vfull_adder_2b
-R13
+R0
 !i10b 1
 !s100 `AEe=hXQTXN=SgEXE;PPM3
 ICX`jM`eDkfW05GV6?goC<2
@@ -325,14 +325,14 @@ R3
 r1
 !s85 0
 31
-R17
+R4
 R23
 R24
 !s101 -O0
 !i113 1
 R5
 vfull_adder_4b
-R13
+R0
 !i10b 1
 !s100 <U8eW0BTZFTP3L:CR[`VD2
 I4^`AO3NKU9o=Lff?0E^290
@@ -346,7 +346,7 @@ R3
 r1
 !s85 0
 31
-R17
+R4
 R23
 R24
 !s101 -O0
@@ -388,7 +388,7 @@ R3
 r1
 !s85 0
 31
-R17
+R4
 Z28 !s107 C:/Users/liuya/Desktop/CPU_Stage1/552_Project/general.v|
 Z29 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/liuya/Desktop/CPU_Stage1/552_Project/general.v|
 !s101 -O0
@@ -410,7 +410,7 @@ R3
 r1
 !s85 0
 31
-R17
+R4
 R28
 R29
 !s101 -O0
@@ -432,7 +432,7 @@ R3
 r1
 !s85 0
 31
-R17
+R4
 R28
 R29
 !s101 -O0
@@ -454,7 +454,7 @@ R3
 r1
 !s85 0
 31
-R17
+R4
 R28
 R29
 !s101 -O0
@@ -486,11 +486,11 @@ n@p@a@d@d@s@b_16b
 vPC_control
 R13
 !i10b 1
-!s100 TMCn`mXnnkM?DMki>4RXb2
-Ik`b2OM>7dz7>WijYFgz7g3
+!s100 4F6]R^O5R=Em[W>JmIdVI0
+Ij`5>gWRN8Df4RC;Y]QGTd3
 R1
 R2
-R14
+w1521419625
 8C:\Users\liuya\Desktop\CPU_Stage1\552_Project\PCctrl.v
 FC:\Users\liuya\Desktop\CPU_Stage1\552_Project\PCctrl.v
 L0 1
@@ -510,43 +510,43 @@ DXx6 sv_std 3 std 0 22 WmjPaeP=7F5?QFXzJ>D[Q2
 R11
 !i10b 1
 !s100 Nh3m;L5nkmePDQ^Y6M1?^2
-IEinVzAMGLZKWCz<Re9aK02
+I>Y53OXMeXC=_:oj[PSQZ?0
 R1
 !s105 pc_reg_tb_sv_unit
 S1
 R2
 w1521411619
-8C:\Users\liuya\Desktop\CPU_Stage1\552_Project\test\cpu_test\pc_reg_tb.sv
-FC:\Users\liuya\Desktop\CPU_Stage1\552_Project\test\cpu_test\pc_reg_tb.sv
+8C:/Users/liuya/Desktop/CPU_Stage1/552_Project/test/cpu_test/pc_reg_tb.sv
+FC:/Users/liuya/Desktop/CPU_Stage1/552_Project/test/cpu_test/pc_reg_tb.sv
 L0 1
 R3
 r1
 !s85 0
 31
 R12
-!s107 C:\Users\liuya\Desktop\CPU_Stage1\552_Project\test\cpu_test\pc_reg_tb.sv|
-!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:\Users\liuya\Desktop\CPU_Stage1\552_Project\test\cpu_test\pc_reg_tb.sv|
+!s107 C:/Users/liuya/Desktop/CPU_Stage1/552_Project/test/cpu_test/pc_reg_tb.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/liuya/Desktop/CPU_Stage1/552_Project/test/cpu_test/pc_reg_tb.sv|
 !s101 -O0
 !i113 1
 o-work work -sv -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact -O0
 vPC_Register
 R13
 !i10b 1
-!s100 J`TiTLid25g7<`5AglU<m1
-IM?;mmRSnR0n>]RCWf]@L03
+!s100 k>Vb5TeKUIPHl1oiDVS0B1
+ISL[2IgW>JGU29;zF9[FE32
 R1
 R2
-w1521408074
-8C:\Users\liuya\Desktop\CPU_Stage1\552_Project\PC_Register.v
-FC:\Users\liuya\Desktop\CPU_Stage1\552_Project\PC_Register.v
+w1521419135
+8C:/Users/liuya/Desktop/CPU_Stage1/552_Project/PC_Register.v
+FC:/Users/liuya/Desktop/CPU_Stage1/552_Project/PC_Register.v
 L0 1
 R3
 r1
 !s85 0
 31
 R17
-!s107 C:\Users\liuya\Desktop\CPU_Stage1\552_Project\PC_Register.v|
-!s90 -reportprogress|300|-work|work|-stats=none|C:\Users\liuya\Desktop\CPU_Stage1\552_Project\PC_Register.v|
+!s107 C:/Users/liuya/Desktop/CPU_Stage1/552_Project/PC_Register.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/liuya/Desktop/CPU_Stage1/552_Project/PC_Register.v|
 !s101 -O0
 !i113 1
 R5
@@ -618,13 +618,13 @@ R17
 R5
 n@register
 vRegisterFile
-R11
+R13
 !i10b 1
-!s100 XLOD1T9l?2H470AmLlA162
-IDGH6SALBKAiRhP4oYjimz2
+!s100 X;g3Q<n`K[bC>`P8>g^Sa1
+I_P2I`?0hm7D?XRZPe;=;V3
 R1
 R2
-w1521397319
+w1521417264
 8C:/Users/liuya/Desktop/CPU_Stage1/552_Project/RegisterFile.v
 FC:/Users/liuya/Desktop/CPU_Stage1/552_Project/RegisterFile.v
 L0 1
@@ -632,7 +632,7 @@ R3
 r1
 !s85 0
 31
-R12
+R17
 !s107 C:/Users/liuya/Desktop/CPU_Stage1/552_Project/RegisterFile.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/liuya/Desktop/CPU_Stage1/552_Project/RegisterFile.v|
 !s101 -O0
