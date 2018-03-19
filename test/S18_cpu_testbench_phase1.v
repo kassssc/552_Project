@@ -27,6 +27,8 @@ module cpu_tb();
 	wire [2:0] flag;
     wire [15:0] pc_current;
 	wire [15:0] pc_out;
+	wire [15:0] alu_out;
+	wire [15:0] read_data_1;
 
    cpu DUT(.clk(clk), .rst_n(rst_n), .pc(PC), .hlt(Halt)); /* Instantiate your processor */
    
@@ -173,7 +175,7 @@ module cpu_tb();
    assign MemWrite = (DUT.memory_enable & DUT.MemWrite);
    // Is memory being written to (1 bit signal)
    
-   assign MemAddress = DUT.ALU_out;
+   assign MemAddress = DUT.mem_addr;
    // Address to access memory with (for both reads and writes to memory, 16 bits)
    
    assign MemData = DUT.Read_data_2;
@@ -187,5 +189,7 @@ module cpu_tb();
 	
 	assign pc_current = DUT.pc_current;
 	assign pc_out = DUT.PC_out;
+	assign alu_out = DUT.ALU_out;
+	assign read_data_1 = DUT.Read_data_2;
    
 endmodule
