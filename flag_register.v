@@ -11,7 +11,7 @@ dff PC_bit0(
 	.q(flag_current[0]), 
 	.wen(wen[0]), 
 	.clk(clk), 
-	.rst(rst_n)
+	.rst(rst)
 );
 
 dff PC_bit1(
@@ -19,7 +19,7 @@ dff PC_bit1(
 	.q(flag_current[1]), 
 	.wen(wen[1]), 
 	.clk(clk), 
-	.rst(rst_n)
+	.rst(rst)
 );
 
 dff PC_bit2(
@@ -27,7 +27,7 @@ dff PC_bit2(
 	.q(flag_current[2]), 
 	.wen(wen[2]), 
 	.clk(clk), 
-	.rst(rst_n)
+	.rst(rst)
 );
 
 endmodule
