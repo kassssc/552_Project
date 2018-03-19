@@ -22,8 +22,8 @@ assign Bitline_all1 = Bitline1[0]|Bitline1[1]|Bitline1[2]|Bitline1[3]|Bitline1[4
 assign Bitline_all2 = Bitline2[0]|Bitline2[1]|Bitline2[2]|Bitline2[3]|Bitline2[4]|Bitline2[5]|Bitline2[6]|Bitline2[7]|Bitline2[8]|Bitline2[9]|Bitline2[10]|Bitline2[11]|Bitline2[12]|Bitline2[13]|Bitline2[14]|Bitline2[15];
 
 
-assign SrcData1 = (WriteReg & (SrcReg1 == DstReg)) ? DstData : Bitline_all1;
-assign SrcData2 = (WriteReg & (SrcReg1 == DstReg)) ? DstData : Bitline_all2;
+assign SrcData1 = Bitline_all1;
+assign SrcData2 = Bitline_all2;
 
 
 	ReadDecoder_4_16 rd1(

@@ -5,6 +5,13 @@ Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 
 Top level modules:
 	PC_Register
 
+} {} {}} C:/Users/liuya/Desktop/CPU_Stage1/552_Project/cpu.v {1 {vlog -work work -stats=none C:/Users/liuya/Desktop/CPU_Stage1/552_Project/cpu.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module cpu
+
+Top level modules:
+	cpu
+
 } {} {}} C:/Users/liuya/Desktop/CPU_Stage1/552_Project/RED_16bit.v {1 {vlog -work work -stats=none C:/Users/liuya/Desktop/CPU_Stage1/552_Project/RED_16bit.v
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
 -- Compiling module RED_16b

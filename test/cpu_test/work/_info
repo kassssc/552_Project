@@ -484,13 +484,13 @@ Z33 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/liuya/Desktop/CPU_S
 R5
 n@p@a@d@d@s@b_16b
 vPC_control
-R13
+!s110 1521419870
 !i10b 1
-!s100 4F6]R^O5R=Em[W>JmIdVI0
-Ij`5>gWRN8Df4RC;Y]QGTd3
+!s100 lBQ<Ml?`O;M_YjJm_1W]61
+Iocm[9aIa^i?SN2LngeM6c3
 R1
 R2
-w1521419625
+w1521419863
 8C:\Users\liuya\Desktop\CPU_Stage1\552_Project\PCctrl.v
 FC:\Users\liuya\Desktop\CPU_Stage1\552_Project\PCctrl.v
 L0 1
@@ -498,7 +498,7 @@ R3
 r1
 !s85 0
 31
-R17
+!s108 1521419870.000000
 !s107 C:\Users\liuya\Desktop\CPU_Stage1\552_Project\PCctrl.v|
 !s90 -reportprogress|300|-work|work|-stats=none|C:\Users\liuya\Desktop\CPU_Stage1\552_Project\PCctrl.v|
 !s101 -O0

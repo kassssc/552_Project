@@ -105,8 +105,10 @@ PC_control PC_control(
 	.I(instruction[8:0]), 
 	.F(F), 
 	.hlt(hlt_internal),
-	.PC_in(PC_current),
-	.PC_out(PC_out)
+	.PC_in(pc_current),
+	.PC_out(PC_out),
+	.B(instruction[15:12]),
+	.branch_reg_in(Read_data_2)
 );
 
 
