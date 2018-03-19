@@ -88,6 +88,7 @@ wire [2:0]flag_write;
 // Addr for memory write
 wire [15:0] mem_addr;
 
+
 // make the output = current pc
 assign pc = pc_current;
 assign hlt = hlt_internal;
@@ -133,7 +134,7 @@ Control_Unit  control_unit(
 	.MemRead(MemRead), 
 	.MemtoReg(MemtoReg), 
 	.MemWrite(MemWrite),
-	.ALUSrc(ALUSrc),
+	.ALUSrc(ALUsrc),
 	.RegWrite(RegWrite),
 	.hlt(hlt_internal),
 	.pcs(pcs),

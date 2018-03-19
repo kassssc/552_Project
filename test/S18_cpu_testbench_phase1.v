@@ -29,6 +29,9 @@ module cpu_tb();
 	wire [15:0] pc_out;
 	wire [15:0] alu_out;
 	wire [15:0] read_data_1;
+	wire [15:0] muxtoalu;
+	wire [15:0] singextended;
+	wire alusrc;
 
    cpu DUT(.clk(clk), .rst_n(rst_n), .pc(PC), .hlt(Halt)); /* Instantiate your processor */
    
@@ -191,5 +194,8 @@ module cpu_tb();
 	assign pc_out = DUT.PC_out;
 	assign alu_out = DUT.ALU_out;
 	assign read_data_1 = DUT.Read_data_1;
+	assign muxtoalu = DUT.muxtoalu;
+	assign singextended = DUT.signextend;
+	assign alusrc = DUT.ALUsrc;
    
 endmodule
