@@ -10,7 +10,7 @@ ALU DUT(.ALU_in1(ALU_in1), .ALU_in2(ALU_in2), .op(op), .ALU_out(ALU_out), .flag(
 	
 initial begin
 	ALU_in1 = 16'h0000;
-	ALU_in2 = 16'hffff;
+	ALU_in2 = 16'h0000;
 	op = 3'b000;
 	
 	repeat(8) begin
