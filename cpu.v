@@ -218,8 +218,8 @@ full_adder_16b pcs_adder (
 assign Write_data = (pcs)? pcs_sum : 
 					(MemtoReg)? Data_memory_out:
 					(ALUOp)? ALU_out:
-					(tophalf) ? (ALU_out | {8'h00, instruction[7:0]}):
-					(ALU_out | {instruction[7:0], 8'h00});
+					(tophalf) ? (ALU_out | {instruction[7:0], 8'h00}):
+					(ALU_out | {8'h00, instruction[7:0]});
 					
 
 endmodule
