@@ -188,7 +188,7 @@ assign memory_enable = MemRead|MemWrite;
 // instantiate data memory
 memory1c Data_memory(
 	.data_out(Data_memory_out), 
-	.data_in(Read_data_1), 
+	.data_in(Read_data_2), 
 	.addr(mem_addr), 
 	.enable(memory_enable), 
 	.wr(MemWrite), 
@@ -197,7 +197,7 @@ memory1c Data_memory(
 );
 
 full_adder_16b mem_addr_adder (
-	.A(Read_data_2), 
+	.A(Read_data_1), 
 	.B({{12{instruction[3]}},instruction[3:0]}),
 	.cin(1'b0), 
 	.Sum(mem_addr), 
