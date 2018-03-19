@@ -16,10 +16,10 @@ wire [15:0]PC_out;
 // instruction fetched from Instruction-memory
 wire [15:0]instruction;
 
-// Mux output to Registers file
+// Register to write to, decoded to 1-hot
 wire [3:0]write_reg;
 
-// Data input to Registers file
+// Data output from Registers file
 wire [15:0]Read_data_1;
 wire [15:0]Read_data_2;
 
@@ -38,7 +38,7 @@ wire [15:0]signextend;
 // wire connect mux to alu 
 wire [15:0]muxtoalu;
 
-// wire connect alu to data memory
+// ALU output
 wire [15:0]ALU_out;
 
 // data memory output to select mux
@@ -188,7 +188,7 @@ assign memory_enable = MemRead|MemWrite;
 // instantiate data memory
 memory1c Data_memory(
 	.data_out(Data_memory_out), 
-	.data_in(Read_data_2), 
+	.data_in(Read_data_1), 
 	.addr(mem_addr), 
 	.enable(memory_enable), 
 	.wr(MemWrite), 
@@ -197,7 +197,7 @@ memory1c Data_memory(
 );
 
 full_adder_16b mem_addr_adder (
-	.A(Read_data_1), 
+	.A(Read_data_2), 
 	.B({{12{instruction[3]}},instruction[3:0]}),
 	.cin(1'b0), 
 	.Sum(mem_addr), 
