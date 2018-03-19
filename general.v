@@ -74,6 +74,7 @@ always @(*) begin
 		3'b101: inter = i5;
 		3'b110: inter = i6;
 		3'b111: inter = i7;
+		default: inter = i0;
 	endcase
 end
 

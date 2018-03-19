@@ -240,6 +240,18 @@ always@(*) begin
 			ALUOp = Not_Asserted;
 			tophalf = Not_Asserted;
 		end
+		default:  begin 
+			//RegDst = Not_Asserted;
+			MemRead = Not_Asserted;
+			MemtoReg = Not_Asserted;
+			MemWrite = Not_Asserted;
+			ALUSrc = Not_Asserted;
+			RegWrite = Not_Asserted;
+			hlt = Asserted;
+			pcs = Not_Asserted;
+			ALUOp = Not_Asserted;
+			tophalf = Not_Asserted;
+		end
 	endcase
 end
 endmodule
