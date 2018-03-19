@@ -23,7 +23,8 @@ module cpu_tb();
 
    reg clk; /* Clock input */
    reg rst_n; /* (Active low) Reset input */
-
+	
+	wire [2:0] flag;
     wire [15:0] pc_current;
 	wire [15:0] pc_out;
 
