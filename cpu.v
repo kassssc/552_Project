@@ -198,7 +198,7 @@ memory1c Data_memory(
 
 full_adder_16b mem_addr_adder (
 	.A(Read_data_1), 
-	.B(instruction[3:0]),
+	.B({{12{instruction[3]}},instruction[3:0]}),
 	.cin(1'b0), 
 	.Sum(mem_addr), 
 	.cout()
