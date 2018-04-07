@@ -3,7 +3,7 @@ module state_reg(
 	input clk,
 	input rst,
 	input wen,
-	output [15:0] state_curr
+	output [15:0] state_current
 );
 
 dff bit0(

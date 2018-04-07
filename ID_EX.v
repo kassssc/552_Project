@@ -3,13 +3,28 @@ module ID_EX(
 	input [15:0]data1_new,
 	input [15:0]data2_new,
 	input [15:0]instr_new,
+	input regdst_new,
+	input regwrite_new,
+	input alusrc_new,
+	input branch_new,
+	input memread_new,
+	input memtoreg_new,
+	input memwrite_new,
+	input aluop,
 	input clk,
 	input rst,
 	input wen,
 	output [15:0]pc_current,
 	output [15:0]data1_current,
 	output [15:0]data2_current,
-	output [15:0]instr_current
+	output [15:0]instr_current,
+	output regdst_current,
+	output regwrite_current,
+	output alusrc_current,
+	output branch_current,
+	output memread_current,
+	output memtoreg_current,
+	output memwrite_current
 );
 
 state_reg pc( 
@@ -44,4 +59,13 @@ state_reg instr(
 	.wen(wen)
 );
 
+wb(
+	.regwrite_new(regwrite_new),
+	.memtoreg_new(memread_new),
+	.wen(wen),
+	.clk(clk),
+	.rst(rst),
+	.regwrite_current(regwrite_current),
+	.memtoreg_current(memtoreg_current)
+);
 endmodule

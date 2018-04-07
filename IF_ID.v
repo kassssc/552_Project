@@ -18,7 +18,7 @@ state_reg pc(
 
 state_reg instr(
 	.state_new(instr_new[15:0]),
-	.state_curr(instr_curr[15:0])
+	.state_curr(instr_curr[15:0]),
 	.clk(clk),
 	.rst(rst),
 	.wen(wen)
