@@ -80,4 +80,17 @@ m mem(
 	.memwrite_current(memwrite_current),
 	.memread_current(memread_current)
 );
+
+ex ex(
+	.aluop_new(aluop_new),
+	.regdst_new(regdst_new),
+	.alusrc_new(alusrc_new),
+	.clk(clk),
+	.rst(rst), 
+	.wen(wen),
+	.aluop_current(aluop_current),
+	.regdst_current(regdst_current),
+	.alusrc_current(alusrc_current)
+);
+
 endmodule
