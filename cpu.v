@@ -136,14 +136,14 @@ Control_Unit  control_unit(
 	.instruction(instruction[15:12]),
 	//.RegDst(RegDst),
 	.MemRead(MemRead),
-	.WriteMemToReg(WriteMemToReg),
+	.MemtoReg(WriteMemToReg),
 	.MemWrite(MemWrite),
-	.ALU_src_imm(ALU_src_imm),
+	.ALUSrc(ALU_src_imm),
 	.RegWrite(RegWrite),
 	.hlt(hlt_internal),
 	.pcs(pcs),
 	.ALUOp(ALUOp),
-	.TopHalf(TopHalf)
+	.tophalf(TopHalf)
 );
 
 // instantiate RegisterFile
