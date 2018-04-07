@@ -18,11 +18,10 @@ state_reg pc(
 	
 state_reg instr( 
 	.pc_new(instr_new[15:0]),
-	.pc_current(instr_current[15:0])
+	.pc_current(instr_current[15:0]),
 	.clk(clk),
 	.rst(rst),
-	.wen(wen),
-	
+	.wen(wen)
 );
 
 endmodule
