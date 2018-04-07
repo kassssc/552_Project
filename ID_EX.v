@@ -36,30 +36,30 @@ state_reg pc(
 );
 	
 state_reg data1(
-	.data1_new(data1_new),
-	.data1_current(data1_current),
+	.data1_new(data1_new[15:0]),
+	.data1_current(data1_current[15:0]),
 	.clk(clk),
 	.rst(rst),
 	.wen(wen)
 );
 
 state_reg data2(
-	.data2_new(data2_new),
-	.data2_current(data2_current),
+	.data2_new(data2_new[15:0]),
+	.data2_current(data2_current[15:0]),
 	.clk(clk),
 	.rst(rst),
 	.wen(wen)
 );
 
 state_reg instr(
-	.instr_new(instr_new),
-	.instr_current(instr_current),
+	.instr_new(instr_new[15:0]),
+	.instr_current(instr_current[15:0]),
 	.clk(clk),
 	.rst(rst),
 	.wen(wen)
 );
 
-wb(
+wb wb( 
 	.regwrite_new(regwrite_new),
 	.memtoreg_new(memread_new),
 	.wen(wen),
@@ -67,5 +67,17 @@ wb(
 	.rst(rst),
 	.regwrite_current(regwrite_current),
 	.memtoreg_current(memtoreg_current)
+);
+
+m mem(
+	.branch_new(branch_new),
+	.memwrite_new(memwrite_new),
+	.memread_new(memread_new),
+	.clk(clk),
+	.rst(rst), 
+	.wen(wen),
+	.branch_current(branch_current),
+	.memwrite_current(memwrite_current),
+	.memread_current(memread_current)
 );
 endmodule
