@@ -4,20 +4,20 @@ module CTRL_UNIT(
 	output reg MemWrite,
 	output reg MemToReg,
 	output reg RegWrite,
-	output reg ALUop,
+	output ALUop,
 	output reg ALUimm,
-	output reg pcs,
-	output reg llb,
-	output reg lhb,
-	output reg hlt
+	output pcs,
+	output llb,
+	output lhb,
+	output hlt
 );
 
 localparam Asserted = 1'b1;
 localparam Not_Asserted = 1'b0;
 
 assign ALUop = ~instr[3];
-assign BranchImm = instr[3] & instr[2] & ~instr[1] & ~instr[0];
-assign BranchReg = instr[3] & instr[2] & ~instr[1] &  instr[0];
+//assign BranchImm = instr[3] & instr[2] & ~instr[1] & ~instr[0];
+//assign BranchReg = instr[3] & instr[2] & ~instr[1] &  instr[0];
 assign lhb = instr[3] & ~instr[2] & instr[1] & ~instr[0];
 assign llb = instr[3] & ~instr[2] & instr[1] &  instr[0];
 assign pcs = instr[3] &  instr[2] & instr[1] & ~instr[0];
@@ -112,7 +112,6 @@ always@(*) begin
 			MemRead = Not_Asserted;
 			MemWrite = Asserted;
 			MemToReg = Not_Asserted;
-			RegToMem = Asserted;
 			RegWrite = Not_Asserted;
 			ALUimm = Not_Asserted;
 		end
