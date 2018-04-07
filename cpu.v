@@ -132,9 +132,8 @@ memory1c instrucion_mem(
 );
 
 // instantiate control unit
-Control_Unit  control_unit(
+CTRL_UNIT control_unit(
 	.instruction(instruction[15:12]),
-	//.RegDst(RegDst),
 	.MemRead(MemRead),
 	.MemtoReg(WriteMemToReg),
 	.MemWrite(MemWrite),
