@@ -1,4 +1,4 @@
-module(
+module hazard_detection(
 	input [15:0] if_id_instr,
 	input [15:0] id_ex_instr,
 	input id_ex_memread,
@@ -10,7 +10,9 @@ wire hlt_h;
 wire hlt_h_d;
 wire ishlt;
 wire hlt_count;
-wire S;
+wire [1:0]S;
+wire data_hazard;
+wire control_hazard;
 assign hlt_h = (if_id_instr[15:12] == 4'b1111)? 1'b1:1'b0;
 
 // detect rising edge
@@ -39,12 +41,10 @@ assign control_hazard = (if_id_instr[15:12] == 4'b1100)? 1'b1:
 						(if_id_instr[15:12] == 4'b1111)? 1'b1:
 						1'b0;
 
-assign cycle_number =   (if_id_instr[15:12] == 4'b1100)? 1'b3:
-						(if_id_instr[15:12] == 4'b1101)? 1'b3:
-						1'b0;						
+assign cycle_number =   (if_id_instr[15:12] == 4'b1100)? 2'b10:
+						(if_id_instr[15:12] == 4'b1101)? 2'b10:2'b00;						
 
+assign stall = (S == 2'b11?)? 1'b1:
+				(control_hazard | data_hazard)? 1'b1:1'b0;
 
-assign stall = (S == 2'b11?)1'b1:
-				(control_hazard | data_hazard) 1'b1:1'b0;
-
-				
+endmodule			
