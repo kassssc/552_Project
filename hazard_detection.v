@@ -44,7 +44,7 @@ assign control_hazard = (if_id_instr[15:12] == 4'b1100)? 1'b1:
 assign cycle_number =   (if_id_instr[15:12] == 4'b1100)? 2'b10:
 						(if_id_instr[15:12] == 4'b1101)? 2'b10:2'b00;						
 
-assign stall = (S == 2'b11?)? 1'b1:
+assign stall = (S == 2'b11)? 1'b1:
 				(control_hazard | data_hazard)? 1'b1:1'b0;
 
 endmodule			
