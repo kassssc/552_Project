@@ -10,7 +10,7 @@ module ID_EX(
 	output [15:0]data1_current,
 	output [15:0]data2_current,
 	output [15:0]instr_current
-)
+);
 
 state_reg pc( 
 	.pc_new(pc_new[15:0]),
@@ -30,7 +30,7 @@ state_reg data1(
 
 state_reg data2(
 	.data2_new(data2_new),
-	.data2_current(data2_current)
+	.data2_current(data2_current),
 	.clk(clk),
 	.rst(rst),
 	.wen(wen)
