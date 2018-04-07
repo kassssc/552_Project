@@ -1,6 +1,6 @@
 module forward (
 	input ex_mem_regwrite,
-	input mem_wb_regwrite,	
+	input mem_wb_regwrite,
 	input [3:0] ex_mem_regdest,
 	input [3:0] mem_wb_regdest,
 	input [3:0] id_ex_regrs,
@@ -20,8 +20,8 @@ assign mem_rd_rs_same = ~|(mem_wb_regdest ^ id_ex_regrs);
 assign mem_rd_rt_same = ~|(mem_wb_regdest ^ id_ex_regrt);
 
 // if reg dest is zero, wire will be 1
-assign ex_rd_zero = ~|(ex_mem_regdest | 4'b0);
-assign mem_rd_zero = ~|(mem_wb_regdest | 4'b0);
+assign ex_rd_zero = ~|(ex_mem_regdest | 4'b0000);
+assign mem_rd_zero = ~|(mem_wb_regdest | 4'b0000);
 
 // if hazard happens, wire will be 1
 assign ex_hazard_a = ex_mem_regwrite & ~ex_rd_zero & ex_rd_rs_same;
@@ -40,7 +40,7 @@ endmodule // forward
 if (EX/MEM.RegWrite
 and (EX/MEM.RegisterRd ≠ 0)
 and (EX/MEM.RegisterRd = ID/EX.RegisterRs)) ForwardA = 10
- 
+
 if (EX/MEM.RegWrite
 and (EX/MEM.RegisterRd ≠ 0)
 and (EX/MEM.RegisterRd = ID/EX.RegisterRt)) ForwardB = 10
@@ -50,7 +50,7 @@ and (EX/MEM.RegisterRd = ID/EX.RegisterRt)) ForwardB = 10
 if (MEM/WB.RegWrite
 and (MEM/WB.RegisterRd ≠  0)
 and (MEM/WB.RegisterRd = ID/EX.RegisterRs)) ForwardA = 01
- 
+
 if (MEM/WB.RegWrite
 and (MEM/WB.RegisterRd ≠  0)
 and (MEM/WB.RegisterRd = ID/EX.RegisterRt)) ForwardB = 01
