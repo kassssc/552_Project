@@ -15,7 +15,6 @@ state_reg pc(
 	.rst(rst),
 	.wen(wen)
 );
-<<<<<<< HEAD
 
 state_reg instr(
 	.state_new(instr_new[15:0]),
