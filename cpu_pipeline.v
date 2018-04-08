@@ -6,19 +6,11 @@ module cpu(
 );
 
 wire rst, stall, flush, fwd_alu_A, fwd_alu_B;
+wire WB_RegWrite;
+wire [15:0] WB_reg_write_data, WB_reg_write_select;
+wire EX_Branch;
 assign rst = ~rst_n;
 assign flush = EX_Branch;
-
-hazard_detection hazards (
-	.if_id_instr(IF_instr[15:0]),
-	.id_ex_instr(ID_instr[15:0]),
-	.id_ex_memread(EX_MemToReg),
-	.stall(stall)
-);
-
-forward forwarder (
-
-);
 
 //------------------------------------------------------------------------------
 // IF: INSTRUCTION FETCH STAGE
@@ -40,7 +32,7 @@ state_reg pc_reg (
 	.pc_current(IF_pc_current[15:0])
 );
 CLA_16b pc_adder (
-	.A(IF_pc_current[15:0]),
+	.A(IF_pc_curr[15:0]),
 	.B(16'h0002),
 	.sub(1'b0),
 	.S(IF_pc_plus_2[15:0]),
@@ -159,7 +151,7 @@ ID_EX IDEX (
 	.reg_write_select_current(EX_reg_write_select[15:0]),
 	.alusrc_current(EX_ALUimm),
 	.memtoreg_current(EX_MemToReg),
-	.memwrite_current(EX_MemWrite),
+	.memwrite_current(EX_MemWrite)
 );
 
 //------------------------------------------------------------------------------
@@ -168,7 +160,6 @@ ID_EX IDEX (
 wire [15:0] EX_pc_branch_target;
 wire [15:0] EX_reg_write_data;
 wire [15:0] EX_ALU_src_2;
-wire EX_Branch, EX_hlt;
 
 wire [2:0] flag_curr, flag_new, flag_write_enable;
 wire [15:0] lhb_out, llb_out, ALU_out;
@@ -297,6 +288,16 @@ MEMWB MEMWB (
 // WB: WRITEBACK STAGE
 //------------------------------------------------------------------------------
 
+hazard_detection hazards (
+	.if_id_instr(IF_instr[15:0]),
+	.id_ex_instr(ID_instr[15:0]),
+	.id_ex_memread(EX_MemToReg),
+	.stall(stall)
+);
+
+forward forwarder (
+
+);
 endmodule
 
 
