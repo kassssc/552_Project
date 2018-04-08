@@ -26,8 +26,8 @@ assign mem_rd_zero = ~|(mem_wb_regdest | 4'b0000);
 // if hazard happens, wire will be 1
 assign ex_hazard_a = ex_mem_regwrite & ~ex_rd_zero & ex_rd_rs_same;
 assign ex_hazard_b = ex_mem_regwrite & ~ex_rd_zero & ex_rd_rt_same;
-assign mem_hazard_a = mem_wb_regwrite & ~mem_rd_zero & mem_rd_rs_same;
-assign mem_hazard_b = mem_wb_regwrite & ~mem_rd_zero & mem_rd_rt_same;
+assign mem_hazard_a = mem_wb_regwrite & ~mem_rd_zero & mem_rd_rs_same & ~(ex_mem_regwrite & ~ex_rd_zero) & ex_rd_rs_same;
+assign mem_hazard_b = mem_wb_regwrite & ~mem_rd_zero & mem_rd_rt_same & ~(ex_mem_regwrite & ~ex_rd_zero) & ex_rd_rt_same;
 
 assign forwardA = ex_hazard_a ? 2'b10 : (mem_hazard_a ? 2'b01 : 2'b00);
 assign forwardB = ex_hazard_b ? 2'b10 : (mem_hazard_b ? 2'b01 : 2'b00);
