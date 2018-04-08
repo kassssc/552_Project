@@ -206,7 +206,3 @@ full_adder_16b pcs_adder (
 );
 
 endmodule
-
-
-
-

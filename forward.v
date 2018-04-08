@@ -49,9 +49,13 @@ and (EX/MEM.RegisterRd = ID/EX.RegisterRt)) ForwardB = 10
 
 if (MEM/WB.RegWrite
 and (MEM/WB.RegisterRd ≠  0)
+and not(EX/MEM.RegWrite and EX/MEM.RegDest != 0)
+and (EX/MEM.RegRd == ID/EX.RegRs)
 and (MEM/WB.RegisterRd = ID/EX.RegisterRs)) ForwardA = 01
 
 if (MEM/WB.RegWrite
 and (MEM/WB.RegisterRd ≠  0)
+and not(EX/MEM.RegWrite and EX/MEM.RegDest != 0)
+and (EX/MEM.RegRd == ID/EX.RegRt)
 and (MEM/WB.RegisterRd = ID/EX.RegisterRt)) ForwardB = 01
 */

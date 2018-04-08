@@ -1,17 +1,13 @@
 module MEM_WB(
 	input regwrite_new,
-	input memtoreg_new,
-	input [15:0] aluresult_new, 
-	input [15:0] dataread_new,
-	input [3:0]muxout_new,
+	input [15:0] reg_write_data_new, 
+	input [15:0] reg_write_select_new,
 	input clk,
 	input wen,
 	input rst,
 	output regwrite_current,
-	output memtoreg_current,
-	output [15:0] aluresult_current, 
-	output [15:0] dataread_current,
-	output [3:0]muxout_current
+	output [15:0] reg_write_data_current, 
+	output [15:0] reg_write_data_current, 
 );
 
 state_reg aluresult(
