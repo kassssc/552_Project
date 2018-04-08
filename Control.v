@@ -1,12 +1,13 @@
 module CTRL_UNIT(
 	input  [3:0]instr,
+	input  flush,
 	output reg MemWrite,
 	output reg MemToReg,
 	output reg RegWrite,
 	output reg ALUimm,
 );
 
-localparam Asserted = 1'b1;
+localparam Asserted = 1'b1 & ~flush;
 localparam Not_Asserted = 1'b0;
 
 always@(*) begin
