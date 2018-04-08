@@ -5,7 +5,7 @@ module cpu(
 	output [15:0] pc
 );
 
-wire rst, stall, flush;
+wire rst, stall, flush, fwd_alu_A, fwd_alu_B;
 assign rst = ~rst_n;
 assign flush = EX_Branch;
 
@@ -16,7 +16,9 @@ hazard_detection hazards (
 	.stall(stall)
 );
 
+forward forwarder (
 
+);
 
 //------------------------------------------------------------------------------
 // IF: INSTRUCTION FETCH STAGE
@@ -27,7 +29,7 @@ wire [15:0] IF_pc_plus_2;
 wire [15:0] IF_instr;
 
 // branch signal from ID stage
-assign IF_pc_new = EX_Branch? EX_pc_branch_target : IF_pc_plus_2;
+assign IF_pc_new = IF_pc_new : EX_Branch? EX_pc_branch_target : IF_pc_plus_2;
 assign pc = IF_pc_new;
 
 state_reg pc_reg (
@@ -147,8 +149,8 @@ ID_EX IDEX (
 	.memtoreg_new(ID_MemToReg),
 	.memwrite_new(ID_MemWrite),
 	.clk(clk),
-	.rst(flush | rst),
-	.wen(~stall),
+	.rst(flush | rst | stall),
+	.wen(1'b1),
 	.pc_current(EX_pc_plus_2[15:0]),
 	.data1_current(EX_reg_data_1[15:0]),
 	.data2_current(EX_reg_data_2[15:0]),
@@ -163,18 +165,15 @@ ID_EX IDEX (
 //------------------------------------------------------------------------------
 // EX: EXECUTION STAGE
 //------------------------------------------------------------------------------
-wire EX_Branch;
 wire [15:0] EX_pc_branch_target;
 wire [15:0] EX_reg_write_data;
 wire [15:0] EX_ALU_src_2;
+wire EX_Branch, EX_hlt;
 
-wire [2:0] flag_curr;
-wire [2:0] flag_new;
-wire [2:0] flag_write_enable;
-wire [15:0] lhb_out;
-wire [15:0] llb_out;
-wire [15:0] ALU_out;
+wire [2:0] flag_curr, flag_new, flag_write_enable;
+wire [15:0] lhb_out, llb_out, ALU_out;
 wire ALUop, BranchImm, BranchReg;
+wire [15:0] ALU_in_1, ALU_in_2;
 
 assign ALUop = ~instr[3];
 assign BranchImm = EX_instr[3] & EX_instr[2] & ~EX_instr[1] & ~EX_instr[0];
@@ -192,9 +191,16 @@ assign EX_reg_write_data = (ALUop)? ALU_out[15:0] :
 						   (llb)? llb_out[15:0] :
 						   EX_pc_plus_2[15:0];
 
+assign ALU_in_1 = (~fwd_alu_A[0] & ~fwd_alu_A[1])? EX_reg_data_1[15:0] :
+				  fwd_alu_A[1]? MEM_reg_write_data[15:0] :
+				  WB_reg_write_data[15:0];
+assign ALU_in_2 = (~fwd_alu_B[0] & ~fwd_alu_B[1])? EX_ALU_src_2[15:0] :
+				  fwd_alu_B[1]? MEM_reg_write_data[15:0] :
+				  WB_reg_write_data[15:0];
+
 ALU alu (
-	.ALU_in1(EX_reg_data_1[15:0]),
-	.ALU_in2(EX_ALU_src_2[15:0]),
+	.ALU_in1(ALU_in_1[15:0]),
+	.ALU_in2(ALU_in_2[15:0]),
 	.op(EX_instr[14:12]),
 	.ALU_out(ALU_out[15:0]),
 	.flag(flag_current[2:0]),
@@ -231,7 +237,7 @@ CLA_16b mem_addr_adder (
 // EX_MEM State Reg
 //------------------------------------------------------------------------------
 wire MEM_RegWrite, MEM_MemToReg, MEM_MemWrite;
-wire [15:0] MEM_mem_addr, MEM_reg_write_data, MEM_reg_write_select, MEM_ALU_src_2;
+wire [15:0] MEM_mem_addr, MEM_reg_write_data, MEM_reg_write_select, MEM_ALU_in_2;
 
 EX_MEM EXMEM (
 	.regwrite_new(EX_RegWrite),
@@ -240,7 +246,7 @@ EX_MEM EXMEM (
 	.mem_addr_new(EX_mem_addr[15:0]),
 	.reg_write_data_new(EX_reg_write_data[15:0]),
 	.reg_write_select_new(EX_reg_write_select[3:0]),
-	.alu_source_2_new(EX_ALU_src_2[15:0]),
+	.alu_source_2_new(EX_ALU_in_2[15:0]),
 	.clk(clk),
 	.wen(~stall),
 	.rst(flash | rst),
@@ -250,7 +256,7 @@ EX_MEM EXMEM (
 	.mem_addr_current(MEM_mem_addr[15:0]),
 	.reg_write_data_current(MEM_reg_write_data[15:0]),
 	.reg_write_select_current(MEM_reg_write_select[3:0]),
-	.alu_source_2_current(MEM_ALU_src_2[15:0]),
+	.alu_source_2_current(MEM_ALU_in_2[15:0]),
 );
 
 //------------------------------------------------------------------------------
@@ -264,7 +270,7 @@ assign MEM_reg_write_data = MEM_MemToReg? mem_read_out[15:0] : MEM_reg_write_dat
 
 memory1c data_mem(
 	.data_out(mem_read_out[15:0]),
-	.data_in(MEM_ALU_src_2[15:0]),
+	.data_in(MEM_ALU_in_2[15:0]),
 	.addr(MEM_mem_addr[15:0]),
 	.enable(MemEnable),
 	.wr(MEM_MemWrite),
@@ -283,7 +289,7 @@ MEMWB MEMWB (
 	.wen(1'b1),
 	.rst(rst),
 	.regwrite_current(WB_RegWrite),
-	.reg_write_data_current(WB_reg_write_data[15:0])
+	.reg_write_data_current(WB_reg_write_data[15:0]),
 	.reg_write_select_current(WB_reg_write_select[15:0]),
 );
 
