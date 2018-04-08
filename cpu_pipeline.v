@@ -74,24 +74,16 @@ IF_ID IFID(
 //------------------------------------------------------------------------------
 // ID: INSTRUCTION DECODE STAGE
 //------------------------------------------------------------------------------
+// Data output from Registers file
+wire [15:0] ID_reg_data_1;
+wire [15:0] ID_reg_data_2;
+wire ID_MemWrite, ID_MemToReg, ID_RegWrite;
 
 // Reg select signals, decoded to 1-hot
 wire [3:0] reg_read_select_1;
 wire [3:0] reg_read_select_2;
 // Register to write to, decoded to 1-hot
 wire [3:0] reg_write_select;
-
-// Data output from Registers file
-wire [15:0] ID_reg_data_1;
-wire [15:0] ID_reg_data_2;
-// Data to be written to Registers
-wire [15:0] WB_reg_write_data; // COMES LATER STAGES
-// control for writing to reg
-
-wire ID_MemWrite;
-wire ID_MemToReg;
-wire ID_RegWrite;
-wire ID_BranchReg;
 
 wire RegToMem;
 assign RegToMem = ID_instr[15] & ~ID_instr[14] & ~ID_instr[13] & ID_instr[12];
@@ -142,10 +134,6 @@ wire [15:0] EX_reg_data_1;
 wire [15:0] EX_reg_data_2;
 wire [15:0] EX_instr;
 wire [15:0] EX_reg_write_select;
-wire EX_Branch;
-wire [15:0] EX_pc_branch_target;
-wire [15:0] EX_reg_write_data;
-wire [15:0] EX_ALU_src_2;
 wire EX_RegWrite, EX_ALUimm, EX_MemWrite, EX_MemToReg;
 
 ID_EX IDEX (
@@ -175,6 +163,10 @@ ID_EX IDEX (
 //------------------------------------------------------------------------------
 // EX: EXECUTION STAGE
 //------------------------------------------------------------------------------
+wire EX_Branch;
+wire [15:0] EX_pc_branch_target;
+wire [15:0] EX_reg_write_data;
+wire [15:0] EX_ALU_src_2;
 
 wire [2:0] flag_curr;
 wire [2:0] flag_new;
@@ -283,12 +275,12 @@ memory1c data_mem(
 //------------------------------------------------------------------------------
 // MEM_WB State Reg
 //------------------------------------------------------------------------------
-MEMWB mem_wb (
+MEMWB MEMWB (
 	.regwrite_new(MEM_RegWrite),
 	.reg_write_data_new(MEM_reg_write_data[15:0]),
 	.reg_write_select_new(MEM_reg_write_select[15:0]),
 	.clk(clk),
-	.wen(~stall),
+	.wen(1'b1),
 	.rst(rst),
 	.regwrite_current(WB_RegWrite),
 	.reg_write_data_current(WB_reg_write_data[15:0])
