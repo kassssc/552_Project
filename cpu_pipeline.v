@@ -5,8 +5,18 @@ module cpu(
 	output [15:0] pc
 );
 
-wire rst;
+wire rst, stall, flush;
 assign rst = ~rst_n;
+assign flush = EX_Branch;
+
+hazard_detection hazards (
+	.if_id_instr(IF_instr[15:0]),
+	.id_ex_instr(ID_instr[15:0]),
+	.id_ex_memread(EX_MemToReg),
+	.stall(stall)
+);
+
+
 
 //------------------------------------------------------------------------------
 // IF: INSTRUCTION FETCH STAGE
@@ -18,11 +28,13 @@ wire [15:0] IF_instr;
 
 // branch signal from ID stage
 assign IF_pc_new = EX_Branch? EX_pc_branch_target : IF_pc_plus_2;
+assign pc = IF_pc_new;
 
-PC_REG pc_reg (
+state_reg pc_reg (
 	.pc_new(IF_pc_new[15:0]),
 	.clk(clk),
 	.rst(rst),
+	.wen(~stall),
 	.pc_current(IF_pc_current[15:0])
 );
 CLA_16b pc_adder (
@@ -53,8 +65,8 @@ IF_ID IFID(
 	.pc_plus_2_new(IF_pc_plus_2[15:0]),
 	.instr_new(IF_instr[15:0]),
 	.clk(clk),
-	.rst(FLUSH),
-	.wen(~STALL),
+	.rst(flush | rst),
+	.wen(~stall),
 	.pc_plus_2_curr(ID_pc_plus_2[15:0]),
 	.instr_curr(ID_instr[15:0])
 );
@@ -73,10 +85,9 @@ wire [3:0] reg_write_select;
 wire [15:0] ID_reg_data_1;
 wire [15:0] ID_reg_data_2;
 // Data to be written to Registers
-wire [15:0] reg_write_data; // COMES LATER STAGES
+wire [15:0] WB_reg_write_data; // COMES LATER STAGES
 // control for writing to reg
 
-wire ID_MemRead;
 wire ID_MemWrite;
 wire ID_MemToReg;
 wire ID_RegWrite;
@@ -100,11 +111,11 @@ assign ID_ALU_opcode = ID_instr[14:12];
 // make write register always the first reg in instruction
 assign ID_reg_write_select = ID_instr[11:8];
 assign reg_read_select_1 = RegToMem? ID_instr[11:8] : ID_instr[7:4];
-assign reg_read_select_2 = BranchReg? ID_instr[7:4] : ID_instr[3:0];
+assign reg_read_select_2 = ID_BranchReg? ID_instr[7:4] : ID_instr[3:0];
 
 CTRL_UNIT control_unit (
 	.instr(ID_instr[15:12]),
-	.MemRead(ID_MemRead),
+	.flush(flush),
 	.MemWrite(ID_MemWrite),
 	.MemToReg(ID_MemToReg),
 	.RegWrite(ID_RegWrite),
@@ -126,20 +137,41 @@ RegisterFile register_file (
 //------------------------------------------------------------------------------
 // ID_EX State Reg
 //------------------------------------------------------------------------------
+wire [15:0] EX_pc_plus_2;
 wire [15:0] EX_reg_data_1;
 wire [15:0] EX_reg_data_2;
-wire [15:0] EX_imm_signextend;
-
-wire [2:0] EX_branch_cond;
-wire EX_BranchImm, EX_BranchReg;
-
-wire EX_ALU_opcode[2:0];
-wire EX_ALU_src_imm;
-wire EX_instr[15:0];
+wire [15:0] EX_instr;
+wire [15:0] EX_reg_write_select;
+wire EX_Branch;
+wire [15:0] EX_pc_branch_target;
+wire [15:0] EX_reg_write_data;
+wire [15:0] EX_ALU_src_2;
+wire EX_RegWrite, EX_ALUimm, EX_MemWrite, EX_MemToReg;
 
 ID_EX IDEX (
-
+	.pc_new(ID_pc_plus_2[15:0]),
+	.data1_new(ID_reg_data_1[15:0]),
+	.data2_new(ID_reg_data_2[15:0]),
+	.instr_new(ID_instr[15:0]),
+	.regwrite_new(ID_RegWrite),
+	.reg_write_select_new(ID_reg_write_select[15:0]),
+	.alusrc_new(ID_ALUimm),
+	.memtoreg_new(ID_MemToReg),
+	.memwrite_new(ID_MemWrite),
+	.clk(clk),
+	.rst(flush | rst),
+	.wen(~stall),
+	.pc_current(EX_pc_plus_2[15:0]),
+	.data1_current(EX_reg_data_1[15:0]),
+	.data2_current(EX_reg_data_2[15:0]),
+	.instr_current(EX_instr[15:0]),
+	.regwrite_current(EX_RegWrite),
+	.reg_write_select_current(EX_reg_write_select[15:0]),
+	.alusrc_current(EX_ALUimm),
+	.memtoreg_current(EX_MemToReg),
+	.memwrite_current(EX_MemWrite),
 );
+
 //------------------------------------------------------------------------------
 // EX: EXECUTION STAGE
 //------------------------------------------------------------------------------
@@ -147,33 +179,30 @@ ID_EX IDEX (
 wire [2:0] flag_curr;
 wire [2:0] flag_new;
 wire [2:0] flag_write_enable;
-wire [15:0] ALU_src_2;
-wire [15:0] EX_lhb_out;
-wire [15:0] EX_llb_out;
-
+wire [15:0] lhb_out;
+wire [15:0] llb_out;
 wire [15:0] ALU_out;
+wire ALUop, BranchImm, BranchReg;
 
-// Branch information, sent to IF stage
-wire EX_Branch;
-wire [15:0] EX_pc_branch_target;
+assign ALUop = ~instr[3];
+assign BranchImm = EX_instr[3] & EX_instr[2] & ~EX_instr[1] & ~EX_instr[0];
+assign BranchReg = EX_instr[3] & EX_instr[2] & ~EX_instr[1] &  EX_instr[0];
 
-wire [15:0] EX_reg_write_data;
+// MUX select ALU source 2
+assign EX_ALU_src_2 = (EX_ALUimm)? EX_imm_signextend[15:0] : EX_reg_data_2[15:0];
 
 assign lhb_out = {EX_instr[7:0], EX_reg_data_1[7:0]};
 assign llb_out = {EX_reg_data_1[15:8], EX_instr[7:0]};
 
-
+// Mem stage will choose between this and mem read output
 assign EX_reg_write_data = (ALUop)? ALU_out[15:0] :
 						   (lhb)? lhb_out[15:0] :
 						   (llb)? llb_out[15:0] :
 						   EX_pc_plus_2[15:0];
 
-// MUX select ALU source 2
-assign ALU_src_2 = (EX_ALUimm)? EX_imm_signextend[15:0] : EX_reg_data_2[15:0];
-
 ALU alu (
 	.ALU_in1(EX_reg_data_1[15:0]),
-	.ALU_in2(ALU_src_2[15:0]),
+	.ALU_in2(EX_ALU_src_2[15:0]),
 	.op(EX_instr[14:12]),
 	.ALU_out(ALU_out[15:0]),
 	.flag(flag_current[2:0]),
@@ -183,13 +212,13 @@ FLAG_REG flag_reg(
 	.flag_new(flag_new[2:0]),
 	.wen(flag_write_enable[2:0]),
 	.clk(clk),
-	.rst(rst),
-	.flag_current(flag_curr[2:0])
+	.rst(flush | rst),
+	.flag_current(flush? 3'b000 : flag_curr[2:0])
 );
 BRANCH_CTRL branch_control (
 	.pc_plus_2(EX_pc_plus_2[15:0]),
-	.BranchImm(EX_BranchImm),
-	.BranchReg(EX_BranchReg),
+	.BranchImm(BranchImm),
+	.BranchReg(BranchReg),
 	.imm(EX_instr[8:0]),
 	.cc(EX_instr[11:9]),
 	.flag(flag_curr[2:0])
@@ -197,66 +226,78 @@ BRANCH_CTRL branch_control (
 	.Branch(EX_Branch),
 	.pc_out(EX_pc_branch_target[15:0])
 );
+CLA_16b mem_addr_adder (
+	.A(EX_reg_data_2[15:0] & 16'hFFFE),
+	.B({{11{EX_instr[3]}}, EX_instr[3:0], 1'b0}),
+	.sub(1'b0)
+	.Sum(EX_mem_addr[15:0]),
+	.ovfl(),
+	.neg()
+);
+
+//------------------------------------------------------------------------------
+// EX_MEM State Reg
+//------------------------------------------------------------------------------
+wire MEM_RegWrite, MEM_MemToReg, MEM_MemWrite;
+wire [15:0] MEM_mem_addr, MEM_reg_write_data, MEM_reg_write_select, MEM_ALU_src_2;
+
+EX_MEM EXMEM (
+	.regwrite_new(EX_RegWrite),
+	.memwrite_new(EX_MemToReg),
+	.memwrite_new(EX_MemWrite),
+	.mem_addr_new(EX_mem_addr[15:0]),
+	.reg_write_data_new(EX_reg_write_data[15:0]),
+	.reg_write_select_new(EX_reg_write_select[3:0]),
+	.alu_source_2_new(EX_ALU_src_2[15:0]),
+	.clk(clk),
+	.wen(~stall),
+	.rst(flash | rst),
+	.regwrite_current(MEM_RegWrite),
+	.memwrite_current(MEM_MemToReg),
+	.memwrite_current(MEM_MemWrite),
+	.mem_addr_current(MEM_mem_addr[15:0]),
+	.reg_write_data_current(MEM_reg_write_data[15:0]),
+	.reg_write_select_current(MEM_reg_write_select[3:0]),
+	.alu_source_2_current(MEM_ALU_src_2[15:0]),
+);
 
 //------------------------------------------------------------------------------
 // MEM: MEMORY STAGE
 //------------------------------------------------------------------------------
-// data memory output to select mux
-wire [15:0]mem_data_out;
-// Addr for memory write
-wire [15:0]mem_write_addr;
-// control singal for red from memory1c
-wire MemRead;
-// control signal for writing to memory
-wire MemWrite;
-// datamemory enable
 wire MemEnable;
-// control signal for assert writing from mem to reg
-wire WriteMemToReg;
+assign MemEnable = MEM_MemToReg | MEM_MemWrite;
 
-assign MemEnable = MemRead | MemWrite;
+wire [15:0] mem_read_out;
+assign MEM_reg_write_data = MEM_MemToReg? mem_read_out[15:0] : MEM_reg_write_data[15:0];
 
-CLA_16b mem_addr_adder (
-	.A(reg_data_out_1),
-	.B({{12{instruction[3]}},instruction[3:0]}),
-	.sub(1'b0)
-	.Sum(mem_addr),
-	.ovfl(),
-	.neg()
-);
 memory1c data_mem(
-	.data_out(mem_data_out),
-	.data_in(reg_data_out_2),
-	.addr(mem_addr),
+	.data_out(mem_read_out[15:0]),
+	.data_in(MEM_ALU_src_2[15:0]),
+	.addr(MEM_mem_addr[15:0]),
 	.enable(MemEnable),
-	.wr(MemWrite),
+	.wr(MEM_MemWrite),
 	.clk(clk),
 	.rst(rst)
 );
 
 //------------------------------------------------------------------------------
+// MEM_WB State Reg
+//------------------------------------------------------------------------------
+MEMWB mem_wb (
+	.regwrite_new(MEM_RegWrite),
+	.reg_write_data_new(MEM_reg_write_data[15:0]),
+	.reg_write_select_new(MEM_reg_write_select[15:0]),
+	.clk(clk),
+	.wen(~stall),
+	.rst(rst),
+	.regwrite_current(WB_RegWrite),
+	.reg_write_data_current(WB_reg_write_data[15:0])
+	.reg_write_select_current(WB_reg_write_select[15:0]),
+);
+
+//------------------------------------------------------------------------------
 // WB: WRITEBACK STAGE
 //------------------------------------------------------------------------------
-
-
-// logic for decide which data to write
-assign WB_reg_write_data = MemToReg? MEM_mem_data[15:0] :
-						   MEM_EX_reg_write_data[15:0];
-
-
-
-// hlt internal connect signal, assert when hlt is called
-wire hlt_internal;
-
-// decide if this is a ALU operation
-wire ALUOp;
-
-// decide if this is LHB or LLB
-wire TopHalf;
-
-// make the output = current pc
-assign pc = pc_current;
-assign hlt = hlt_internal;
 
 endmodule
 
