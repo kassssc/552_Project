@@ -1,11 +1,28 @@
-module CTRL_UNIT(
-	input  [3:0]instr,
-	output reg MemWrite,
-	output reg MemToReg,
-	output reg RegWrite,
-	output reg ALUimm
+module CTRL_UNIT (
+	input [3:0]instr,
+	input flush
+	output MemWrite,
+	output MemToReg,
+	output RegWrite
 );
 
+// MemWrite asserted when SW, opcode: 1001
+assign MemWrite = flush? 1'b0 : (instr[3] & ~instr[2] & ~instr[1] &  instr[0]);
+// MemWrite asserted when LW, opcode: 1000
+assign MemToReg = flush? 1'b0 : (instr[3] & ~instr[2] & ~instr[1] & ~instr[0]);
+
+assign RegWrite = flush? 1'b0 :
+				  (
+					(~instr[3]) | // ALU op MSB = 0
+					(~instr[2] & ~instr[1] & ~instr[0]) |	// LW
+					(~instr[2] &  instr[1] & ~instr[0]) |	// LHB
+					(~instr[2] &  instr[1] &  instr[0]) |	// LLB
+					( instr[2] &  instr[1] & ~instr[0])		// PCS
+				  );
+				  // RegWrite not asserted: SW, B, BR, HLT
+
+endmodule
+/*
 localparam Asserted =1'b1;
 localparam Not_Asserted = 1'b0;
 
@@ -146,4 +163,5 @@ always@(*) begin
 		end
 	endcase
 end
-endmodule
+
+*/
