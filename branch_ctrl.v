@@ -1,18 +1,18 @@
 module BRANCH_CTRL (
-	input pc_plus_2[15:0],
+	input [15:0]pc_plus_2,
 	input BranchImm,
 	input BranchReg,
-	input imm[8:0],
-	input cc[2:0],
-	input flag[2:0],
-	input branch_reg_data[15:0],
+	input [8:0]imm,
+	input [2:0]cc,
+	input [2:0]flag,
+	input [15:0]branch_reg_data,
 	output Branch,
-	output pc_out[15:0]
+	output [15:0]pc_out
 );
 
 	wire neg_flag, ovfl_flag, zero_flag, branch;
 	wire NEQ, EQ, GT, LT, GEQ, LEQ, OVFL, UNCOND;
-	wire [15:0] sign_extend_I, shifted_I, PC_plus_2, imm_target;
+	wire [15:0] sign_extend_imm, shifted_imm, PC_plus_2, imm_target;
 
 	assign neg_flag = flag[2];
 	assign ovfl_flag = flag[0];
