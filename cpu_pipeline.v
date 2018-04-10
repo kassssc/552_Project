@@ -32,7 +32,7 @@ wire [15:0] EX_mem_addr;
 wire [15:0] ALU_in_1, EX_ALU_in_2;
 wire EX_RegWrite, EX_MemToReg, EX_MemWrite;
 // EX signals used by IF
-wire EX_Branch;
+wire EX_Branch_new, EX_Branch_current;
 wire [15:0] EX_pc_branch_target;
 
 wire [15:0] EX_reg_data_1, EX_reg_data_2;
@@ -54,7 +54,7 @@ wire [15:0] WB_reg_write_data, WB_reg_write_select;
 // branch signal from ID stage
 wire [15:0] pc_current, pc_plus_2;
 
-assign IF_pc_new = EX_Branch? EX_pc_branch_target : pc_plus_2;
+assign IF_pc_new = EX_Branch_current? EX_pc_branch_target : pc_plus_2;
 
 state_reg pc_reg (
 	.state_new(IF_pc_new[15:0]),
@@ -215,6 +215,13 @@ FLAG_REG flag_reg(
 	.rst(flush | rst),
 	.flag_current(flag_current[2:0])
 );
+reg_1bit branch_cond_reg (
+	.reg_new(EX_branch_new),
+	.reg_current(EX_branch_current),
+	.clk(clk),
+	.rst(rst),
+	.wen(1'b1)
+);
 BRANCH_CTRL branch_control (
 	.pc_plus_2(EX_pc[15:0]),
 	.BranchImm(BranchImm),
@@ -223,7 +230,7 @@ BRANCH_CTRL branch_control (
 	.cc(EX_instr[11:9]),
 	.flag(flag_current[2:0]),
 	.branch_reg_data(EX_reg_data_1[15:0]),
-	.Branch(EX_Branch),
+	.Branch(EX_Branch_new),
 	.pc_out(EX_pc_branch_target[15:0])
 );
 CLA_16b mem_addr_adder (
