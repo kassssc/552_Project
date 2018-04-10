@@ -6,7 +6,7 @@ module BRANCH_CTRL (
 	input [2:0]cc,
 	input [2:0]flag,
 	input [15:0]branch_reg_data,
-	output Branch,
+	output BranchOut,
 	output [15:0]pc_out
 );
 
@@ -48,5 +48,7 @@ module BRANCH_CTRL (
 
 	assign pc_out = (Branch & BranchImm)? imm_target[15:0] :
 					(Branch & BranchReg)? branch_reg_data[15:0] : pc_plus_2[15:0];
+
+	assign BranchOut = Branch & (BranchImm | BranchReg);
 
 endmodule
