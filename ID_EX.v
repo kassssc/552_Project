@@ -72,7 +72,7 @@ m mem(
 
 reg_4bit reg_write_select(
 	.reg_new(reg_write_select_new),	
-	.wen(1'b1),
+	.wen(wen),
 	.clk(clk),
 	.rst(rst),
 	.reg_current(reg_write_select_current)
