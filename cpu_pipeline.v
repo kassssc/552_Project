@@ -64,7 +64,7 @@ state_reg pc_reg (
 	.pc_current(pc_current[15:0])
 );
 CLA_16b pc_adder (
-	.A(pc_curr[15:0]),
+	.A(pc_current[15:0]),
 	.B(16'h0002),
 	.sub(1'b0),
 	.S(pc_plus_2[15:0]),
@@ -175,7 +175,7 @@ assign ALUshift = (
 				  );
 
 assign imm_signextend = {{12{EX_instr[3]}}, EX_instr[3:0]};
-assign ALU_src_2 = ALUshift? imm_signextend[15:0] : EX_reg_data_2[15:0];
+assign EX_ALU_src_2 = ALUshift? imm_signextend[15:0] : EX_reg_data_2[15:0];
 
 assign lhb_out = {EX_instr[7:0], EX_reg_data_1[7:0]};
 assign llb_out = {EX_reg_data_1[15:8], EX_instr[7:0]};
@@ -194,7 +194,7 @@ assign EX_reg_write_data = (ALUop)? ALU_out[15:0] :		// ALUop
 assign ALU_in_1 = (fwd_alu_A[1:0] == 2'b00)? EX_reg_data_1[15:0] :
 				  (fwd_alu_A[1])? MEM_reg_write_data[15:0] :
 				  WB_reg_write_data[15:0];
-assign EX_ALU_in_2 = (fwd_alu_B[1:0] == 2'b00)? ALU_src_2[15:0] :
+assign EX_ALU_in_2 = (fwd_alu_B[1:0] == 2'b00)? EX_ALU_src_2[15:0] :
 					 (fwd_alu_B[1])? MEM_reg_write_data[15:0] :
 					 WB_reg_write_data[15:0];
 
@@ -278,7 +278,7 @@ memory1c data_mem(
 //------------------------------------------------------------------------------
 // MEM_WB State Reg
 //------------------------------------------------------------------------------
-MEMWB MEMWB (
+MEM_WB MEMWB (
 	.regwrite_new(MEM_RegWrite),
 	.reg_write_data_new(MEM_reg_write_data[15:0]),
 	.reg_write_select_new(MEM_reg_write_select[3:0]),
