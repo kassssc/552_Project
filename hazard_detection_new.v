@@ -26,7 +26,7 @@ wire [1:0]S;
 
 assign hlt_h = (if_id_instr[15:12] == 4'b1111)? 1'b1:1'b0;
 
-dff hlt(
+dff hlt_ff(
 	.d(hlt_h),
 	.q(hlt_h_d),
 	.wen(1'b1),
@@ -37,7 +37,7 @@ dff hlt(
 // detect rising edge
 assign ishlt = (hlt_h & ~hlt_h_d);
 
-dff hlt(
+dff hltff(
 	.d(1'b1),
 	.q(hlt_count),
 	.wen(ishlt),
@@ -52,8 +52,16 @@ assign hlt = (S == 2'b11)? 1'b1:1'b0;
 //************************************
 //*	Data
 //************************************
+wire if_id_rs;
+wire if_id_rt;
+wire id_ex_rt;
+
+assign if_id_rs = if_id_instr[7:4];
+assign if_id_rt = if_id_instr[3:0];
+assign id_ex_rt = if_id_instr[3:0];
+
 assign data_hazard = (id_ex_memread & (if_id_rs == id_ex_rt)) ? 1'b1:
-					 (id_ex_memread & (if_id_rt == if_id_rt)) ? 1'b1:1'b0;
+					 (id_ex_memread & (if_id_rt == id_ex_rt)) ? 1'b1:1'b0;
 
 wire data_hazard_out1;
 wire data_hazard_out2;
@@ -72,6 +80,7 @@ dff dataff2(
 	.clk(clk),
 	.rst(rst)
 );
-assign flush = data_hazard | data_hazard_out1 | data_hazard_out2
-assign stall = hlt | (data_hazard | data_hazard_out1 | data_hazard_out2)
+assign flush = data_hazard | data_hazard_out1 | data_hazard_out2;
+assign stall = hlt | (data_hazard | data_hazard_out1 | data_hazard_out2);
 
+endmodule
