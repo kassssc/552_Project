@@ -249,6 +249,7 @@ CLA_16b mem_addr_adder (
 //------------------------------------------------------------------------------
 // EX_MEM State Reg
 //------------------------------------------------------------------------------
+wire [15:0] MEM_EX_reg_write_data;
 EX_MEM EXMEM (
 	.memtoreg_new(EX_MemToReg),
 	.memwrite_new(EX_MemWrite),
@@ -262,7 +263,7 @@ EX_MEM EXMEM (
 	.rst(flush | rst),
 	.memtoreg_current(MEM_MemToReg),
 	.memwrite_current(MEM_MemWrite),
-	.reg_write_data_current(MEM_reg_write_data[15:0]),
+	.reg_write_data_current(MEM_EX_reg_write_data[15:0]),
 	.reg_write_select_current(MEM_reg_write_select[3:0]),
 	.regwrite_current(MEM_RegWrite),
 	.mem_addr_current(MEM_mem_addr[15:0]),
@@ -276,7 +277,7 @@ wire MemEnable;
 wire [15:0] mem_read_out;
 
 assign MemEnable = MEM_MemToReg | MEM_MemWrite;
-assign MEM_reg_write_data = MEM_MemToReg? mem_read_out[15:0] : MEM_reg_write_data[15:0];
+assign MEM_reg_write_data = MEM_MemToReg? mem_read_out[15:0] : MEM_EX_reg_write_data[15:0];
 
 memory1c data_mem(
 	.data_out(mem_read_out[15:0]),
