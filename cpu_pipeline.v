@@ -230,7 +230,7 @@ BRANCH_CTRL branch_control (
 	.cc(EX_instr[11:9]),
 	.flag(flag_current[2:0]),
 	.branch_reg_data(EX_reg_data_1[15:0]),
-	.Branch(EX_Branch_new),
+	.Branch(EX_Branch_current),
 	.pc_out(EX_pc_branch_target[15:0])
 );
 CLA_16b mem_addr_adder (

@@ -34,7 +34,6 @@ module cpu_ptb();
 
 
 
-
    /* Setup */
    initial begin
       $display("Hello world...simulation starting");
@@ -122,8 +121,13 @@ module cpu_ptb();
 	    #5;
             $finish;
          end 
-      end
-      
+
+         $display("EX_Branch_current: %b", DUT.EX_Branch_current);
+         $display("EX_Branch_new: %b", DUT.EX_Branch_new);
+         $display("pc_plus_2: %b", DUT.pc_plus_2);
+
+      end      
+
    end
    /* Assign internal signals to top level wires
       The internal module names and signal names will vary depending
