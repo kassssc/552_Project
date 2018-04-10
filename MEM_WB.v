@@ -12,39 +12,39 @@ module MEM_WB(
 
 state_reg reg_write_data(
 	.state_new(reg_write_data_new[15:0]),
-	.state_curr(reg_write_data_current[15:0]),
+	.state_current(reg_write_data_current[15:0]),
 	.clk(clk),
 	.rst(rst),
 	.wen(wen)
 );
 
 dff reg_write_select_0(
-	.state_new(reg_write_select_new[0]),
-	.state_curr(reg_write_select_current[0]),
+	.d(reg_write_select_new[0]),
+	.q(reg_write_select_current[0]),
 	.clk(clk),
 	.rst(rst),
 	.wen(wen)
 );
 
 dff reg_write_select_1(
-	.state_new(reg_write_select_new[1]),
-	.state_curr(reg_write_select_current[1]),
+	.d(reg_write_select_new[1]),
+	.q(reg_write_select_current[1]),
 	.clk(clk),
 	.rst(rst),
 	.wen(wen)
 );
 
 dff reg_write_select_2(
-	.state_new(reg_write_select_new[2]),
-	.state_curr(reg_write_select_current[2]),
+	.d(reg_write_select_new[2]),
+	.q(reg_write_select_current[2]),
 	.clk(clk),
 	.rst(rst),
 	.wen(wen)
 );
 
 dff reg_write_select_3(
-	.state_new(reg_write_select_new[3]),
-	.state_curr(reg_write_select_current[3]),
+	.d(reg_write_select_new[3]),
+	.q(reg_write_select_current[3]),
 	.clk(clk),
 	.rst(rst),
 	.wen(wen)
