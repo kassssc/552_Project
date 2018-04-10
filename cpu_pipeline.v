@@ -304,6 +304,7 @@ MEM_WB MEMWB (
 //------------------------------------------------------------------------------
 
 wire [1:0]S_out;
+wire flush_out;
 hazard_detection hazards (
 	.if_id_instr(IF_instr[15:0]),
 	.id_ex_instr(ID_instr[15:0]),
@@ -311,7 +312,7 @@ hazard_detection hazards (
 	.clk(clk),
 	.rst(rst),
 	.stall(stall),
-	.flush(flush),
+	.flush(flush_out),
 	.hlt_out(hlt),
 	.S_out(S_out)
 );
@@ -328,7 +329,7 @@ forward forwarder (
 );
 
 assign rst = ~rst_n;
-assign flush = EX_Branch;
+assign flush = EX_Branch_current? 1'b1 : flush_out;
 assign pc_out = pc_current;
 
 endmodule
