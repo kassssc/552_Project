@@ -322,6 +322,6 @@ forward forwarder (
 
 assign rst = ~rst_n;
 assign flush = EX_Branch;
-assign pc = pc_current;
+assign pc_out = pc_current;
 
 endmodule
