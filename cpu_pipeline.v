@@ -216,8 +216,8 @@ FLAG_REG flag_reg(
 	.flag_current(flag_current[2:0])
 );
 reg_1bit branch_cond_reg (
-	.reg_new(EX_branch_new),
-	.reg_current(EX_branch_current),
+	.reg_new(EX_Branch_new),
+	.reg_current(EX_Branch_current),
 	.clk(clk),
 	.rst(rst),
 	.wen(1'b1)
