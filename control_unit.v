@@ -1,6 +1,6 @@
 module CTRL_UNIT (
 	input [3:0]instr,
-	input flush
+	input flush,
 	output MemWrite,
 	output MemToReg,
 	output RegWrite
