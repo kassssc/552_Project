@@ -2,7 +2,7 @@ module cpu(
 	input clk,
 	input rst_n,
 	output hlt,
-	output [15:0] pc
+	output [15:0] pc_out
 );
 
 //
@@ -57,11 +57,11 @@ wire [15:0] pc_current, pc_plus_2;
 assign IF_pc_new = EX_Branch? EX_pc_branch_target : pc_plus_2;
 
 state_reg pc_reg (
-	.pc_new(IF_pc_new[15:0]),
+	.state_new(IF_pc_new[15:0]),
 	.clk(clk),
 	.rst(rst),
 	.wen(~stall),
-	.pc_current(pc_current[15:0])
+	.state_current(pc_current[15:0])
 );
 CLA_16b pc_adder (
 	.A(pc_current[15:0]),
