@@ -30,7 +30,7 @@ wire [15:0] EX_ALU_src_2;
 wire [15:0] EX_reg_write_data, EX_reg_write_select;
 wire [15:0] EX_mem_addr;
 wire [15:0] ALU_in_1, EX_ALU_in_2;
-wire EX_RegWrite, EX_MemToReg, EX_MemWrite,;
+wire EX_RegWrite, EX_MemToReg, EX_MemWrite;
 // EX signals used by IF
 wire EX_Branch;
 wire [15:0] EX_pc_branch_target;
@@ -100,8 +100,8 @@ IF_ID IFID(
 wire ID_lhb, ID_llb;
 wire [3:0] reg_read_select_1, reg_read_select_2;
 
-assign ID_lhb = (ID_instr[3:0] == 4'b1010);
-assign ID_llb = (ID_instr[3:0] == 4'b1011);
+assign ID_lhb = (ID_instr[15:12] == 4'b1010);
+assign ID_llb = (ID_instr[15:12] == 4'b1011);
 assign RegToMem = (ID_instr[15:12] == 4'b1001);
 
 assign ID_reg_write_select = ID_instr[11:8];
@@ -142,8 +142,8 @@ ID_EX IDEX (
 	.memtoreg_new(ID_MemToReg),
 	.memwrite_new(ID_MemWrite),
 	.clk(clk),
-	.rst(flush | rst | stall),
-	.wen(1'b1),
+	.rst(flush | rst),
+	.wen(stall),
 	.pc_current(EX_pc[15:0]),
 	.data1_current(EX_reg_data_1[15:0]),
 	.data2_current(EX_reg_data_2[15:0]),
@@ -281,13 +281,13 @@ memory1c data_mem(
 MEMWB MEMWB (
 	.regwrite_new(MEM_RegWrite),
 	.reg_write_data_new(MEM_reg_write_data[15:0]),
-	.reg_write_select_new(MEM_reg_write_select[15:0]),
+	.reg_write_select_new(MEM_reg_write_select[3:0]),
 	.clk(clk),
 	.wen(1'b1),
 	.rst(rst),
 	.regwrite_current(WB_RegWrite),
 	.reg_write_data_current(WB_reg_write_data[15:0]),
-	.reg_write_select_current(WB_reg_write_select[15:0])
+	.reg_write_select_current(WB_reg_write_select[3:0])
 );
 
 //------------------------------------------------------------------------------
@@ -298,11 +298,22 @@ hazard_detection hazards (
 	.if_id_instr(IF_instr[15:0]),
 	.id_ex_instr(ID_instr[15:0]),
 	.id_ex_memread(EX_MemToReg),
-	.stall(stall)
+	.clk(clk),
+	.rst(rst),
+	.stall(stall),
+	.flush(flush),
+	.hlt_out(hlt)
 );
 
 forward forwarder (
-
+	.ex_mem_regwrite(MEM_RegWrite),
+	.mem_wb_regwrite(WB_RegWrite),
+	.ex_mem_regdest(MEM_reg_write_select[3:0]),
+	.mem_wb_regdest(WB_reg_write_select[3:0]),
+	.id_ex_regrs(reg_read_select_1[3:0]),
+	.id_ex_regrd(ID_reg_write_select[3:0]),
+	.forwardA(fwd_alu_A[1:0]),
+	.forwardB(fwd_alu_B[1:0])
 );
 
 assign rst = ~rst_n;
