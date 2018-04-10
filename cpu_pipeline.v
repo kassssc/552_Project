@@ -90,8 +90,8 @@ IF_ID IFID(
 	.clk(clk),
 	.rst(flush | rst),
 	.wen(~stall),
-	.pc_plus_2_curr(ID_pc[15:0]),
-	.instr_curr(ID_instr[15:0])
+	.pc_plus_2_current(ID_pc[15:0]),
+	.instr_current(ID_instr[15:0])
 );
 
 //------------------------------------------------------------------------------
@@ -159,7 +159,7 @@ ID_EX IDEX (
 //------------------------------------------------------------------------------
 wire EX_lhb, EX_llb, ALUop, BranchImm, BranchReg, ALUshift;
 
-wire [2:0] flag_current, flag_new, flag_write_enable;
+wire [2:0] flag_current, flag_new, flag_write_enable, flag_alu_out;
 wire [15:0] lhb_out, llb_out, ALU_out;
 wire [15:0] imm_signextend, mem_addr_offset;
 
@@ -198,12 +198,14 @@ assign EX_ALU_in_2 = (fwd_alu_B[1:0] == 2'b00)? EX_ALU_src_2[15:0] :
 					 (fwd_alu_B[1])? MEM_reg_write_data[15:0] :
 					 WB_reg_write_data[15:0];
 
+assign flag_new = flush? 3'b000 : flag_alu_out[2:0];
+
 ALU alu (
 	.ALU_in1(ALU_in_1[15:0]),
 	.ALU_in2(EX_ALU_in_2[15:0]),
 	.op(EX_instr[14:12]),
 	.ALU_out(ALU_out[15:0]),
-	.flag(flag_current[2:0]),
+	.flag(flag_alu_out[2:0]),
 	.flag_write(flag_write_enable[2:0])
 );
 FLAG_REG flag_reg(
@@ -211,7 +213,7 @@ FLAG_REG flag_reg(
 	.wen(flag_write_enable[2:0]),
 	.clk(clk),
 	.rst(flush | rst),
-	.flag_current(flush? 3'b000 : flag_current[2:0])
+	.flag_current(flag_current[2:0])
 );
 BRANCH_CTRL branch_control (
 	.pc_plus_2(EX_pc[15:0]),
@@ -228,7 +230,7 @@ CLA_16b mem_addr_adder (
 	.A(EX_reg_data_1[15:0] & 16'hFFFE),
 	.B(mem_addr_offset[15:0]),
 	.sub(1'b0),
-	.Sum(EX_mem_addr[15:0]),
+	.S(EX_mem_addr[15:0]),
 	.ovfl(),
 	.neg()
 );
