@@ -296,6 +296,7 @@ MEM_WB MEMWB (
 // WB: WRITEBACK STAGE
 //------------------------------------------------------------------------------
 
+wire [1:0]S_out;
 hazard_detection hazards (
 	.if_id_instr(IF_instr[15:0]),
 	.id_ex_instr(ID_instr[15:0]),
@@ -304,7 +305,8 @@ hazard_detection hazards (
 	.rst(rst),
 	.stall(stall),
 	.flush(flush),
-	.hlt_out(hlt)
+	.hlt_out(hlt),
+	.S_out(S_out)
 );
 
 forward forwarder (
@@ -313,7 +315,7 @@ forward forwarder (
 	.ex_mem_regdest(MEM_reg_write_select[3:0]),
 	.mem_wb_regdest(WB_reg_write_select[3:0]),
 	.id_ex_regrs(reg_read_select_1[3:0]),
-	.id_ex_regrd(ID_reg_write_select[3:0]),
+	.id_ex_regrt(ID_reg_write_select[3:0]),
 	.forwardA(fwd_alu_A[1:0]),
 	.forwardB(fwd_alu_B[1:0])
 );

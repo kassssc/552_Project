@@ -6,7 +6,8 @@ module hazard_detection(
 	input rst,
 	output stall,
 	output flush,
-	output hlt_out
+	output hlt_out,
+	output [1:0]S_out
 );
 
 wire control;
@@ -26,6 +27,7 @@ wire cout;
 wire [1:0]S;
 
 assign hlt_h = (if_id_instr[15:12] == 4'b1111)? 1'b1:1'b0;
+assign S_out = S;
 
 dff hlt_ff(
 	.d(hlt_h),
