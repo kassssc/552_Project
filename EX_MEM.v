@@ -52,7 +52,7 @@ reg_4bit reg_write_select(
 
 wb wb(
 	.regwrite_new(regwrite_new),
-	.memtoreg_new(memread_new),
+	.memtoreg_new(memtoreg_new),
 	.wen(wen),
 	.clk(clk),
 	.rst(rst),
