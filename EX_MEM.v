@@ -2,7 +2,6 @@ module EX_MEM(
 	input regwrite_new,
 	input memtoreg_new,
 	input memwrite_new,
-	input memread_new,
 	input [15:0] mem_addr_new, 
 	input [15:0] reg_write_data_new, 
 	input [15:0] alu_source_2_new, 
@@ -13,7 +12,6 @@ module EX_MEM(
 	output regwrite_current,
 	output memtoreg_current,
 	output memwrite_current,
-	output memread_current,
 	output [15:0] mem_addr_current, 
 	output [15:0] alu_source_2_current, 
 	output [15:0] reg_write_data_current, 
@@ -64,12 +62,10 @@ wb wb(
 
 m mem(
 	.memwrite_new(memwrite_new),
-	.memread_new(memread_new),
 	.clk(clk),
 	.rst(rst), 
 	.wen(wen),
-	.memwrite_current(memwrite_current),
-	.memread_current(memread_current)
+	.memwrite_current(memwrite_current)
 );
 
 endmodule

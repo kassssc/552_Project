@@ -1,11 +1,9 @@
 module m(
 	input memwrite_new,
-	input memread_new,
 	input clk,
 	input rst, 
 	input wen,
-	output memwrite_current,
-	output memread_current
+	output memwrite_current
 );
 
 dff memwrite(
@@ -16,12 +14,5 @@ dff memwrite(
 	.wen(wen)
 );
 
-dff memread(
-	.instr_new(memread_new),
-	.instr_current(memread_current),
-	.clk(clk),
-	.rst(rst),
-	.wen(wen)
-);
 
 endmodule
