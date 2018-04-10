@@ -5,7 +5,6 @@ module ID_EX(
 	input [15:0]instr_new,
 	input regwrite_new,
 	input [3:0]reg_write_select_new,
-	input alusrc_new,
 	input memtoreg_new,
 	input memwrite_new,
 	input clk,
@@ -17,7 +16,6 @@ module ID_EX(
 	output [15:0]instr_current,
 	output regwrite_current,
 	output [3:0]reg_write_select_current,
-	output alusrc_current,
 	output memtoreg_current,
 	output memwrite_current
 );
@@ -79,13 +77,11 @@ m mem(
 ex ex(
 	.aluop_new(aluop_new),
 	.regdst_new(regdst_new),
-	.alusrc_new(alusrc_new),
 	.clk(clk),
 	.rst(rst), 
 	.wen(wen),
 	.aluop_current(aluop_current),
-	.regdst_current(regdst_current),
-	.alusrc_current(alusrc_current)
+	.regdst_current(regdst_current)
 );
 
 endmodule
