@@ -122,10 +122,14 @@ module cpu_ptb();
             $finish;
          end 
 
-         $display("EX_Branch_current: %b", DUT.EX_Branch_current);
-         $display("EX_Branch_new: %b", DUT.EX_Branch_new);
-         $display("pc_plus_2: %b", DUT.pc_plus_2);
+         $display("ID_RegWrite: %b", DUT.ID_RegWrite);
+         $display("WB_RegWrite: %b", DUT.WB_RegWrite);
+         $display("MEM_RegWrite: %b", DUT.MEM_RegWrite);
 
+         $display("ID_reg_write_select: %b", DUT.ID_reg_write_select);
+         $display("WB_reg_write_select: %b", DUT.WB_reg_write_select);
+         $display("MEM_reg_write_select: %b", DUT.MEM_reg_write_select);
+         
       end      
 
    end
