@@ -130,6 +130,7 @@ module cpu_ptb();
          $display("ID_reg_write_select: %b", DUT.ID_reg_write_select);
          $display("EX_reg_write_select: %b", DUT.EX_reg_write_select);
          $display("WB_reg_write_select: %b", DUT.WB_reg_write_select);
+		 $display("EX_reg_write_select: %b", DUT.EX_reg_write_data);
          $display("MEM_reg_write_select: %b", DUT.MEM_reg_write_select);
          
          $display("ID_instr: %b", DUT.ID_instr);

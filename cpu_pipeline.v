@@ -17,7 +17,8 @@ wire [15:0] IF_pc_new, IF_instr;
 // ID signals received from IF
 wire [15:0] ID_pc, ID_instr;
 // ID signals passed to EX
-wire [15:0] ID_reg_data_1, ID_reg_data_2, ID_reg_write_select;
+wire [15:0] ID_reg_data_1, ID_reg_data_2;
+wire [3:0] ID_reg_write_select;
 wire ID_MemWrite, ID_MemToReg, ID_RegWrite;
 
 // also: ID_instr
@@ -27,7 +28,8 @@ wire EX_ALUimm;
 wire [15:0] EX_pc, EX_instr;
 wire [15:0] EX_ALU_src_2;
 // EX signals passed to MEM
-wire [15:0] EX_reg_write_data, EX_reg_write_select;
+wire [15:0] EX_reg_write_data;
+wire [3:0] EX_reg_write_select;
 wire [15:0] EX_mem_addr;
 wire [15:0] ALU_in_1, EX_ALU_in_2;
 wire EX_RegWrite, EX_MemToReg, EX_MemWrite;
@@ -42,11 +44,13 @@ wire MEM_MemToReg, MEM_MemWrite;
 wire [15:0] MEM_mem_addr, MEM_ALU_in_2;
 // MEM signals passed to WB
 wire MEM_RegWrite;
-wire [15:0] MEM_reg_write_data, MEM_reg_write_select;
+wire [15:0] MEM_reg_write_data;
+wire [3:0] MEM_reg_write_select;
 
 // WB signals received from MEM & used by ID
 wire WB_RegWrite;
-wire [15:0] WB_reg_write_data, WB_reg_write_select;
+wire [15:0] WB_reg_write_data;
+wire [3:0] WB_reg_write_select;
 
 //------------------------------------------------------------------------------
 // IF: INSTRUCTION FETCH STAGE
