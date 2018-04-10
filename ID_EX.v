@@ -63,15 +63,11 @@ wb wb(
 );
 
 m mem(
-	.branch_new(branch_new),
 	.memwrite_new(memwrite_new),
-	.memread_new(memread_new),
 	.clk(clk),
 	.rst(rst),
 	.wen(wen),
-	.branch_current(branch_current),
-	.memwrite_current(memwrite_current),
-	.memread_current(memread_current)
+	.memwrite_current(memwrite_current)
 );
 
 ex ex(
