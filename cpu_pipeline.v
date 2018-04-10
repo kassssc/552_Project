@@ -259,7 +259,7 @@ EX_MEM EXMEM (
 	.alu_source_2_new(EX_ALU_in_2[15:0]),
 	.clk(clk),
 	.wen(~stall),
-	.rst(flash | rst),
+	.rst(flush | rst),
 	.memtoreg_current(MEM_MemToReg),
 	.memwrite_current(MEM_MemWrite),
 	.reg_write_data_current(MEM_reg_write_data[15:0]),
