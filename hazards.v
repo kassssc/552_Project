@@ -22,6 +22,7 @@ wire hlt_h;
 wire hlt_h_d;
 wire ishlt;
 wire hlt_count;
+wire cout;
 wire [1:0]S;
 
 assign hlt_h = (if_id_instr[15:12] == 4'b1111)? 1'b1:1'b0;
@@ -45,7 +46,7 @@ dff hltff(
 	.rst(rst)
 );
 
-full_adder_2b adder(hlt_count, 2'b00, 1'b0, S, 1'b0);
+full_adder_2b adder({1'b0,hlt_count}, 2'b00, 1'b0, S, cout);
 
 assign hlt = (S == 2'b11)? 1'b1:1'b0;
 
