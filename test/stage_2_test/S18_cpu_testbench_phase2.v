@@ -123,13 +123,17 @@ module cpu_ptb();
          end 
 
          $display("ID_RegWrite: %b", DUT.ID_RegWrite);
+         $display("EX_RegWrite: %b", DUT.EX_RegWrite);
          $display("WB_RegWrite: %b", DUT.WB_RegWrite);
          $display("MEM_RegWrite: %b", DUT.MEM_RegWrite);
 
          $display("ID_reg_write_select: %b", DUT.ID_reg_write_select);
+         $display("EX_reg_write_select: %b", DUT.EX_reg_write_select);
          $display("WB_reg_write_select: %b", DUT.WB_reg_write_select);
          $display("MEM_reg_write_select: %b", DUT.MEM_reg_write_select);
          
+         $display("ID_instr: %b", DUT.ID_instr);
+
       end      
 
    end
