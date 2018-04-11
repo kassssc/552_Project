@@ -181,9 +181,6 @@ assign ALUshift = (
 assign imm_signextend = {{12{EX_instr[3]}}, EX_instr[3:0]};
 assign EX_ALU_src_2 = ALUshift? imm_signextend[15:0] : EX_reg_data_2[15:0];
 
-assign lhb_out = {EX_instr[7:0], EX_reg_data_1[7:0]};
-assign llb_out = {EX_reg_data_1[15:8], EX_instr[7:0]};
-
 assign mem_addr_offset = {{12{EX_instr[3]}}, EX_instr[3:0] << 1};
 
 // Mem stage will choose between this and mem read output
@@ -201,6 +198,9 @@ assign ALU_in_1 = (fwd_alu_A[1:0] == 2'b00)? EX_reg_data_1[15:0] :
 assign EX_ALU_in_2 = (fwd_alu_B[1:0] == 2'b00)? EX_ALU_src_2[15:0] :
 					 (fwd_alu_B[1])? MEM_reg_write_data[15:0] :
 					 WB_reg_write_data[15:0];
+
+assign lhb_out = {EX_instr[7:0], ALU_in_1[7:0]};
+assign llb_out = {ALU_in_1[15:8], EX_instr[7:0]};
 
 assign flag_new = flush? 3'b000 : flag_alu_out[2:0];
 
