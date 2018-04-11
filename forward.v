@@ -26,8 +26,8 @@ assign mem_rd_zero = ~|(mem_wb_regdest | 4'b0000);
 // if hazard happens, wire will be 1
 assign ex_need_mem_hazard_a = ex_mem_regwrite & ~ex_rd_zero & ex_rs_mem_rd_same;
 assign ex_need_mem_hazard_b = ex_mem_regwrite & ~ex_rd_zero & ex_rt_mem_rd_same;
-assign ex_need_wb_hazard_a = mem_wb_regwrite & ~mem_rd_zero & ex_rs_wb_rd_same ;
-assign ex_need_wb_hazard_b = mem_wb_regwrite & ~mem_rd_zero & ex_rt_wb_rd_same ;
+assign ex_need_wb_hazard_a = mem_wb_regwrite & ~mem_rd_zero & ex_rs_wb_rd_same & ~(ex_mem_regwrite & ~ex_rd_zero & ex_rs_mem_rd_same);
+assign ex_need_wb_hazard_b = mem_wb_regwrite & ~mem_rd_zero & ex_rt_wb_rd_same & ~(ex_mem_regwrite & ~ex_rd_zero & ex_rt_mem_rd_same);
 
 assign forwardA = ex_need_mem_hazard_a ? 2'b10 : (ex_need_wb_hazard_a ? 2'b01 : 2'b00);
 assign forwardB = ex_need_mem_hazard_b ? 2'b10 : (ex_need_wb_hazard_b ? 2'b01 : 2'b00);
@@ -48,14 +48,18 @@ and (EX/MEM.RegisterRd = ID/EX.RegisterRt)) ForwardB = 10
 2. MEM hazard:
 
 if (MEM/WB.RegWrite
-and (MEM/WB.RegisterRd ≠  0)
-and not(EX/MEM.RegWrite and EX/MEM.RegDest != 0)
-and (EX/MEM.RegRd == ID/EX.RegRs)
+and (MEM/WB.RegisterRd = 0)
+and not(EX/MEM.RegWrite 
+		and EX/MEM.RegDest != 0
+		and (EX/MEM.RegRd == ID/EX.RegRs)
+		)
 and (MEM/WB.RegisterRd = ID/EX.RegisterRs)) ForwardA = 01
 
 if (MEM/WB.RegWrite
-and (MEM/WB.RegisterRd ≠  0)
-and not(EX/MEM.RegWrite and EX/MEM.RegDest != 0)
-and (EX/MEM.RegRd == ID/EX.RegRt)
+and (MEM/WB.RegisterRd = 0)
+and not(EX/MEM.RegWrite 
+		and EX/MEM.RegDest != 0	
+		and (EX/MEM.RegRd == ID/EX.RegRt)
+		)
 and (MEM/WB.RegisterRd = ID/EX.RegisterRt)) ForwardB = 01
 */
