@@ -328,7 +328,7 @@ forward forwarder (
 	.ex_mem_regdest(MEM_reg_write_select[3:0]),
 	.mem_wb_regdest(WB_reg_write_select[3:0]),
 	.id_ex_regrs(reg_read_select_1[3:0]),
-	.id_ex_regrt(ID_reg_write_select[3:0]),
+	.id_ex_regrt(reg_read_select_2[3:0]),
 	.forwardA(fwd_alu_A[1:0]),
 	.forwardB(fwd_alu_B[1:0])
 );
