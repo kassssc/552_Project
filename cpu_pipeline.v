@@ -41,7 +41,7 @@ wire [15:0] EX_reg_data_1, EX_reg_data_2;
 
 // MEM signals received from EX
 wire MEM_MemToReg, MEM_MemWrite;
-wire [15:0] MEM_mem_addr, MEM_ALU_in_2;
+wire [15:0] MEM_mem_addr, MEM_ALU_in_1;
 // MEM signals passed to WB
 wire MEM_RegWrite;
 wire [15:0] MEM_reg_write_data;
