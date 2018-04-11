@@ -9,28 +9,28 @@ module forward (
 	output [1:0] forwardB
 );
 
-wire ex_rd_rs_same, ex_rd_rt_same, mem_rd_rs_same, mem_rd_rt_same;
+wire ex_rs_mem_rd_same, ex_rt_mem_rd_same, ex_rs_wb_rd_same, ex_rt_wb_rd_same;
 wire ex_rd_zero, mem_rd_zero;
-wire ex_hazard_a, ex_hazard_b, mem_hazard_a, mem_hazard_b;
+wire ex_need_mem_hazard_a, ex_need_mem_hazard_b, ex_need_wb_hazard_a, ex_need_wb_hazard_b;
 
 // if two are same, wire will be 1
-assign ex_rd_rs_same = ~|(ex_mem_regdest ^ id_ex_regrs);
-assign ex_rd_rt_same = ~|(ex_mem_regdest ^ id_ex_regrt);
-assign mem_rd_rs_same = ~|(mem_wb_regdest ^ id_ex_regrs);
-assign mem_rd_rt_same = ~|(mem_wb_regdest ^ id_ex_regrt);
+assign ex_rs_mem_rd_same = ~|(ex_mem_regdest ^ id_ex_regrs);
+assign ex_rt_mem_rd_same = ~|(ex_mem_regdest ^ id_ex_regrt);
+assign ex_rs_wb_rd_same = ~|(mem_wb_regdest ^ id_ex_regrs);
+assign ex_rt_wb_rd_same = ~|(mem_wb_regdest ^ id_ex_regrt);
 
 // if reg dest is zero, wire will be 1
 assign ex_rd_zero = ~|(ex_mem_regdest | 4'b0000);
 assign mem_rd_zero = ~|(mem_wb_regdest | 4'b0000);
 
 // if hazard happens, wire will be 1
-assign ex_hazard_a = ex_mem_regwrite & ~ex_rd_zero & ex_rd_rs_same;
-assign ex_hazard_b = ex_mem_regwrite & ~ex_rd_zero & ex_rd_rt_same;
-assign mem_hazard_a = mem_wb_regwrite & ~mem_rd_zero & mem_rd_rs_same ;
-assign mem_hazard_b = mem_wb_regwrite & ~mem_rd_zero & mem_rd_rt_same ;
+assign ex_need_mem_hazard_a = ex_mem_regwrite & ~ex_rd_zero & ex_rs_mem_rd_same;
+assign ex_need_mem_hazard_b = ex_mem_regwrite & ~ex_rd_zero & ex_rt_mem_rd_same;
+assign ex_need_wb_hazard_a = mem_wb_regwrite & ~mem_rd_zero & ex_rs_wb_rd_same ;
+assign ex_need_wb_hazard_b = mem_wb_regwrite & ~mem_rd_zero & ex_rt_wb_rd_same ;
 
-assign forwardA = ex_hazard_a ? 2'b10 : (mem_hazard_a ? 2'b01 : 2'b00);
-assign forwardB = ex_hazard_b ? 2'b10 : (mem_hazard_b ? 2'b01 : 2'b00);
+assign forwardA = ex_need_mem_hazard_a ? 2'b10 : (ex_need_wb_hazard_a ? 2'b01 : 2'b00);
+assign forwardB = ex_need_mem_hazard_b ? 2'b10 : (ex_need_wb_hazard_b ? 2'b01 : 2'b00);
 
 endmodule // forward
 
