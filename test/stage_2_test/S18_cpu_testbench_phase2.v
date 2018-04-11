@@ -133,10 +133,7 @@ module cpu_ptb();
          $display("WB_reg_write_select: %b", DUT.WB_reg_write_select);
          $display("MEM_reg_write_select: %b", DUT.MEM_reg_write_select);
 		 
-		 
-		 $display("flush: %b", DUT.flush);
-         $display("stall: %b", DUT.stall);
-		 $display("flush_out: %b", DUT.flush_out);
+
          $display("rst: %b", DUT.rst);
          $display("ID_instr: %b", DUT.ID_instr);
 		 $display("ex_pc: %b", DUT.EX_pc);
