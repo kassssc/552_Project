@@ -84,7 +84,7 @@ wire data_hazard_internal;
 
 assign id_ex_write_reg = id_ex_instr[11:8];
 
-wire lhb, llb, RegToMem, MemToReg;
+wire ID_lhb, ID_llb, RegToMem, MemToReg;
 
 assign lhb = (if_id_instr[15:12] == 4'b1010);
 assign llb = (if_id_instr[15:12] == 4'b1011);
@@ -92,7 +92,7 @@ assign MemToReg = (if_id_instr[15:12] == 4'b100); //LW
 assign RegToMem = (if_id_instr[15:12] == 4'b1001); //SW
 
 assign if_id_rs = (RegToMem | ID_lhb | ID_llb)? if_id_instr[11:8] : if_id_instr[7:4];
-assign if_id_rt = (RegToMem | MemToReg) if_id_instr[7:4] : if_id_instr[3:0];
+assign if_id_rt = (RegToMem | MemToReg)? if_id_instr[7:4] : if_id_instr[3:0];
 
 
 assign data_hazard_internal = (id_ex_MemToReg & (if_id_rs == id_ex_write_reg)) ? 1'b1:
