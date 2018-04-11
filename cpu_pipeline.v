@@ -321,7 +321,7 @@ wire [1:0]S_out;
 hazard_detection hazards (
 	.if_id_instr(ID_instr[15:0]),
 	.id_ex_instr(EX_instr[15:0]),
-	.id_ex_memread(EX_MemToReg),
+	.id_ex_MemToReg(EX_MemToReg),
 	.clk(clk),
 	.rst(rst),
 	.stall(stall),
