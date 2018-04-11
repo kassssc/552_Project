@@ -87,8 +87,8 @@ assign id_ex_write_reg = id_ex_instr[11:8];
 wire ID_lhb, ID_llb, RegToMem, MemToReg;
 wire reset;
 
-assign lhb = (if_id_instr[15:12] == 4'b1010);
-assign llb = (if_id_instr[15:12] == 4'b1011);
+assign ID_lhb = (if_id_instr[15:12] == 4'b1010);
+assign ID_llb = (if_id_instr[15:12] == 4'b1011);
 assign MemToReg = (if_id_instr[15:12] == 4'b100); //LW
 assign RegToMem = (if_id_instr[15:12] == 4'b1001); //SW
 
