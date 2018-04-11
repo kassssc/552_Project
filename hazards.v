@@ -67,25 +67,33 @@ assign hlt = hlt_count;
 //************************************
 //*	Data
 //************************************
+
 wire if_id_rs;
 wire if_id_rt;
 wire id_ex_rt;
 
-wire data_hazard_internal;
-wire data_hazard_out1_internal;
-wire data_hazard_out2_internal;
 
 assign if_id_rs_out = if_id_rs;
 assign if_id_rt_out = if_id_rt;
 assign id_ex_rt_out = id_ex_rt;
 
-assign data_hazard = data_hazard_internal;
-assign data_hazard_out1 = data_hazard_out1_internal;
-assign data_hazard_out2 = data_hazard_out2_internal;
+wire data_hazard_internal;
+wire data_hazard_out1_internal;
+wire data_hazard_out2_internal;
 
-assign if_id_rs = if_id_instr[7:4];
+
 assign if_id_rt = if_id_instr[3:0];
 assign id_ex_rt = id_ex_instr[3:0];
+
+
+wire ID_lhb, ID_llb, RegToMem;
+wire [3:0] ID_reg_read_select_1, ID_reg_read_select_2;
+
+assign ID_lhb = (if_id_instr[15:12] == 4'b1010);
+assign ID_llb = (if_id_instr[15:12] == 4'b1011);
+assign RegToMem = (if_id_instr[15:12] == 4'b1001);
+
+assign if_id_rs = (RegToMem | ID_lhb | ID_llb)? if_id_instr[11:8] : if_id_instr[7:4];
 
 
 assign data_hazard_internal = (id_ex_memread & (if_id_rs == id_ex_rt)) ? 1'b1:
