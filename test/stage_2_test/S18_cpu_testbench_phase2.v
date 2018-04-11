@@ -124,10 +124,12 @@ module cpu_ptb();
 
 
 	
-     $display("EX_reg_write_data:%h", DUT.EX_reg_write_data);
-     $display("EX_ALU_in_1:%h", DUT.EX_ALU_in_1);
-     $display("EX_ALU_in_2:%h", DUT.EX_ALU_in_2);
-     $display("ALU_out:%h", DUT.ALU_out);
+     $display("EX_ALU_src_2:%h", DUT.EX_ALU_src_2);
+     $display("MEM_reg_write_data:%h", DUT.MEM_reg_write_data);
+     $display("WB_reg_write_data:%h", DUT.WB_reg_write_data);
+       $display("EX_ALU_in_1:%h", DUT.EX_ALU_in_1);
+   $display("EX_ALU_in_2:%h", DUT.EX_ALU_in_2);
+   $display("fwd_alu_B:%b\n", DUT.fwd_alu_B);
 
 
       end      
