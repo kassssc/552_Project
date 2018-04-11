@@ -76,7 +76,7 @@ assign if_id_rs_out = if_id_rs;
 assign if_id_rt_out = if_id_rt;
 
 wire data_hazard_internal;
-
+data_hazard_out1_internal
 
 //assign if_id_rt = if_id_instr[3:0];
 //assign id_ex_write_reg = id_ex_instr[3:0];
@@ -85,6 +85,7 @@ wire data_hazard_internal;
 assign id_ex_write_reg = id_ex_instr[11:8];
 
 wire ID_lhb, ID_llb, RegToMem, MemToReg;
+wire reset;
 
 assign lhb = (if_id_instr[15:12] == 4'b1010);
 assign llb = (if_id_instr[15:12] == 4'b1011);
@@ -94,8 +95,10 @@ assign RegToMem = (if_id_instr[15:12] == 4'b1001); //SW
 assign if_id_rs = (RegToMem | ID_lhb | ID_llb)? if_id_instr[11:8] : if_id_instr[7:4];
 assign if_id_rt = (RegToMem | MemToReg)? if_id_instr[7:4] : if_id_instr[3:0];
 
+assign reset = data_hazard_internal;
 
-assign data_hazard_internal = (id_ex_MemToReg & (if_id_rs == id_ex_write_reg)) ? 1'b1:
+assign data_hazard_internal =   (reset) ?  1'b0:
+								(id_ex_MemToReg & (if_id_rs == id_ex_write_reg)) ? 1'b1:
 								(id_ex_MemToReg & (if_id_rt == id_ex_write_reg)) ? 1'b1:1'b0;
 
 
@@ -107,6 +110,7 @@ assign data_hazard_internal = (id_ex_MemToReg & (if_id_rs == id_ex_write_reg)) ?
 	.clk(clk),
 	.rst(rst)
 );
+/*
 dff dataff2(
 	.d(data_hazard_out1_internal),
 	.q(data_hazard_out2_internal),
