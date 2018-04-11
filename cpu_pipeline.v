@@ -309,7 +309,12 @@ MEM_WB MEMWB (
 //------------------------------------------------------------------------------
 
 wire [1:0]S_out;
-
+wire data_hazard;
+wire data_hazard_out1;
+wire data_hazard_out2;
+wire if_id_rs_out;
+wire if_id_rt_out;
+wire id_ex_rt_out;
 hazard_detection hazards (
 	.if_id_instr(IF_instr[15:0]),
 	.id_ex_instr(ID_instr[15:0]),
@@ -318,7 +323,13 @@ hazard_detection hazards (
 	.rst(rst),
 	.stall(stall),
 	.hlt_out(hlt),
-	.S_out(S_out)
+	.S_out(S_out),
+	.data_hazard(data_hazard),
+	.data_hazard_out1(data_hazard_out1),
+	.data_hazard_out2(data_hazard_out2),
+	.if_id_rs_out(if_id_rs_out),
+	.if_id_rt_out(if_id_rt_out),
+	.id_ex_rt_out(id_ex_rt_out)
 );
 
 forward forwarder (

@@ -85,7 +85,7 @@ module cpu_ptb();
          if (Halt || RegWrite || MemWrite) begin
             inst_count = inst_count + 1;
          end
-         $fdisplay(sim_log_file, "SIMLOG:: Cycle %d PC: %8x I: %8x R: %d %3d %8x M: %d %d %8x %8x %8x",
+         $fdisplay(sim_log_file, "SIMLOG:: Cycle%d PC:%8x I:%8x R:%d %3d %8x M:%d %d %8x %8x %8x",
                   cycle_count,
                   PC,
                   Inst,
@@ -98,23 +98,23 @@ module cpu_ptb();
                   MemDataIn,
 		  MemDataOut);
          if (RegWrite) begin
-            $fdisplay(trace_file,"REG: %d VALUE: 0x%04x",
+            $fdisplay(trace_file,"REG:%d VALUE:0x%04x",
                       WriteRegister,
                       WriteData );            
          end
          if (MemRead) begin
-            $fdisplay(trace_file,"LOAD: ADDR: 0x%04x VALUE: 0x%04x",
+            $fdisplay(trace_file,"LOAD: ADDR:0x%04x VALUE:0x%04x",
                       MemAddress, MemDataOut );
          end
 
          if (MemWrite) begin
-            $fdisplay(trace_file,"STORE: ADDR: 0x%04x VALUE: 0x%04x",
+            $fdisplay(trace_file,"STORE: ADDR:0x%04x VALUE:0x%04x",
                       MemAddress, MemDataIn  );
          end
          if (Halt) begin
             $fdisplay(sim_log_file, "SIMLOG:: Processor halted\n");
-            $fdisplay(sim_log_file, "SIMLOG:: sim_cycles %d\n", DUT.S_out);
-            $fdisplay(sim_log_file, "SIMLOG:: inst_count %d\n", inst_count);
+            $fdisplay(sim_log_file, "SIMLOG:: sim_cycles%d\n", DUT.S_out);
+            $fdisplay(sim_log_file, "SIMLOG:: inst_count%d\n", inst_count);
 
             $fclose(trace_file);
             $fclose(sim_log_file);
@@ -122,7 +122,7 @@ module cpu_ptb();
             $finish;
          end 
 
-         $display("ID_RegWrite: %b", DUT.ID_RegWrite);
+         /*$display("ID_RegWrite: %b", DUT.ID_RegWrite);
          $display("EX_RegWrite: %b", DUT.EX_RegWrite);
          $display("WB_RegWrite: %b", DUT.WB_RegWrite);
 		 $display("EX_RegWrite: %b", DUT.EX_RegWrite);
@@ -133,7 +133,13 @@ module cpu_ptb();
          $display("WB_reg_write_select: %b", DUT.WB_reg_write_select);
          $display("MEM_reg_write_select: %b", DUT.MEM_reg_write_select);
 		 
+<<<<<<< HEAD
 
+=======
+		 
+		 $display("flush: %b", DUT.flush);
+         $display("stall: %b", DUT.stall);
+>>>>>>> bd7bbfcd30756011fa7068af6b566779374ee4ed
          $display("rst: %b", DUT.rst);
          $display("ID_instr: %b", DUT.ID_instr);
 		 $display("ex_pc: %b", DUT.EX_pc);
@@ -141,11 +147,16 @@ module cpu_ptb();
 		 $display("EX_Branch_current: %b", DUT.EX_Branch_current);
 		 $display("EX_pc_branch_target: %b", DUT.EX_pc_branch_target);
 		 $display("pc_plus_2: %b", DUT.pc_plus_2);
-		 
+		 */
+	
+       $display("ID_reg_data_1:%b", DUT.ID_reg_data_1);
+       $display("ID_reg_data_2:%b", DUT.ID_reg_data_2);
+       $display("EX_reg_data_1:%b", DUT.EX_reg_data_1);
+       $display("EX_reg_data_2:%b", DUT.EX_reg_data_2);
 
-      $display("EX_Branch_current: %b", DUT.EX_Branch_current);
-      $display("flush: %b", DUT.flush);
-      $display("stall: %b", DUT.stall);
+     $display("EX_reg_write_data:%b", DUT.EX_reg_write_data);
+     $display("MEM_reg_write_data:%b", DUT.MEM_reg_write_data);
+     $display("WB_reg_write_data:%b", DUT.WB_reg_write_data);
 
 
       end      

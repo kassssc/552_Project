@@ -54,7 +54,7 @@ state_reg instr(
 
 wb wb(
 	.regwrite_new(regwrite_new),
-	.memtoreg_new(memread_new),
+	.memtoreg_new(memtoreg_new),
 	.wen(wen),
 	.clk(clk),
 	.rst(rst),
@@ -71,7 +71,7 @@ m mem(
 );
 
 reg_4bit reg_write_select(
-	.reg_new(reg_write_select_new),	
+	.reg_new(reg_write_select_new),
 	.wen(wen),
 	.clk(clk),
 	.rst(rst),
