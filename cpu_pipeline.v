@@ -260,7 +260,7 @@ EX_MEM EXMEM (
 	.alu_source_2_new(EX_ALU_in_2[15:0]),
 	.clk(clk),
 	.wen(~stall),
-	.rst(flush | rst),
+	.rst(rst),
 	.memtoreg_current(MEM_MemToReg),
 	.memwrite_current(MEM_MemWrite),
 	.reg_write_data_current(MEM_EX_reg_write_data[15:0]),
@@ -309,7 +309,7 @@ MEM_WB MEMWB (
 //------------------------------------------------------------------------------
 
 wire [1:0]S_out;
-wire flush_out;
+
 hazard_detection hazards (
 	.if_id_instr(IF_instr[15:0]),
 	.id_ex_instr(ID_instr[15:0]),
@@ -317,7 +317,6 @@ hazard_detection hazards (
 	.clk(clk),
 	.rst(rst),
 	.stall(stall),
-	.flush(flush_out),
 	.hlt_out(hlt),
 	.S_out(S_out)
 );
