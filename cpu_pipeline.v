@@ -319,7 +319,7 @@ hazard_detection hazards (
 	.rst(rst),
 	.stall(stall),
 	.hlt_out(hlt),
-	.S_out(S_out),
+	.S_out(S_out)
 );
 
 forward forwarder (
