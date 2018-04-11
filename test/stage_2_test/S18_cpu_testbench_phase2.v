@@ -113,7 +113,7 @@ module cpu_ptb();
          end
          if (Halt) begin
             $fdisplay(sim_log_file, "SIMLOG:: Processor halted\n");
-            $fdisplay(sim_log_file, "SIMLOG:: sim_cycles%d\n", DUT.S_out);
+            $fdisplay(sim_log_file, "SIMLOG:: sim_cycles%d\n", cycle_count);
             $fdisplay(sim_log_file, "SIMLOG:: inst_count%d\n", inst_count);
 
             $fclose(trace_file);
