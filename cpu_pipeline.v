@@ -106,7 +106,6 @@ wire [3:0] ID_reg_read_select_1, ID_reg_read_select_2;
 
 assign ID_lhb = (ID_instr[15:12] == 4'b1010);
 assign ID_llb = (ID_instr[15:12] == 4'b1011);
-assign ID_MemToReg = (ID_instr[15:12] == 4'b1000); //LW
 assign RegToMem = (ID_instr[15:12] == 4'b1001); //SW
 
 assign ID_reg_write_select = ID_instr[11:8];
