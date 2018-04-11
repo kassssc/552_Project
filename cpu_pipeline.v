@@ -188,7 +188,6 @@ assign mem_addr_offset = {{12{EX_instr[3]}}, EX_instr[3:0] << 1};
 
 // Mem stage will choose between this and mem read output
 assign EX_reg_write_data = (ALUop)? ALU_out[15:0] :		// ALUop
-						   (SW)? EX_reg_data_1[15:0] :
 						   (EX_lhb)? lhb_out[15:0] :	// LHB
 						   (EX_llb)? llb_out[15:0] :	// LLB
 						   EX_pc[15:0];					// PCS
@@ -266,7 +265,7 @@ EX_MEM EXMEM (
 	.reg_write_select_new(EX_reg_write_select[3:0]),
 	.regwrite_new(EX_RegWrite),
 	.mem_addr_new(EX_mem_addr[15:0]),
-	.alu_source_2_new(EX_ALU_in_2[15:0]),
+	.alu_source_2_new(EX_ALU_in_1[15:0]),
 	.clk(clk),
 	.wen(~stall),
 	.rst(rst),
@@ -276,7 +275,7 @@ EX_MEM EXMEM (
 	.reg_write_select_current(MEM_reg_write_select[3:0]),
 	.regwrite_current(MEM_RegWrite),
 	.mem_addr_current(MEM_mem_addr[15:0]),
-	.alu_source_2_current(MEM_ALU_in_2[15:0])
+	.alu_source_2_current(MEM_ALU_in_1[15:0])
 );
 
 //------------------------------------------------------------------------------
@@ -290,7 +289,7 @@ assign MEM_reg_write_data = MEM_MemToReg? mem_read_out[15:0] : MEM_EX_reg_write_
 
 memory1c data_mem(
 	.data_out(mem_read_out[15:0]),
-	.data_in(MEM_ALU_in_2[15:0]),
+	.data_in(MEM_ALU_in_1[15:0]),
 	.addr(MEM_mem_addr[15:0]),
 	.enable(MemEnable),
 	.wr(MEM_MemWrite),
