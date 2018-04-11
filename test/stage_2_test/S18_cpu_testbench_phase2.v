@@ -122,7 +122,7 @@ module cpu_ptb();
             $finish;
          end 
 
-         $display("ID_RegWrite: %b", DUT.ID_RegWrite);
+         /*$display("ID_RegWrite: %b", DUT.ID_RegWrite);
          $display("EX_RegWrite: %b", DUT.EX_RegWrite);
          $display("WB_RegWrite: %b", DUT.WB_RegWrite);
 		 $display("EX_RegWrite: %b", DUT.EX_RegWrite);
@@ -136,7 +136,6 @@ module cpu_ptb();
 		 
 		 $display("flush: %b", DUT.flush);
          $display("stall: %b", DUT.stall);
-		 $display("flush_out: %b", DUT.flush_out);
          $display("rst: %b", DUT.rst);
          $display("ID_instr: %b", DUT.ID_instr);
 		 $display("ex_pc: %b", DUT.EX_pc);
@@ -144,6 +143,16 @@ module cpu_ptb();
 		 $display("EX_Branch_current: %b", DUT.EX_Branch_current);
 		 $display("EX_pc_branch_target: %b", DUT.EX_pc_branch_target);
 		 $display("pc_plus_2: %b", DUT.pc_plus_2);
+		 */
+		 $display("data_hazard: %b", DUT.data_hazard);
+		 $display("data_hazard_out1: %b", DUT.data_hazard_out1);
+		 $display("data_hazard_out2: %b", DUT.data_hazard_out2);
+		 
+		 $display("if_id_rs: %b", DUT.if_id_rs_out);
+		 $display("if_id_rt: %b", DUT.if_id_rt_out);
+		 $display("id_ex_rt: %b", DUT.id_ex_rt_out);
+		 $display("idmemtoreg: %b", DUT.ID_MemToReg);
+		 $display("exmemtoreg: %b", DUT.EX_MemToReg);
 		 
 
       end      

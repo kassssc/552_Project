@@ -6,7 +6,14 @@ module hazard_detection(
 	input rst,
 	output stall,
 	output hlt_out,
-	output [1:0]S_out
+	output [1:0]S_out,
+	output data_hazard,
+	output data_hazard_out1,
+	output data_hazard_out2,
+	output if_id_rs_out,
+	output if_id_rt_out,
+	output id_ex_rt_out
+
 );
 
 wire control;
@@ -58,30 +65,43 @@ wire if_id_rs;
 wire if_id_rt;
 wire id_ex_rt;
 
+wire data_hazard_internal;
+wire data_hazard_out1_internal;
+wire data_hazard_out2_internal;
+
+assign if_id_rs_out = if_id_rs;
+assign if_id_rt_out = if_id_rt;
+assign id_ex_rt_out = id_ex_rt;
+
+assign data_hazard = data_hazard_internal;
+assign data_hazard_out1 = data_hazard_out1_internal;
+assign data_hazard_out2 = data_hazard_out2_internal;
+
 assign if_id_rs = if_id_instr[7:4];
 assign if_id_rt = if_id_instr[3:0];
-assign id_ex_rt = if_id_instr[3:0];
+assign id_ex_rt = id_ex_instr[3:0];
 
-assign data_hazard = (id_ex_memread & (if_id_rs == id_ex_rt)) ? 1'b1:
-					 (id_ex_memread & (if_id_rt == id_ex_rt)) ? 1'b1:1'b0;
 
-wire data_hazard_out1;
-wire data_hazard_out2;
+assign data_hazard_internal = (id_ex_memread & (if_id_rs == id_ex_rt)) ? 1'b1:
+								(id_ex_memread & (if_id_rt == id_ex_rt)) ? 1'b1:1'b0;
+
+
 
 dff dataff1(
-	.d(data_hazard),
-	.q(data_hazard_out1),
+	.d(data_hazard_internal),
+	.q(data_hazard_out1_internal),
 	.wen(1'b1),
 	.clk(clk),
 	.rst(rst)
 );
 dff dataff2(
-	.d(data_hazard_out1),
-	.q(data_hazard_out2),
+	.d(data_hazard_out1_internal),
+	.q(data_hazard_out2_internal),
 	.wen(1'b1),
 	.clk(clk),
 	.rst(rst)
 );
-assign stall = hlt | (data_hazard | data_hazard_out1 | data_hazard_out2);
+
+assign stall = hlt | (data_hazard_internal | data_hazard_out1_internal | data_hazard_out2_internal);
 
 endmodule
