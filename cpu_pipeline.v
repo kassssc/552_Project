@@ -317,8 +317,8 @@ MEM_WB MEMWB (
 
 wire [1:0]S_out;
 hazard_detection hazards (
-	.if_id_instr(IF_instr[15:0]),
-	.id_ex_instr(ID_instr[15:0]),
+	.if_id_instr(ID_instr[15:0]),
+	.id_ex_instr(EX_instr[15:0]),
 	.id_ex_memread(EX_MemToReg),
 	.clk(clk),
 	.rst(rst),
