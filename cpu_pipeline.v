@@ -268,7 +268,7 @@ EX_MEM EXMEM (
 	.mem_addr_new(EX_mem_addr[15:0]),
 	.alu_source_2_new(EX_ALU_in_1[15:0]),
 	.clk(clk),
-	.wen(~stall),
+	.wen(1'b1),
 	.rst(rst),
 	.memtoreg_current(MEM_MemToReg),
 	.memwrite_current(MEM_MemWrite),
