@@ -147,7 +147,7 @@ ID_EX IDEX (
 	.memwrite_new(ID_MemWrite),
 	.clk(clk),
 	.rst(flush | rst),
-	.wen(stall),
+	.wen(~stall),
 	.pc_current(EX_pc[15:0]),
 	.data1_current(EX_reg_data_1[15:0]),
 	.data2_current(EX_reg_data_2[15:0]),
