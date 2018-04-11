@@ -2,6 +2,8 @@ module ID_EX(
 	input [15:0]pc_new,
 	input [15:0]data1_new,
 	input [15:0]data2_new,
+	input [3:0]sel_reg_1_new,
+	input [3:0]sel_reg_2_new,
 	input [15:0]instr_new,
 	input regwrite_new,
 	input [3:0]reg_write_select_new,
@@ -13,6 +15,8 @@ module ID_EX(
 	output [15:0]pc_current,
 	output [15:0]data1_current,
 	output [15:0]data2_current,
+	output [3:0]sel_reg_1_current,
+	output [3:0]sel_reg_2_current,
 	output [15:0]instr_current,
 	output regwrite_current,
 	output [3:0]reg_write_select_current,
@@ -76,6 +80,22 @@ reg_4bit reg_write_select(
 	.clk(clk),
 	.rst(rst),
 	.reg_current(reg_write_select_current)
+);
+
+reg_4bit sel_reg_1(
+	.reg_new(sel_reg_1_new),
+	.wen(wen),
+	.clk(clk),
+	.rst(rst),
+	.reg_current(sel_reg_1_current)
+);
+
+reg_4bit sel_reg_2(
+	.reg_new(sel_reg_2_new),
+	.wen(wen),
+	.clk(clk),
+	.rst(rst),
+	.reg_current(sel_reg_2_current)
 );
 
 ex ex(
