@@ -39,8 +39,8 @@ module cpu_ptb();
       $display("Hello world...simulation starting");
       $display("See verilogsim.plog and verilogsim.ptrace for output");
       inst_count = 0;
-      trace_file = $fopen("verilogsim.ptrace");
-      sim_log_file = $fopen("verilogsim.plog");
+      trace_file = $fopen("test1.ptrace");
+      sim_log_file = $fopen("test1.plog");
       
    end
 

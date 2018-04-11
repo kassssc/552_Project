@@ -5,8 +5,7 @@ module hazard_detection(
 	input clk,
 	input rst,
 	output stall,
-	output hlt_out,
-	output [1:0]S_out
+	output hlt_out
 );
 
 wire control;
