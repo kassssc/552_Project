@@ -114,6 +114,6 @@ dff dataff2(
 	.rst(rst)
 );*/
 
-assign stall = hlt | data_hazard_internal; //| data_hazard_out1_internal | data_hazard_out2_internal);
+assign stall = 1'b0;//hlt | data_hazard_internal; //| data_hazard_out1_internal | data_hazard_out2_internal);
 
 endmodule
