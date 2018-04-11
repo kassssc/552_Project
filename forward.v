@@ -9,28 +9,18 @@ module forward (
 	output [1:0] forwardB
 );
 
-wire ex_rs_mem_rd_same, ex_rt_mem_rd_same, ex_rs_wb_rd_same, ex_rt_wb_rd_same;
-wire ex_rd_zero, mem_rd_zero;
-wire ex_need_mem_hazard_a, ex_need_mem_hazard_b, ex_need_wb_hazard_a, ex_need_wb_hazard_b;
+wire [1:0] ex_hazard;
+wire [1:0] mem_hazard;
 
-// if two are same, wire will be 1
-assign ex_rs_mem_rd_same = ~|(ex_mem_regdest ^ id_ex_regrs);
-assign ex_rt_mem_rd_same = ~|(ex_mem_regdest ^ id_ex_regrt);
-assign ex_rs_wb_rd_same = ~|(mem_wb_regdest ^ id_ex_regrs);
-assign ex_rt_wb_rd_same = ~|(mem_wb_regdest ^ id_ex_regrt);
 
-// if reg dest is zero, wire will be 1
-assign ex_rd_zero = ~|(ex_mem_regdest | 4'b0000);
-assign mem_rd_zero = ~|(mem_wb_regdest | 4'b0000);
+assign ex_hazard[0] = ex_mem_regwrite & (ex_mem_regdest != 4'h0) & (ex_mem_regdest == id_ex_regrs);
+assign ex_hazard[1] = ex_mem_regwrite & (ex_mem_regdest != 4'h0) & (ex_mem_regdest == id_ex_regrt);
+assign mem_hazard[0] = mem_wb_regwrite & (mem_wb_regdest != 4'h0) & ~ex_hazard[0] & (mem_wb_regdest == id_ex_regrs);
+assign mem_hazard[1] = mem_wb_regwrite & (mem_wb_regdest != 4'h0) & ~ex_hazard[1] & (mem_wb_regdest == id_ex_regrt);
 
-// if hazard happens, wire will be 1
-assign ex_need_mem_hazard_a = ex_mem_regwrite & ~ex_rd_zero & ex_rs_mem_rd_same;
-assign ex_need_mem_hazard_b = ex_mem_regwrite & ~ex_rd_zero & ex_rt_mem_rd_same;
-assign ex_need_wb_hazard_a = mem_wb_regwrite & ~mem_rd_zero & ex_rs_wb_rd_same ;
-assign ex_need_wb_hazard_b = mem_wb_regwrite & ~mem_rd_zero & ex_rt_wb_rd_same ;
+assign forwardB = ex_hazard[0] ? 2'b10 : (mem_hazard[0] ? 2'b01 : 2'b0);
+assign forwardA = ex_hazard[1] ? 2'b10 : (mem_hazard[1] ? 2'b01 : 2'b0);
 
-assign forwardA = ex_need_mem_hazard_a ? 2'b10 : (ex_need_wb_hazard_a ? 2'b01 : 2'b00);
-assign forwardB = ex_need_mem_hazard_b ? 2'b10 : (ex_need_wb_hazard_b ? 2'b01 : 2'b00);
 
 endmodule // forward
 
