@@ -31,7 +31,7 @@ wire [15:0] EX_ALU_src_2;
 wire [15:0] EX_reg_write_data;
 wire [3:0] EX_reg_write_select;
 wire [15:0] EX_mem_addr;
-wire [15:0] ALU_in_1, EX_ALU_in_2;
+wire [15:0] EX_ALU_in_1, EX_ALU_in_2;
 wire EX_RegWrite, EX_MemToReg, EX_MemWrite;
 // EX signals used by IF
 wire EX_Branch_new, EX_Branch_current;
@@ -178,9 +178,6 @@ assign ALUshift = (
 					(EX_instr[15:12] == 4'b0110)
 				  );
 
-assign imm_signextend = {{12{EX_instr[3]}}, EX_instr[3:0]};
-assign EX_ALU_src_2 = ALUshift? imm_signextend[15:0] : EX_reg_data_2[15:0];
-
 assign mem_addr_offset = {{12{EX_instr[3]}}, EX_instr[3:0] << 1};
 
 // Mem stage will choose between this and mem read output
@@ -189,23 +186,28 @@ assign EX_reg_write_data = (ALUop)? ALU_out[15:0] :		// ALUop
 						   (EX_llb)? llb_out[15:0] :	// LLB
 						   EX_pc[15:0];					// PCS
 
+assign EX_ALU_src_2 = ALUshift? imm_signextend[15:0] : EX_reg_data_2[15:0];
+
 //
 // Handle Data Forwarding
 //
-assign ALU_in_1 = (fwd_alu_A[1:0] == 2'b00)? EX_reg_data_1[15:0] :
+assign EX_ALU_in_1 = (fwd_alu_A[1:0] == 2'b00)? EX_reg_data_1[15:0] :
 				  (fwd_alu_A[1])? MEM_reg_write_data[15:0] :
 				  WB_reg_write_data[15:0];
 assign EX_ALU_in_2 = (fwd_alu_B[1:0] == 2'b00)? EX_ALU_src_2[15:0] :
 					 (fwd_alu_B[1])? MEM_reg_write_data[15:0] :
 					 WB_reg_write_data[15:0];
 
-assign lhb_out = {EX_instr[7:0], ALU_in_1[7:0]};
-assign llb_out = {ALU_in_1[15:8], EX_instr[7:0]};
+assign imm_signextend = {{12{EX_instr[3]}}, EX_instr[3:0]};
+
+
+assign lhb_out = {EX_instr[7:0], EX_ALU_in_1[7:0]};
+assign llb_out = {EX_ALU_in_1[15:8], EX_instr[7:0]};
 
 assign flag_new = flush? 3'b000 : flag_alu_out[2:0];
 
 ALU alu (
-	.ALU_in1(ALU_in_1[15:0]),
+	.ALU_in1(EX_ALU_in_1[15:0]),
 	.ALU_in2(EX_ALU_in_2[15:0]),
 	.op(EX_instr[14:12]),
 	.ALU_out(ALU_out[15:0]),
