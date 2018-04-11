@@ -94,14 +94,19 @@ assign RegToMem = (if_id_instr[15:12] == 4'b1001); //SW
 assign if_id_rs = (RegToMem | ID_lhb | ID_llb)? if_id_instr[11:8] : if_id_instr[7:4];
 assign if_id_rt = (RegToMem | MemToReg)? if_id_instr[7:4] : if_id_instr[3:0];
 
-assign reset = data_hazard_internal;
 
-assign data_hazard_internal =   (reset) ?  1'b0:
+assign data_hazard_internal =   (~reset) ?  1'b0:
 								(id_ex_MemToReg & (if_id_rs == id_ex_write_reg)) ? 1'b1:
 								(id_ex_MemToReg & (if_id_rt == id_ex_write_reg)) ? 1'b1:1'b0;
 
 
-
+dff reset_ff(
+	.d(1'b1),
+	.q(reset),
+	.wen(1'b1),
+	.clk(clk),
+	.rst(data_hazard_internal)
+);
 /*dff dataff1(
 	.d(data_hazard_internal),
 	.q(data_hazard_out1_internal),
