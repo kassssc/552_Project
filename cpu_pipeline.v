@@ -166,7 +166,7 @@ ID_EX IDEX (
 //------------------------------------------------------------------------------
 // EX: EXECUTION STAGE
 //------------------------------------------------------------------------------
-wire EX_lhb, EX_llb, ALUop, SW, LW, BranchImm, BranchReg, ALUshift;
+wire EX_lhb, EX_llb, ALUop, SW, BranchImm, BranchReg, ALUshift;
 
 wire [2:0] flag_current, flag_new, flag_write_enable, flag_alu_out;
 wire [15:0] lhb_out, llb_out, ALU_out;
@@ -177,7 +177,7 @@ assign BranchImm = (EX_instr[15:12] == 4'b1100);
 assign BranchReg = (EX_instr[15:12] == 4'b1101);
 assign EX_lhb = (EX_instr[15:12] == 4'b1010);
 assign EX_llb = (EX_instr[15:12] == 4'b1011);
-assign SW = (EX_instr[15:12] == 4'b1000);
+assign SW = (EX_instr[15:12] == 4'b1001);
 assign ALUshift = (
 					(EX_instr[15:12] == 4'b0100) |
 					(EX_instr[15:12] == 4'b0101) |
