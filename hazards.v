@@ -5,7 +5,6 @@ module hazard_detection(
 	input clk,
 	input rst,
 	output stall,
-	output flush,
 	output hlt_out,
 	output [1:0]S_out
 );
@@ -83,7 +82,6 @@ dff dataff2(
 	.clk(clk),
 	.rst(rst)
 );
-assign flush = data_hazard | data_hazard_out1 | data_hazard_out2;
 assign stall = hlt | (data_hazard | data_hazard_out1 | data_hazard_out2);
 
 endmodule
