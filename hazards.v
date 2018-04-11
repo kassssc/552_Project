@@ -69,37 +69,34 @@ assign hlt = hlt_count;
 
 wire if_id_rs;
 wire if_id_rt;
-wire id_ex_rt;
+wire id_ex_write_reg;
 
 
 assign if_id_rs_out = if_id_rs;
 assign if_id_rt_out = if_id_rt;
-assign id_ex_rt_out = id_ex_rt;
 
 wire data_hazard_internal;
-wire data_hazard_out1_internal;
-wire data_hazard_out2_internal;
 
 
 //assign if_id_rt = if_id_instr[3:0];
-//assign id_ex_rt = id_ex_instr[3:0];
-
-assign if_id_rt = if_id_instr[3:0];
-assign id_ex_rt = id_ex_instr[11:8];
+//assign id_ex_write_reg = id_ex_instr[3:0];
 
 
-wire ID_lhb, ID_llb, RegToMem;
-wire [3:0] ID_reg_read_select_1, ID_reg_read_select_2;
+assign id_ex_write_reg = id_ex_instr[11:8];
 
-assign ID_lhb = (if_id_instr[15:12] == 4'b1010);
-assign ID_llb = (if_id_instr[15:12] == 4'b1011);
-assign RegToMem = (if_id_instr[15:12] == 4'b1001);
+wire lhb, llb, RegToMem, MemToReg;
+
+assign lhb = (if_id_instr[15:12] == 4'b1010);
+assign llb = (if_id_instr[15:12] == 4'b1011);
+assign MemToReg = (if_id_instr[15:12] == 4'b100); //LW
+assign RegToMem = (if_id_instr[15:12] == 4'b1001); //SW
 
 assign if_id_rs = (RegToMem | ID_lhb | ID_llb)? if_id_instr[11:8] : if_id_instr[7:4];
+assign if_id_rt = (RegToMem | MemToReg) if_id_instr[7:4] : if_id_instr[3:0];
 
 
-assign data_hazard_internal = (id_ex_MemToReg & (if_id_rs == id_ex_rt)) ? 1'b1:
-								(id_ex_MemToReg & (if_id_rt == id_ex_rt)) ? 1'b1:1'b0;
+assign data_hazard_internal = (id_ex_MemToReg & (if_id_rs == id_ex_write_reg)) ? 1'b1:
+								(id_ex_MemToReg & (if_id_rt == id_ex_write_reg)) ? 1'b1:1'b0;
 
 
 

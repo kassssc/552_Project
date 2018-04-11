@@ -247,7 +247,7 @@ BRANCH_CTRL branch_control (
 	.pc_out(EX_pc_branch_target[15:0])
 );
 CLA_16b mem_addr_adder (
-	.A(EX_ALU_in_1[15:0] & 16'hFFFE),
+	.A(EX_ALU_in_2[15:0] & 16'hFFFE),
 	.B(mem_addr_offset[15:0]),
 	.sub(1'b0),
 	.S(EX_mem_addr[15:0]),
