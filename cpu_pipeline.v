@@ -167,15 +167,15 @@ wire [2:0] flag_current, flag_new, flag_write_enable, flag_alu_out;
 wire [15:0] lhb_out, llb_out, ALU_out;
 wire [15:0] imm_signextend, mem_addr_offset;
 
-assign ALUop = (EX_instr[3] == 1'b0);
-assign BranchImm = (EX_instr[3:0] == 4'b1100);
-assign BranchReg = (EX_instr[3:0] == 4'b1101);
-assign EX_lhb = (EX_instr[3:0] == 4'b1010);
-assign EX_llb = (EX_instr[3:0] == 4'b1011);
+assign ALUop = (EX_instr[15] == 1'b0);
+assign BranchImm = (EX_instr[15:12] == 4'b1100);
+assign BranchReg = (EX_instr[15:12] == 4'b1101);
+assign EX_lhb = (EX_instr[15:12] == 4'b1010);
+assign EX_llb = (EX_instr[15:12] == 4'b1011);
 assign ALUshift = (
-					(EX_instr[3:0] == 4'b0100) |
-					(EX_instr[3:0] == 4'b0101) |
-					(EX_instr[3:0] == 4'b0110)
+					(EX_instr[15:12] == 4'b0100) |
+					(EX_instr[15:12] == 4'b0101) |
+					(EX_instr[15:12] == 4'b0110)
 				  );
 
 assign imm_signextend = {{12{EX_instr[3]}}, EX_instr[3:0]};
