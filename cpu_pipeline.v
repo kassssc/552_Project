@@ -106,11 +106,12 @@ wire [3:0] ID_reg_read_select_1, ID_reg_read_select_2;
 
 assign ID_lhb = (ID_instr[15:12] == 4'b1010);
 assign ID_llb = (ID_instr[15:12] == 4'b1011);
-assign RegToMem = (ID_instr[15:12] == 4'b1001);
+assign ID_MemToReg = (ID_instr[15:12] == 4'b1000); //LW
+assign RegToMem = (ID_instr[15:12] == 4'b1001); //SW
 
 assign ID_reg_write_select = ID_instr[11:8];
 assign ID_reg_read_select_1 = (RegToMem | ID_lhb | ID_llb)? ID_instr[11:8] : ID_instr[7:4];
-assign ID_reg_read_select_2 = ID_instr[3:0];
+assign ID_reg_read_select_2 = (RegToMem | ID_MemToReg)? ID_instr[7:4] : ID_instr[3:0];
 
 CTRL_UNIT control_unit (
 	.instr(ID_instr[15:12]),
@@ -166,7 +167,7 @@ ID_EX IDEX (
 //------------------------------------------------------------------------------
 // EX: EXECUTION STAGE
 //------------------------------------------------------------------------------
-wire EX_lhb, EX_llb, ALUop, BranchImm, BranchReg, ALUshift;
+wire EX_lhb, EX_llb, ALUop, SW, LW, BranchImm, BranchReg, ALUshift;
 
 wire [2:0] flag_current, flag_new, flag_write_enable, flag_alu_out;
 wire [15:0] lhb_out, llb_out, ALU_out;
@@ -177,6 +178,7 @@ assign BranchImm = (EX_instr[15:12] == 4'b1100);
 assign BranchReg = (EX_instr[15:12] == 4'b1101);
 assign EX_lhb = (EX_instr[15:12] == 4'b1010);
 assign EX_llb = (EX_instr[15:12] == 4'b1011);
+assign SW = (EX_instr[15:12] == 4'b1000);
 assign ALUshift = (
 					(EX_instr[15:12] == 4'b0100) |
 					(EX_instr[15:12] == 4'b0101) |
@@ -187,6 +189,7 @@ assign mem_addr_offset = {{12{EX_instr[3]}}, EX_instr[3:0] << 1};
 
 // Mem stage will choose between this and mem read output
 assign EX_reg_write_data = (ALUop)? ALU_out[15:0] :		// ALUop
+						   (SW)? EX_reg_data_1[15:0]
 						   (EX_lhb)? lhb_out[15:0] :	// LHB
 						   (EX_llb)? llb_out[15:0] :	// LLB
 						   EX_pc[15:0];					// PCS
@@ -245,7 +248,7 @@ BRANCH_CTRL branch_control (
 	.pc_out(EX_pc_branch_target[15:0])
 );
 CLA_16b mem_addr_adder (
-	.A(EX_reg_data_1[15:0] & 16'hFFFE),
+	.A(EX_reg_data_2[15:0] & 16'hFFFE),
 	.B(mem_addr_offset[15:0]),
 	.sub(1'b0),
 	.S(EX_mem_addr[15:0]),
