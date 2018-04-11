@@ -102,15 +102,15 @@ IF_ID IFID(
 // ID: INSTRUCTION DECODE STAGE
 //------------------------------------------------------------------------------
 wire ID_lhb, ID_llb;
-wire [3:0] reg_read_select_1, reg_read_select_2;
+wire [3:0] ID_reg_read_select_1, ID_reg_read_select_2;
 
 assign ID_lhb = (ID_instr[15:12] == 4'b1010);
 assign ID_llb = (ID_instr[15:12] == 4'b1011);
 assign RegToMem = (ID_instr[15:12] == 4'b1001);
 
 assign ID_reg_write_select = ID_instr[11:8];
-assign reg_read_select_1 = (RegToMem | ID_lhb | ID_llb)? ID_instr[11:8] : ID_instr[7:4];
-assign reg_read_select_2 = ID_instr[3:0];
+assign ID_reg_read_select_1 = (RegToMem | ID_lhb | ID_llb)? ID_instr[11:8] : ID_instr[7:4];
+assign ID_reg_read_select_2 = ID_instr[3:0];
 
 CTRL_UNIT control_unit (
 	.instr(ID_instr[15:12]),
@@ -124,8 +124,8 @@ CTRL_UNIT control_unit (
 RegisterFile register_file (
 	.clk(clk),
 	.rst(rst),
-	.SrcReg1(reg_read_select_1[3:0]),
-	.SrcReg2(reg_read_select_2[3:0]),
+	.SrcReg1(ID_reg_read_select_1[3:0]),
+	.SrcReg2(ID_reg_read_select_2[3:0]),
 	.DstReg(WB_reg_write_select[3:0]),
 	.WriteReg(WB_RegWrite),
 	.DstData(WB_reg_write_data[15:0]),
@@ -136,10 +136,13 @@ RegisterFile register_file (
 //------------------------------------------------------------------------------
 // ID_EX State Reg
 //------------------------------------------------------------------------------
+wire [3:0] EX_reg_read_select_1, EX_reg_read_select_2;
 ID_EX IDEX (
 	.pc_new(ID_pc[15:0]),
 	.data1_new(ID_reg_data_1[15:0]),
 	.data2_new(ID_reg_data_2[15:0]),
+	.sel_reg_1_new(ID_reg_read_select_1[3:0]),
+	.sel_reg_2_new(ID_reg_read_select_2[3:0]),
 	.instr_new(ID_instr[15:0]),
 	.regwrite_new(ID_RegWrite),
 	.reg_write_select_new(ID_reg_write_select[3:0]),
@@ -151,6 +154,8 @@ ID_EX IDEX (
 	.pc_current(EX_pc[15:0]),
 	.data1_current(EX_reg_data_1[15:0]),
 	.data2_current(EX_reg_data_2[15:0]),
+	.sel_reg_1_current(EX_reg_read_select_1[3:0]),
+	.sel_reg_2_current(EX_reg_read_select_2[3:0]),
 	.instr_current(EX_instr[15:0]),
 	.regwrite_current(EX_RegWrite),
 	.reg_write_select_current(EX_reg_write_select[3:0]),
@@ -327,8 +332,8 @@ forward forwarder (
 	.mem_wb_regwrite(WB_RegWrite),
 	.ex_mem_regdest(MEM_reg_write_select[3:0]),
 	.mem_wb_regdest(WB_reg_write_select[3:0]),
-	.id_ex_regrs(reg_read_select_1[3:0]),
-	.id_ex_regrt(reg_read_select_2[3:0]),
+	.id_ex_regrs(EX_reg_read_select_1[3:0]),
+	.id_ex_regrt(EX_reg_read_select_2[3:0]),
 	.forwardA(fwd_alu_A[1:0]),
 	.forwardB(fwd_alu_B[1:0])
 );
