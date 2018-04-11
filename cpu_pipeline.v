@@ -322,6 +322,7 @@ hazard_detection hazards (
 	.if_id_instr(ID_instr[15:0]),
 	.id_ex_instr(EX_instr[15:0]),
 	.id_ex_MemToReg(EX_MemToReg),
+	.flush(flush),
 	.clk(clk),
 	.rst(rst),
 	.stall(stall),

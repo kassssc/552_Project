@@ -4,6 +4,7 @@ module hazard_detection(
 	input id_ex_MemToReg,
 	input clk,
 	input rst,
+	input flush,
 	output stall,
 	output hlt_out
 );
@@ -50,7 +51,7 @@ dff hlt_ff2(
 );
 
 // detect rising edge
-assign ishlt = (hlt_h3 & ~hlt_h3_d);
+assign ishlt = (flush)? 1'b0: (hlt_h3 & ~hlt_h3_d);
 
 dff hltff(
 	.d(1'b1),
