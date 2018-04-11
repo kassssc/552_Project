@@ -33,25 +33,25 @@ dff hlt_ff0(
 	.q(hlt_h1),
 	.wen(1'b1),
 	.clk(clk),
-	.rst(rst)
+	.rst(rst | flush)
 );
 dff hlt_ff1(
 	.d(hlt_h1),
 	.q(hlt_h2),
 	.wen(1'b1),
 	.clk(clk),
-	.rst(rst)
+	.rst(rst | flush)
 );
 dff hlt_ff2(
 	.d(hlt_h2),
 	.q(hlt_h3),
 	.wen(1'b1),
 	.clk(clk),
-	.rst(rst)
+	.rst(rst | flush)
 );
 
 // detect rising edge
-assign ishlt = (flush)? 1'b0: (hlt_h3 & ~hlt_h3_d);
+assign ishlt = hlt_h3 & ~hlt_h3_d;
 
 dff hltff(
 	.d(1'b1),
