@@ -188,7 +188,7 @@ assign mem_addr_offset = {{12{EX_instr[3]}}, EX_instr[3:0] << 1};
 
 // Mem stage will choose between this and mem read output
 assign EX_reg_write_data = (ALUop)? ALU_out[15:0] :		// ALUop
-						   (SW)? EX_reg_data_1[15:0]
+						   (SW)? EX_reg_data_1[15:0] :
 						   (EX_lhb)? lhb_out[15:0] :	// LHB
 						   (EX_llb)? llb_out[15:0] :	// LLB
 						   EX_pc[15:0];					// PCS
