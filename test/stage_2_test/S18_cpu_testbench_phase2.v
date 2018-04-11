@@ -142,6 +142,11 @@ module cpu_ptb();
 		 $display("ex_pc: %b", DUT.EX_pc);
 		 $display("does it pass: %b", DUT.ID_instr);
 
+      $display("EX_Branch_current: %b", DUT.EX_Branch_current);
+      $display("flush: %b", DUT.flush);
+      $display("stall: %b", DUT.stall);
+
+
       end      
 
    end
