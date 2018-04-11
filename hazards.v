@@ -6,14 +6,7 @@ module hazard_detection(
 	input rst,
 	output stall,
 	output hlt_out,
-	output [1:0]S_out,
-	output data_hazard,
-	output data_hazard_out1,
-	output data_hazard_out2,
-	output if_id_rs_out,
-	output if_id_rt_out,
-	output id_ex_rt_out
-
+	output [1:0]S_out
 );
 
 wire control;
@@ -23,28 +16,42 @@ wire data;
 //************************************
 //*	HLT
 //************************************
-assign hlt_out = hlt;
+wire hlt_h1, hlt_h2,hlt_h3,hlt_h3_d;
+assign hlt_out = hlt_h3;
 
 wire hlt_h;
 wire hlt_h_d;
 wire ishlt;
 wire hlt_count;
 wire cout;
-wire [1:0]S;
 
 assign hlt_h = (if_id_instr[15:12] == 4'b1111)? 1'b1:1'b0;
-assign S_out = S;
 
-dff hlt_ff(
+
+dff hlt_ff0(
 	.d(hlt_h),
-	.q(hlt_h_d),
+	.q(hlt_h1),
+	.wen(1'b1),
+	.clk(clk),
+	.rst(rst)
+);
+dff hlt_ff1(
+	.d(hlt_h1),
+	.q(hlt_h2),
+	.wen(1'b1),
+	.clk(clk),
+	.rst(rst)
+);
+dff hlt_ff2(
+	.d(hlt_h2),
+	.q(hlt_h3),
 	.wen(1'b1),
 	.clk(clk),
 	.rst(rst)
 );
 
 // detect rising edge
-assign ishlt = (hlt_h & ~hlt_h_d);
+assign ishlt = (hlt_h3 & ~hlt_h3_d);
 
 dff hltff(
 	.d(1'b1),
@@ -54,9 +61,8 @@ dff hltff(
 	.rst(rst)
 );
 
-full_adder_2b adder({1'b0,hlt_count}, 2'b00, 1'b0, S, cout);
 
-assign hlt = (S == 2'b11)? 1'b1:1'b0;
+assign hlt = hlt_count;
 
 //************************************
 //*	Data
@@ -86,8 +92,7 @@ assign data_hazard_internal = (id_ex_memread & (if_id_rs == id_ex_rt)) ? 1'b1:
 								(id_ex_memread & (if_id_rt == id_ex_rt)) ? 1'b1:1'b0;
 
 
-
-dff dataff1(
+/*dff dataff1(
 	.d(data_hazard_internal),
 	.q(data_hazard_out1_internal),
 	.wen(1'b1),
@@ -100,8 +105,8 @@ dff dataff2(
 	.wen(1'b1),
 	.clk(clk),
 	.rst(rst)
-);
+);*/
 
-assign stall = hlt | (data_hazard_internal | data_hazard_out1_internal | data_hazard_out2_internal);
+assign stall = hlt | data_hazard_internal //| data_hazard_out1_internal | data_hazard_out2_internal);
 
 endmodule
