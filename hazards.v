@@ -76,7 +76,6 @@ assign if_id_rs_out = if_id_rs;
 assign if_id_rt_out = if_id_rt;
 
 wire data_hazard_internal;
-data_hazard_out1_internal
 
 //assign if_id_rt = if_id_instr[3:0];
 //assign id_ex_write_reg = id_ex_instr[3:0];
