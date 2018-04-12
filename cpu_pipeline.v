@@ -242,7 +242,7 @@ BRANCH_CTRL branch_control (
 	.imm(EX_instr[8:0]),
 	.cc(EX_instr[11:9]),
 	.flag(flag_current[2:0]),
-	.branch_reg_data(EX_reg_data_1[15:0]),
+	.branch_reg_data(EX_ALU_in_1[15:0]),
 	.BranchOut(EX_Branch_new),
 	.pc_out(EX_pc_branch_target[15:0])
 );
