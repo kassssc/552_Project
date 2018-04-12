@@ -58,7 +58,7 @@ wire [3:0] WB_reg_write_select;
 // branch signal from ID stage
 wire [15:0] pc_current, pc_plus_2;
 
-assign IF_pc_new = EX_Branch_new? EX_pc_branch_target : pc_plus_2;
+assign IF_pc_new = EX_Branch_current? EX_pc_branch_target : pc_plus_2;
 
 state_reg pc_reg (
 	.state_new(IF_pc_new[15:0]),
@@ -341,7 +341,7 @@ forward forwarder (
 );
 
 assign rst = ~rst_n;
-assign flush = EX_Branch_current? 1'b1 : 1'b0;
+assign flush = EX_Branch_new? 1'b1 : 1'b0;
 assign pc_out = pc_current;
 
 endmodule
