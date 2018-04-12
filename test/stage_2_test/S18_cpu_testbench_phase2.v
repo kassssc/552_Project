@@ -39,8 +39,8 @@ module cpu_ptb();
       $display("Hello world...simulation starting");
       $display("See verilogsim.plog and verilogsim.ptrace for output");
       inst_count = 0;
-      trace_file = $fopen("test2.ptrace");
-      sim_log_file = $fopen("test2.plog");
+      trace_file = $fopen("test3.ptrace");
+      sim_log_file = $fopen("test3.plog");
       
    end
 
@@ -124,12 +124,8 @@ module cpu_ptb();
 
 
 	
-     $display("EX_ALU_src_2:%h", DUT.EX_ALU_src_2);
-     $display("MEM_reg_write_data:%h", DUT.MEM_reg_write_data);
-     $display("WB_reg_write_data:%h", DUT.WB_reg_write_data);
-       $display("EX_ALU_in_1:%h", DUT.EX_ALU_in_1);
-   $display("EX_ALU_in_2:%h", DUT.EX_ALU_in_2);
-   $display("fwd_alu_B:%b\n", DUT.fwd_alu_B);
+     $display("stall:%b", DUT.stall);
+     $display("flush:%b", DUT.flush);
 
 
       end      

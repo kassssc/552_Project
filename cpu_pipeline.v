@@ -341,7 +341,7 @@ forward forwarder (
 );
 
 assign rst = ~rst_n;
-assign flush = EX_Branch_new? 1'b1 : 1'b0;
+assign flush = EX_Branch_current? 1'b1 : 1'b0;
 assign pc_out = pc_current;
 
 endmodule
