@@ -16,7 +16,7 @@ wire data;
 //************************************
 //*	HLT
 //************************************
-wire hlt_h1, hlt_h2,hlt_h3,hlt_h3_d;
+wire hlt_h1, hlt_h2,hlt_h3;
 assign hlt_out = hlt_h3;
 
 wire hlt_h;
@@ -51,7 +51,7 @@ dff hlt_ff2(
 );
 
 // detect rising edge
-assign ishlt = hlt_h3 & ~hlt_h3_d;
+assign ishlt = hlt_h3 & ~hlt_h2;
 
 dff hltff(
 	.d(1'b1),
