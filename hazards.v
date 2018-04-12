@@ -51,7 +51,7 @@ dff hlt_ff2(
 );
 
 // detect rising edge
-assign ishlt = hlt_h3 & ~hlt_h2;
+assign ishlt = hlt_h3;
 
 dff hltff(
 	.d(1'b1),
