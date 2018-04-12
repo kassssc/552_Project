@@ -16,13 +16,12 @@ wire data;
 //************************************
 //*	HLT
 //************************************
-wire hlt_h1, hlt_h2,hlt_h3;
-assign hlt_out = hlt_h3;
+wire hlt_h1, hlt_h2, hlt_h3;
+assign hlt_out = hlt;
 
 wire hlt_h;
 wire hlt_h_d;
 wire ishlt;
-wire hlt_count;
 wire cout;
 
 assign hlt_h = (if_id_instr[15:12] == 4'b1111)? 1'b1:1'b0;
@@ -55,14 +54,13 @@ assign ishlt = hlt_h3;
 
 dff hltff(
 	.d(1'b1),
-	.q(hlt_count),
+	.q(hlt),
 	.wen(ishlt),
 	.clk(clk),
 	.rst(rst)
 );
 
 
-assign hlt = hlt_count;
 
 //************************************
 //*	Data
