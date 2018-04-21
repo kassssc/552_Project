@@ -3,26 +3,24 @@ module CACHE (
 	input rst,
 
 	// PIPELINE Interface
-	input pipe_MemRead,
-	input [15:0] pipe_read_addr,	// PC for I-cache, mem_read_addr for D-cache
-	input pipe_MemWrite,			// always 0 for I-cache
-	input [15:0] pipe_mem_write_addr,
-	input [15:0] pipe_mem_write_data,
+	input pipe_MemRead, // does the pipeline want to read something from mem?
+	input [15:0] pipe_read_addr, // PC for I-cache, mem_read_addr for D-cache
+	input pipe_MemWrite, // always 0 for I-cache
+	input [15:0] pipe_mem_write_addr, // mem addr the pipeline wants to write to
+	input [15:0] pipe_mem_write_data, // data the pipeline wants to write to mem
 
-	output [15:0] cache_data_out,
+	output [15:0] cache_data_out, // data read from the cache
 
 	// MEMORY MODULE INTERFACE
 	// Interfaces with memory
 	// These come from pipeline registers MEM stage
-	input MemDataValid,
-	input [15:0] mem_read_data,
+	input MemDataValid,	// is data from memory valid?
+	input [15:0] mem_read_data, // data read from memory
 
-	output MemRead,
-	output [15:0] mem_read_addr,
-	output MemWrite,
-	output [15:0] mem_write_addr,
-	output [15:0] mem_write_data,
-	output stall
+	output MemRead, // does cache want any data from mem?
+	output [15:0] mem_read_addr, // addr cache wants to read from mem when transferring data
+	output MemWrite, // Does the cache want to write to mem?
+	output stall // Stall pipeline while cache is busy transferring data from mem
 );
 
 wire WriteTagArray, WriteDataArray, CacheMiss, CacheHit, CacheBusy;
@@ -47,6 +45,9 @@ assign block_offset = addr[3:0];
 
 assign CacheHit = meta_data_out[5] & (meta_data_out[4:0] == tag[4:0]);
 assign CacheMiss = ~CacheHit & (pipe_MemRead | pipe_MemWrite);
+
+assign mem_write_addr = pipe_mem_write_addr;
+assign mem_write_data = pipe_mem_write_data;
 
 DECODER_3_8 block_offset_decoder (
 	.id_in(block_offset[3:1]),
@@ -83,7 +84,7 @@ MetaDataArray meta (
 );
 
 assign data_block_select_one_hot = CacheHit? block_select_one_hot[15:0] : 16'h0000;
-assign CacheWrite = WriteDataArray | MemWrite;
+assign CacheWrite = WriteDataArray | pipe_MemWrite;
 assign cache_data_in = MemDataValid? mem_read_data[15:0] : pipe_mem_write_data;
 
 DataArray data (
@@ -96,6 +97,7 @@ DataArray data (
 	.DataOut(cache_data_out[15:0])
 );
 
+assign MemWrite = CacheWrite;	// Write to mem also when writing to cache
 assign stall = CacheBusy; // Stall if transferring data from memory
 
 endmodule
