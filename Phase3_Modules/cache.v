@@ -2,8 +2,7 @@ module CACHE (
 	input clk,
 	input rst,
 
-	// are we doing a read/write?
-	// These come from pipeline registers IF stage
+	// PIPELINE Interface
 	input pipe_MemRead,
 	input [15:0] pipe_read_addr,	// PC for I-cache, mem_read_addr for D-cache
 	input pipe_MemWrite,			// always 0 for I-cache
@@ -12,7 +11,7 @@ module CACHE (
 
 	output [15:0] cache_data_out,
 
-	// are we doing it with memory?
+	// MEMORY MODULE INTERFACE
 	// Interfaces with memory
 	// These come from pipeline registers MEM stage
 	input MemDataValid,
@@ -46,7 +45,7 @@ assign set_index = addr[10:4];
 assign block_offset = addr[3:0];
 
 assign CacheHit = meta_data_out[5] & (meta_data_out[4:0] == tag[4:0]);
-assign CacheMiss = ~CacheHit;
+assign CacheMiss = ~CacheHit & (pipe_MemRead | pipe_MemWrite);
 
 DECODER_3_8 block_offset_decoder (
 	.id_in(block_offset[3:1]),
