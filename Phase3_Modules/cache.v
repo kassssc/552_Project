@@ -29,7 +29,7 @@ wire WriteTagArray, WriteDataArray, CacheMiss, CacheHit, CacheBusy;
 wire[15:0] addr;
 
 wire[7:0] meta_data_in, meta_data_out;
-wire[15:0] cache_data_in, cache_data_out;
+wire[15:0] cache_data_in;
 
 wire[4:0] tag;
 wire[6:0] set_index;
@@ -37,8 +37,9 @@ wire[3:0] block_offset;
 
 wire[127:0] block_select_one_hot;	// one-hot selects the set index in cache
 wire[7:0] word_select_one_hot;		// one-hot selects word in a cache block
+wire[15:0] data_block_select_one_hot;
 
-assign addr[15:0] == (pipe_MemWrite)? pipe_mem_write_addr[15:0] : pipe_read_addr[15:0];
+assign addr[15:0] = (pipe_MemWrite)? pipe_mem_write_addr[15:0] : pipe_read_addr[15:0];
 
 assign tag = addr[15:11];
 assign set_index = addr[10:4];
@@ -80,8 +81,6 @@ MetaDataArray meta (
 	.BlockEnable(block_select_one_hot[15:0]),
 	.DataOut(meta_data_out[7:0])
 );
-
-wire[15:0] data_block_select_one_hot, cache_data_in;
 
 assign data_block_select_one_hot = CacheHit? block_select_one_hot[15:0] : 16'h0000;
 assign CacheWrite = WriteDataArray | MemWrite;
