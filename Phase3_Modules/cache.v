@@ -1,21 +1,52 @@
 module CACHE (
 	input clk,
 	input rst,
-	input WriteEnable,
-	input[15:0] mem_addr,
-	input[15:0] data_in,
-	output[15:0] data_out
+
+	// are we doing a read/write?
+	// These come from pipeline registers IF stage
+	input pipe_MemRead,
+	input [15:0] pipe_read_addr,	// PC for I-cache, mem_read_addr for D-cache
+	input pipe_MemWrite,			// always 0 for I-cache
+	input [15:0] pipe_mem_write_addr,
+	input [15:0] pipe_mem_write_data,
+
+	output [15:0] cache_data_out,
+
+	// are we doing it with memory?
+	// Interfaces with memory
+	// These come from pipeline registers MEM stage
+	input MemDataValid,
+	input [15:0] mem_read_data,
+
+	output MemRead,
+	output [15:0] mem_read_addr,
+	output MemWrite,
+	output [15:0] mem_write_addr,
+	output [15:0] mem_write_data,
+	output stall
 );
+
+wire WriteTagArray, WriteDataArray, CacheMiss, CacheHit, CacheBusy;
+wire[15:0] addr;
+
+wire[7:0] meta_data_in, meta_data_out;
+wire[15:0] cache_data_in, cache_data_out;
 
 wire[4:0] tag;
 wire[6:0] set_index;
 wire[3:0] block_offset;
+
 wire[127:0] block_select_one_hot;	// one-hot selects the set index in cache
 wire[7:0] word_select_one_hot;		// one-hot selects word in a cache block
 
-assign tag = mem_addr[15:11];
-assign set_index = mem_addr[10:4];
-assign block_offset = mem_addr[3:0];
+assign addr[15:0] == (pipe_MemWrite)? pipe_mem_write_addr[15:0] : pipe_read_addr[15:0];
+
+assign tag = addr[15:11];
+assign set_index = addr[10:4];
+assign block_offset = addr[3:0];
+
+assign CacheHit = meta_data_out[5] & (meta_data_out[4:0] == tag[4:0]);
+assign CacheMiss = ~CacheHit;
 
 DECODER_3_8 block_offset_decoder (
 	.id_in(block_offset[3:1]),
@@ -29,35 +60,45 @@ DECODER_7_128 set_index_decoder (
 cache_fill_FSM cache_ctrl (
 	.clk(clk),
 	.rst(rst),
-	.miss_detected(),
-	.memory_data_valid(),
-	.miss_address(),
-	.memory_data(),
+	.miss_detected(CacheMiss),
+	.memory_data_valid(MemDataValid),
+	.miss_address(addr[15:0]),
+	.memory_data(mem_read_data[15:0]),
 
-	.fsm_busy(),
-	.write_data_array(),
-	.write_tag_array(),
-	.memory_address(mem_addr)
+	.fsm_busy(CacheBusy),
+	.write_data_array(WriteDataArray),
+	.write_tag_array(WriteTagArray),
+	.memory_address(mem_read_addr[15:0])
 );
+
+assign meta_data_in[7:0] = {3'b1, tag[4:0]};
 
 MetaDataArray meta (
 	.clk(clk),
 	.rst(rst),
-	.DataIn(),
-	.Write(),
-	.BlockEnable(),
-	.DataOut()
+	.DataIn(meta_data_in[7:0]),
+	.Write(WriteTagArray),
+	.BlockEnable(block_select_one_hot[15:0]),
+	.DataOut(meta_data_out[7:0])
 );
+
+wire[15:0] data_block_select_one_hot, cache_data_in;
+
+assign data_block_select_one_hot = CacheHit? block_select_one_hot[15:0] : 16'h0000;
+assign CacheWrite = WriteDataArray | MemWrite;
+assign cache_data_in = MemDataValid? mem_read_data[15:0] : pipe_mem_write_data;
 
 DataArray data (
 	.clk(clk),
 	.rst(rst),
-	.DataIn(),
-	.Write(),
-	.BlockEnable(),
-	.WordEnable(),
-	.DataOut()
+	.DataIn(cache_data_in[15:0]),
+	.Write(CacheWrite),
+	.BlockEnable(data_block_select_one_hot[15:0]),
+	.WordEnable(word_select_one_hot[7:0]),
+	.DataOut(cache_data_out[15:0])
 );
+
+assign stall = CacheBusy; // Stall if transferring data from memory
 
 endmodule
 
