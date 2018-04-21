@@ -1,6 +1,6 @@
 module cache_fill_FSM (
 	input clk,
-	input rst_n,
+	input rst,
 	input miss_detected, // active high when tag match logic detects a miss
 	input memory_data_valid, // active high indicates valid data returning on memory bus
 	input[15:0] miss_address, // address that missed the cache
@@ -23,7 +23,7 @@ dff state_fsm_busy (
 	.q(fsm_busy_curr),
 	.wen(1'b1),
 	.clk(clk),
-	.rst(~rst_n)
+	.rst(rst)
 );
 
 reg_3b block_offset_counter (
@@ -31,7 +31,7 @@ reg_3b block_offset_counter (
 	.reg_current(block_offset_curr[2:0]),
 	.wen(fsm_busy_curr & memory_data_valid),
 	.clk(clk),
-	.rst(~rst_n | finish_data_transfer)
+	.rst(rst | finish_data_transfer)
 );
 
 reg_16b mem_addr (
@@ -39,7 +39,7 @@ reg_16b mem_addr (
 	.reg_current(base_address[15:0]),
 	.wen(~fsm_busy_curr & miss_detected),
 	.clk(clk),
-	.rst(~rst_n | finish_data_transfer)
+	.rst(rst | finish_data_transfer)
 );
 
 adder_3b block_offset_adder (
@@ -55,24 +55,6 @@ CLA_16b addsub_16b (
 assign fsm_busy = fsm_busy_curr;
 assign write_data_array = fsm_busy_curr;
 assign write_tag_array = fsm_busy_curr & finish_data_transfer;
-
-endmodule
-
-module dff (q, d, wen, clk, rst);
-
-	output	q;		// DFF output
-	input	d;		// DFF input
-	input	wen;	// Write Enable
-	input	clk;	// Clock
-	input	rst;	// Reset (used synchronously)
-
-	reg	state;
-
-	assign q = state;
-
-	always @(posedge clk) begin
-	  state = rst ? 0 : (wen ? d : state);
-	end
 
 endmodule
 
