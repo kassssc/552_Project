@@ -52,6 +52,75 @@ wire WB_RegWrite;
 wire [15:0] WB_reg_write_data;
 wire [3:0] WB_reg_write_select;
 
+// Memory singals
+wire [15:0] memory4c_dataout;
+wire [15:0] memory4c_datain;
+wire [15:0] memory4c_address;
+wire 		memory4c_enable;
+wire 		memory4c_write;
+wire 		memory4c_datavalid;
+
+// I_cache
+wire 		pipe_MemRead_I;
+wire [15:0] pipe_read_addr_I;
+wire 		pipe_MemRead_I; // does the pipeline want to read something from mem?
+wire [15:0] pipe_read_addr_I; // PC for I-cache, mem_read_addr for D-cache
+wire 		pipe_MemWrite_I; // always 0 for I-cache
+wire [15:0] pipe_mem_write_addr_I; // mem addr the pipeline wants to write to
+wire [15:0] pipe_mem_write_data_I; // data the pipeline wants to write to mem
+
+wire [15:0] cache_data_out_I; // data read from the cache
+
+wire 		MemDataValid_I;	// is data from memory valid?
+wire [15:0] mem_read_data_I; // data read from memory
+
+wire 		MemRead_I; // does cache want any data from mem?
+wire [15:0] mem_read_addr_I; // addr cache wants to read from mem when transferring data
+wire 		MemWrite_I; // Does the cache want to write to mem?
+wire 		stall_I; // 
+
+// D_cache
+
+wire 		pipe_MemRead_D;
+wire [15:0] pipe_read_addr_D;
+wire 		pipe_MemRead_D; // does the pipeline want to read something from mem?
+wire [15:0] pipe_read_addr_D; // PC for I-cache, mem_read_addr for D-cache
+wire 		pipe_MemWrite_D; // always 0 for I-cache
+wire [15:0] pipe_mem_write_addr_D; // mem addr the pipeline wants to write to
+wire [15:0] pipe_mem_write_data_D; // data the pipeline wants to write to mem
+
+wire [15:0] cache_data_out_D; // data read from the cache
+
+wire 		MemDataValid_D;	// is data from memory valid?
+wire [15:0] mem_read_data_D; // data read from memory
+
+wire 		MemRead_D; // does cache want any data from mem?
+wire [15:0] mem_read_addr_D; // addr cache wants to read from mem when transferring data
+wire 		MemWrite_D; // Does the cache want to write to mem?
+wire 		stall_D; 
+
+//------------------------------------------------------------------------------
+// MEMORY: INSTANCIATION OF MAIN MEMORY
+//------------------------------------------------------------------------------
+assign memory4c_enable = MemRead_I | MemWrite_I | MemRead_D | MemWrite_D;
+assign memory4c_write = MemWrite_D | MemWrite_I;
+
+assign memory4c_address = (stall_I)? ((MemRead_I)? mem_read_addr_I: pipe_mem_write_addr_I):
+									 ((MemRead_D)? mem_read_addr_D:pipe_mem_write_addr_D);
+
+
+
+memory4c memory4c(
+	.data_out(memory4c_dataout), 
+	.data_in(memory4c_datain), 
+	.addr(memory4c_address), 
+	.enable(memory4c_enable), 
+	.wr(memory4c_write), 
+	.clk(clk), 
+	.rst(rst), 
+	.data_valid(memory4c_datavalid)
+);
+
 //------------------------------------------------------------------------------
 // IF: INSTRUCTION FETCH STAGE
 //------------------------------------------------------------------------------
@@ -64,8 +133,39 @@ state_reg pc_reg (
 	.state_new(IF_pc_new[15:0]),
 	.clk(clk),
 	.rst(rst),
-	.wen(~stall),
+	.wen(~(stall | stall_I | stall_D)),
 	.state_current(pc_current[15:0])
+);
+
+assign pipe_MemRead_I = 1'b1;
+assign pipe_read_addr_I = pc_current[15:0];
+assign IF_instr = cache_data_out;
+assign MemDataValid_I = memory4c_datavalid;
+assign mem_read_data_I = memory4c_dataout;
+
+CACHE  cache_I(
+	.clk(clk),
+	.rst(rst),
+
+	// PIPELINE Interface
+	.pipe_MemRead(pipe_MemRead_I), // does the pipeline want to read something from mem?
+	.pipe_read_addr(pipe_read_addr_I), // PC for I-cache, mem_read_addr for D-cache
+	.pipe_MemWrite(1'b0), // always 0 for I-cache
+	.pipe_mem_write_addr(16'b0), // mem addr the pipeline wants to write to
+	.pipe_mem_write_data(16'b0), // data the pipeline wants to write to mem
+
+	.cache_data_out(cache_data_out_I), // data read from the cache
+
+	// MEMORY MODULE INTERFACE
+	// Interfaces with memory
+	// These come from pipeline registers MEM stage
+	.MemDataValid(MemDataValid_I),	// is data from memory valid?
+	.mem_read_data(mem_read_data_I), // data read from memory
+
+	.MemRead(MemRead_I), // does cache want any data from mem?
+	.mem_read_addr(mem_read_addr_I), // addr cache wants to read from mem when transferring data
+	.MemWrite(MemWrite_I), // Does the cache want to write to mem?
+	.stall(stall_I) // Stall pipeline while cache is busy transferring data from mem
 );
 CLA_16b pc_adder (
 	.A(pc_current[15:0]),
@@ -75,6 +175,7 @@ CLA_16b pc_adder (
 	.ovfl(),
 	.neg()
 );
+/* Deprecated
 memory1c instr_mem (
 	.data_out(IF_instr[15:0]),
 	.data_in({16{1'b0}}),
@@ -84,7 +185,7 @@ memory1c instr_mem (
 	.clk(clk),
 	.rst(rst)
 );
-
+*/
 //------------------------------------------------------------------------------
 // IF-ID State Reg
 //------------------------------------------------------------------------------
@@ -288,6 +389,41 @@ wire [15:0] mem_read_out;
 assign MemEnable = MEM_MemToReg | MEM_MemWrite;
 assign MEM_reg_write_data = MEM_MemToReg? mem_read_out[15:0] : MEM_EX_reg_write_data[15:0];
 
+CACHE  cache_D(
+	.clk(clk),
+	.rst(rst),
+
+	// PIPELINE Interface
+	.pipe_MemRead(pipe_MemRead_D), // does the pipeline want to read something from mem?
+	.pipe_read_addr(pipe_read_addr_D), // PC for I-cache, mem_read_addr for D-cache
+	.pipe_MemWrite(pipe_MemWrite_D), // always 0 for I-cache
+	.pipe_mem_write_addr(pipe_mem_write_addr_D), // mem addr the pipeline wants to write to
+	.pipe_mem_write_data(pipe_mem_write_data_D), // data the pipeline wants to write to mem
+
+	.cache_data_out(cache_data_out_D), // data read from the cache
+
+	// MEMORY MODULE INTERFACE
+	// Interfaces with memory
+	// These come from pipeline registers MEM stage
+	.MemDataValid(MemDataValid_D),	// is data from memory valid?
+	.mem_read_data(mem_read_data_D), // data read from memory
+
+	.MemRead(MemRead_D), // does cache want any data from mem?
+	.mem_read_addr(mem_read_addr_D), // addr cache wants to read from mem when transferring data
+	.MemWrite(MemWrite_D), // Does the cache want to write to mem?
+	.stall(stall_D) // Stall pipeline while cache is busy transferring data from mem
+);
+
+assign pipe_MemRead_D = MemEnable & ~MEM_MemWrite;
+assign pipe_read_addr_D = MEM_mem_addr;
+assign mem_read_out = cache_data_out_D;
+assign pipe_MemWrite_D = MemEnable & ~MEM_MemWrite;
+assign pipe_mem_write_addr_D = Mem_mem_addr;
+assign pipe_mem_write_data_D = MEM_ALU_in_1;
+assign MemDataValid_D = memory4c_datavalid & ~stall_I;
+assign mem_read_data_D = memory4c_dataout;
+
+/* Deprecated
 memory1c data_mem(
 	.data_out(mem_read_out[15:0]),
 	.data_in(MEM_ALU_in_1[15:0]),
