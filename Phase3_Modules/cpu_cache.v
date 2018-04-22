@@ -61,8 +61,6 @@ wire 		memory4c_write;
 wire 		memory4c_datavalid;
 
 // I_cache
-wire 		pipe_MemRead_I;
-wire [15:0] pipe_read_addr_I;
 wire 		pipe_MemRead_I; // does the pipeline want to read something from mem?
 wire [15:0] pipe_read_addr_I; // PC for I-cache, mem_read_addr for D-cache
 wire 		pipe_MemWrite_I; // always 0 for I-cache
@@ -81,8 +79,6 @@ wire 		stall_I; //
 
 // D_cache
 
-wire 		pipe_MemRead_D;
-wire [15:0] pipe_read_addr_D;
 wire 		pipe_MemRead_D; // does the pipeline want to read something from mem?
 wire [15:0] pipe_read_addr_D; // PC for I-cache, mem_read_addr for D-cache
 wire 		pipe_MemWrite_D; // always 0 for I-cache
@@ -139,7 +135,7 @@ state_reg pc_reg (
 
 assign pipe_MemRead_I = 1'b1;
 assign pipe_read_addr_I = pc_current[15:0];
-assign IF_instr = cache_data_out;
+assign IF_instr = cache_data_out_I;
 assign MemDataValid_I = memory4c_datavalid;
 assign mem_read_data_I = memory4c_dataout;
 
@@ -418,7 +414,7 @@ assign pipe_MemRead_D = MemEnable & ~MEM_MemWrite;
 assign pipe_read_addr_D = MEM_mem_addr;
 assign mem_read_out = cache_data_out_D;
 assign pipe_MemWrite_D = MemEnable & ~MEM_MemWrite;
-assign pipe_mem_write_addr_D = Mem_mem_addr;
+assign pipe_mem_write_addr_D = MEM_mem_addr;
 assign pipe_mem_write_data_D = MEM_ALU_in_1;
 assign MemDataValid_D = memory4c_datavalid & ~stall_I;
 assign mem_read_data_D = memory4c_dataout;
@@ -433,6 +429,7 @@ memory1c data_mem(
 	.clk(clk),
 	.rst(rst)
 );
+*/
 
 //------------------------------------------------------------------------------
 // MEM_WB State Reg
