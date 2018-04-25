@@ -1,9 +1,9 @@
-module reg_3b(
-	input [2:0]reg_new,
+module reg_4b(
+	input [4:0]reg_new,
 	input wen,
 	input clk,
 	input rst,
-	output [2:0]reg_current
+	output [4:0]reg_current
 );
 
 dff b0(
@@ -14,6 +14,9 @@ dff b1(
 );
 dff b2(
 	.d(reg_new[2]), .q(reg_current[2]), .wen(wen), .clk(clk), .rst(rst)
+);
+dff b3(
+	.d(reg_new[3]), .q(reg_current[3]), .wen(wen), .clk(clk), .rst(rst)
 );
 
 endmodule

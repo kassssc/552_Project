@@ -36,12 +36,13 @@ wire[3:0] block_offset;
 wire[127:0] block_select_one_hot;	// one-hot selects the set index in cache
 wire[7:0] word_select_one_hot;		// one-hot selects word in a cache block
 wire[127:0] data_block_select_one_hot;
+wire[3:0] fsm_offset;
 
 assign addr[15:0] = (pipe_MemWrite)? pipe_mem_write_addr[15:0] : pipe_read_addr[15:0];
 
 assign tag = addr[15:11];
 assign set_index = addr[10:4];
-assign block_offset = addr[3:0];
+assign block_offset = CacheBusy? fsm_offset[3:0] : addr[3:0];
 
 assign CacheHit = meta_data_out[5] & (meta_data_out[4:0] == tag[4:0]);
 assign CacheMiss = ~CacheHit & (pipe_MemRead | pipe_MemWrite);
@@ -67,6 +68,7 @@ cache_fill_FSM cache_ctrl (
 	.memory_data(mem_read_data[15:0]),
 
 	.fsm_busy(CacheBusy),
+	.fsm_offset(fsm_offset[3:0])
 	.write_data_array(WriteDataArray),
 	.write_tag_array(WriteTagArray),
 	.memory_address(cache_mem_read_addr[15:0])
@@ -85,7 +87,7 @@ MetaDataArray meta (
 
 assign data_block_select_one_hot = CacheHit? block_select_one_hot[15:0] : 16'h0000;
 assign CacheWrite = WriteDataArray | pipe_MemWrite;
-assign cache_data_in = MemDataValid? mem_read_data[15:0] : pipe_mem_write_data;
+assign cache_data_in = MemDataValid? mem_read_data[15:0] : pipe_mem_write_data[15:0];
 
 DataArray data (
 	.clk(clk),
