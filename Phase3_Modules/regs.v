@@ -1,9 +1,9 @@
 module reg_4b(
-	input [4:0]reg_new,
+	input [3:0]reg_new,
 	input wen,
 	input clk,
 	input rst,
-	output [4:0]reg_current
+	output [3:0]reg_current
 );
 
 dff b0(
