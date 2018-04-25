@@ -161,9 +161,9 @@ CACHE  cache_I(
 	.MemDataValid(MemDataValid_I),	// is data from memory valid?
 	.mem_read_data(mem_read_data_I), // data read from memory
 
-	.MemRead(MemRead_I), // does cache want any data from mem?
-	.mem_read_addr(mem_read_addr_I), // addr cache wants to read from mem when transferring data
-	.MemWrite(MemWrite_I), // Does the cache want to write to mem?
+	.cache_MemRead(MemRead_I), // does cache want any data from mem?
+	.cache_mem_read_addr(mem_read_addr_I), // addr cache wants to read from mem when transferring data
+	.cache_MemWrite(MemWrite_I), // Does the cache want to write to mem?
 	.stall(stall_I) // Stall pipeline while cache is busy transferring data from mem
 );
 CLA_16b pc_adder (
