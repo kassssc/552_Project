@@ -172,28 +172,19 @@ module cpu_ptb();
       // Is processor halted (1 bit signal)
    assign ICacheHit = DUT.cachehit_I;
    assign DCacheHit = DUT.cachehit_D;
-   assign pipe_MemRead_I = DUT.pipe_MemRead_I; 
-   assign pipe_read_addr_I = DUT.pipe_read_addr_I;
-   assign pipe_MemWrite_I = DUT.pipe_MemWrite_I; // always 0 for I-cache
-   assign pipe_mem_write_addr_I = DUT.pipe_mem_write_addr_I; // mem addr the pipeline wants to write to
-   assign pipe_mem_write_data_I= DUT.pipe_mem_write_data_I; // data the pipeline wants to write to mem
-
-   assign cache_data_out_I= DUT.cache_data_out_I; // data read from the cache
+   assign cache_data_out_I = DUT.IF_instr; // data read from the cache
 
    assign MemDataValid_I= DUT.MemDataValid_I; // is data from memory valid?
    assign mem_read_data_I= DUT.mem_read_data_I; // data read from memory
 
-   assign MemRead_I = DUT.MemRead_I; // does cache want any data from mem?
-   assign mem_read_addr_I= DUT.mem_read_addr_I; // addr cache wants to read from mem when transferring data
-   assign MemWrite_I= DUT.MemWrite_I; // Does the cache want to write to mem?
    assign stall_I= DUT.stall_I; //
 
    // D_cache
-   assign pipe_MemRead_D = DUT.pipe_MemRead_D; // does the pipeline want to read something from mem?
-   assign pipe_read_addr_D = DUT.pipe_read_addr_D; // PC for I-cache, mem_read_addr for D-cache
-   assign pipe_MemWrite_D = DUT.pipe_MemWrite_D; // always 0 for I-cache
-   assign pipe_mem_write_addr_D = DUT.pipe_mem_write_addr_D; // mem addr the pipeline wants to write to
-   assign pipe_mem_write_data_D = DUT.pipe_mem_write_data_D; // data the pipeline wants to write to mem
+   assign pipe_MemRead_D = DUT.MEM_MemToReg; // does the pipeline want to read something from mem?
+   assign pipe_read_addr_D = DUT.MEM_mem_addr; // PC for I-cache, mem_read_addr for D-cache
+   assign pipe_MemWrite_D = DUT.MEM_MemWrite; // always 0 for I-cache
+   assign pipe_mem_write_addr_D = DUT.MEM_mem_addr; // mem addr the pipeline wants to write to
+   assign pipe_mem_write_data_D = DUT.mem_write_data; // data the pipeline wants to write to mem
 
    assign cache_data_out_D = DUT.cache_data_out_D; // data read from the cache
 
