@@ -172,44 +172,66 @@ module cpu_ptb();
    // Is processor halted (1 bit signal)
    
 
-   assign Inst = DUT.p0.instr;
+   // I_cache
+   assign pipe_MemRead_I = DUT.pipe_MemRead_I; // does the pipeline want to read something from mem?
+   assign pipe_read_addr_I = DUT.pipe_read_addr_I; // PC for I-cache, mem_read_addr for D-cache
+   assign pipe_MemWrite_I = DUT.pipe_MemWrite_I; // always 0 for I-cache
+   assign pipe_mem_write_addr_I = DUT.pipe_mem_write_addr_I; // mem addr the pipeline wants to write to
+   assign pipe_mem_write_data_I= DUT.pipe_mem_write_data_I; // data the pipeline wants to write to mem
+
+   assign cache_data_out_I= DUT.cache_data_out_I; // data read from the cache
+
+   assign MemDataValid_I= DUT.MemDataValid_I; // is data from memory valid?
+   assign mem_read_data_I= DUT.mem_read_data_I; // data read from memory
+
+   assign MemRead_I = DUT.MemRead_I; // does cache want any data from mem?
+   assign mem_read_addr_I= DUT.mem_read_addr_I; // addr cache wants to read from mem when transferring data
+   assign MemWrite_I= DUT.MemWrite_I; // Does the cache want to write to mem?
+   assign stall_I= DUT.stall_I; //
+
+   // D_cache
+   assign pipe_MemRead_D = DUT.pipe_MemRead_D; // does the pipeline want to read something from mem?
+   assign pipe_read_addr_D = DUT.pipe_read_addr_D; // PC for I-cache, mem_read_addr for D-cache
+   assign pipe_MemWrite_D = DUT.pipe_MemWrite_D; // always 0 for I-cache
+   assign pipe_mem_write_addr_D = DUT.pipe_mem_write_addr_D; // mem addr the pipeline wants to write to
+   assign pipe_mem_write_data_D = DUT.pipe_mem_write_data_D; // data the pipeline wants to write to mem
+
+   assign cache_data_out_D = DUT.cache_data_out_D; // data read from the cache
+
+   assign MemDataValid_D = DUT.MemDataValid_D; // is data from memory valid?
+   assign mem_read_data_D = DUT.mem_read_data_D; // data read from memory
+
+   assign MemRead_D = DUT.MemRead_D; // does cache want any data from mem?
+   assign mem_read_addr_D = DUT.mem_read_addr_D; // addr cache wants to read from mem when transferring data
+   assign MemWrite_D = DUT.MemWrite_D; // Does the cache want to write to mem?
+   assign stall_D = DUT.stall_D;
+
+   assign Inst = DUT.IF_instr;
    //Instruction fetched in the current cycle
    
-   assign RegWrite = DUT.p0.regWrite;
+   assign RegWrite = DUT.WB_RegWrite;
    // Is register file being written to in this cycle, one bit signal (1 means yes, 0 means no)
   
-   assign WriteRegister = DUT.p0.DstwithJmout;
+   assign WriteRegister = DUT.WB_reg_write_select;
    // If above is true, this should hold the name of the register being written to. (4 bit signal)
    
-   assign WriteData = DUT.p0.wData;
+   assign WriteData = DUT.WB_reg_write_data;
    // If above is true, this should hold the Data being written to the register. (16 bits)
    
-   assign MemRead =  (DUT.p0.memRxout & ~DUT.p0.notdonem);
+   assign MemRead =  DUT.MEM_MemToReg;
    // Is memory being read from, in this cycle. one bit signal (1 means yes, 0 means no)
    
-   assign MemWrite = (DUT.p0.memWxout & ~DUT.p0.notdonem);
+   assign MemWrite = DUT.MEM_MemWrite;
    // Is memory being written to, in this cycle (1 bit signal)
    
-   assign MemAddress = DUT.p0.data1out;
+   assign MemAddress = DUT.MEM_mem_addr;
    // If there's a memory access this cycle, this should hold the address to access memory with (for both reads and writes to memory, 16 bits)
    
-   assign MemDataIn = DUT.p0.data2out;
+   assign MemDataIn = DUT.MEM_ALU_in_1;
    // If there's a memory write in this cycle, this is the Data being written to memory (16 bits)
    
-   assign MemDataOut = DUT.p0.readData;
+   assign MemDataOut = DUT.mem_read_out;
    // If there's a memory read in this cycle, this is the data being read out of memory (16 bits)
-
-   assign ICacheReq = DUT.p0.icr;
-   // Signal indicating a valid instruction read request to cache
-   
-   assign ICacheHit = DUT.p0.ich;
-   // Signal indicating a valid instruction cache hit
-
-   assign DCacheReq = DUT.p0.dcr;
-   // Signal indicating a valid instruction data read or write request to cache
-   
-   assign DCacheHit = DUT.p0.dch;
-   // Signal indicating a valid data cache hit
 
 
    /* Add anything else you want here */
