@@ -19,12 +19,18 @@ wire data;
 wire hlt_h1, hlt_h2, hlt_h3;
 assign hlt_out = hlt;
 
-wire hlt_h;
+reg hlt_h;
 wire hlt_h_d;
 wire ishlt;
 wire cout;
 
-assign hlt_h = (if_id_instr[15:12] == 4'b1111)? 1'b1:1'b0;
+always@(if_id_instr) begin
+    hlt_h = 1'b0;
+	casex (if_id_instr[15:12])
+		4'b1111: hlt_h =1'b1;
+		default: hlt_h = 1'b0;
+	endcase
+end
 
 
 dff hlt_ff0(

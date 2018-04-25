@@ -223,6 +223,7 @@ module cpu_ptb();
    assign MemDataOut = DUT.mem_read_out;
    // If there's a memory read in this cycle, this is the data being read out of memory (16 bits)
 
+   assign stall = DUT.stall;
 
    /* Add anything else you want here */
 
