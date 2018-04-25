@@ -1,9 +1,9 @@
 module DECODER_3_8(
 	input[2:0] id_in,
-	output[8:0] one_hot_out
+	output[7:0] one_hot_out
 );
 
-	reg [8:0]one_hot_reg;
+	reg [7:0]one_hot_reg;
 	assign one_hot_out = one_hot_reg;
 
 	always@(*) begin
