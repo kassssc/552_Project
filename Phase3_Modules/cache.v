@@ -71,10 +71,6 @@ assign block_offset = CacheBusy? fsm_offset[3:0] : addr[3:0];
 assign CacheHit = meta_data_out[5] & (meta_data_out[4:0] == tag[4:0]);
 assign CacheMiss = ~CacheHit & (pipe_MemRead | pipe_MemWrite);
 
-assign mem_write_addr = pipe_mem_write_addr;
-assign mem_write_data = pipe_mem_write_data;
-
-
 assign meta_data_in[7:0] = {3'b1, tag[4:0]};
 
 MetaDataArray meta (

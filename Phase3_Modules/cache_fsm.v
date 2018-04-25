@@ -17,7 +17,7 @@ wire [3:0] block_offset_new, block_offset_curr;
 wire [15:0] base_address, block_offset_16b;
 
 assign fsm_busy_new = fsm_busy_curr? (~finish_data_transfer) : miss_detected;
-assign block_offset_16b = {{13{1'b0}}, block_offset_curr[2:0]};
+assign block_offset_16b = {{12{1'b0}}, block_offset_curr[3:0]};
 assign fsm_offset = block_offset_curr[3:0];
 
 dff state_fsm_busy (
