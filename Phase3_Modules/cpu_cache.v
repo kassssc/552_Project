@@ -93,7 +93,10 @@ wire [15:0] mem_read_data_D; // data read from memory
 wire 		MemRead_D; // does cache want any data from mem?
 wire [15:0] mem_read_addr_D; // addr cache wants to read from mem when transferring data
 wire 		MemWrite_D; // Does the cache want to write to mem?
-wire 		stall_D; 
+wire 		stall_D;
+
+wire [1:0]S_out;
+wire stall_hazard;
 
 //------------------------------------------------------------------------------
 // MEMORY: INSTANCIATION OF MAIN MEMORY
@@ -102,7 +105,7 @@ assign memory4c_enable = MemRead_I | MemWrite_I | MemRead_D | MemWrite_D;
 assign memory4c_write = MemWrite_D | MemWrite_I;
 
 assign memory4c_address = (stall_I)? ((MemRead_I)? mem_read_addr_I: pipe_mem_write_addr_I):
-									 ((MemRead_D)? mem_read_addr_D:pipe_mem_write_addr_D);
+									 ((MemRead_D)? mem_read_addr_D: pipe_mem_write_addr_D);
 
 
 
@@ -129,7 +132,7 @@ state_reg pc_reg (
 	.state_new(IF_pc_new[15:0]),
 	.clk(clk),
 	.rst(rst),
-	.wen(~(stall | stall_I | stall_D)),
+	.wen(~stall),
 	.state_current(pc_current[15:0])
 );
 
@@ -449,8 +452,6 @@ MEM_WB MEMWB (
 //------------------------------------------------------------------------------
 // WB: WRITEBACK STAGE
 //------------------------------------------------------------------------------
-
-wire [1:0]S_out;
 hazard_detection hazards (
 	.if_id_instr(ID_instr[15:0]),
 	.id_ex_instr(EX_instr[15:0]),
@@ -458,7 +459,7 @@ hazard_detection hazards (
 	.flush(flush),
 	.clk(clk),
 	.rst(rst),
-	.stall(stall),
+	.stall(stall_hazard),
 	.hlt_out(hlt)
 );
 
@@ -476,5 +477,6 @@ forward forwarder (
 assign rst = ~rst_n;
 assign flush = EX_Branch_current? 1'b1 : 1'b0;
 assign pc_out = pc_current;
+assign stall = stall_I | stall_D | stall_hazard;
 
 endmodule
