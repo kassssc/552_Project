@@ -102,5 +102,6 @@ DataArray data (
 
 assign cache_MemWrite = CacheWrite;	// Write to mem also when writing to cache
 assign stall = CacheBusy; // Stall if transferring data from memory
+assign cache_MemRead = CacheBusy;
 
 endmodule
