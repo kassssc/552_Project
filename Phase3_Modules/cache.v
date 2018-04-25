@@ -68,7 +68,7 @@ cache_fill_FSM cache_ctrl (
 	.memory_data(mem_read_data[15:0]),
 
 	.fsm_busy(CacheBusy),
-	.fsm_offset(fsm_offset[3:0])
+	.fsm_offset(fsm_offset[3:0]),
 	.write_data_array(WriteDataArray),
 	.write_tag_array(WriteTagArray),
 	.memory_address(cache_mem_read_addr[15:0])
