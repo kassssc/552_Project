@@ -174,8 +174,8 @@ module cpu_ptb();
    assign DCacheHit = DUT.cachehit_D;
    assign cache_data_out_I = DUT.IF_instr; // data read from the cache
 
-   assign MemDataValid_I= DUT.MemDataValid_I; // is data from memory valid?
-   assign mem_read_data_I= DUT.mem_read_data_I; // data read from memory
+   assign MemDataValid_I= DUT.I_mem_datavalid; // is data from memory valid?
+   assign mem_read_data_I= DUT.I_mem_data_out; // data read from memory
 
    assign stall_I= DUT.stall_I; //
 
