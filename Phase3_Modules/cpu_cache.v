@@ -407,9 +407,9 @@ CACHE  cache_D(
 	.MemDataValid(MemDataValid_D),	// is data from memory valid?
 	.mem_read_data(mem_read_data_D), // data read from memory
 
-	.MemRead(MemRead_D), // does cache want any data from mem?
-	.mem_read_addr(mem_read_addr_D), // addr cache wants to read from mem when transferring data
-	.MemWrite(MemWrite_D), // Does the cache want to write to mem?
+	.cache_MemRead(MemRead_D), // does cache want any data from mem?
+	.cache_MemWrite(MemWrite_D), // Does the cache want to write to mem?
+	.cache_mem_read_addr(mem_read_addr_D), // addr cache wants to read from mem when transferring data
 	.stall(stall_D) // Stall pipeline while cache is busy transferring data from mem
 );
 
