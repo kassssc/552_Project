@@ -85,7 +85,7 @@ MetaDataArray meta (
 	.DataOut(meta_data_out[7:0])
 );
 
-assign data_block_select_one_hot = CacheHit? block_select_one_hot[15:0] : 16'h0000;
+assign data_block_select_one_hot = CacheHit? block_select_one_hot[127:0] : 128'b0;
 assign CacheWrite = WriteDataArray | pipe_MemWrite;
 assign cache_data_in = MemDataValid? mem_read_data[15:0] : pipe_mem_write_data[15:0];
 
