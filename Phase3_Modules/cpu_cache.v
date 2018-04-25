@@ -61,16 +61,7 @@ wire 		memory4c_write;
 wire 		memory4c_datavalid;
 
 // I_cache
-//wire 		pipe_MemRead_I; // does the pipeline want to read something from mem?
-wire [15:0] pipe_read_addr_I; // PC for I-cache, mem_read_addr for D-cache
-wire 		pipe_MemWrite_I; // always 0 for I-cache
-wire [15:0] pipe_mem_write_addr_I; // mem addr the pipeline wants to write to
-wire [15:0] pipe_mem_write_data_I; // data the pipeline wants to write to mem
-
 wire [15:0] cache_data_out_I; // data read from the cache
-
-wire 		MemDataValid_I;	// is data from memory valid?
-wire [15:0] mem_read_data_I; // data read from memory
 
 wire 		MemRead_I; // does cache want any data from mem?
 wire [15:0] mem_read_addr_I; // addr cache wants to read from mem when transferring data
