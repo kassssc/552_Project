@@ -38,17 +38,6 @@ wire[7:0] word_select_one_hot;		// one-hot selects word in a cache block
 wire[127:0] data_block_select_one_hot;
 wire[3:0] fsm_offset;
 
-assign addr[15:0] = (pipe_MemWrite)? pipe_mem_write_addr[15:0] : pipe_read_addr[15:0];
-
-assign tag = addr[15:11];
-assign set_index = addr[10:4];
-assign block_offset = CacheBusy? fsm_offset[3:0] : addr[3:0];
-
-assign CacheHit = meta_data_out[5] & (meta_data_out[4:0] == tag[4:0]);
-assign CacheMiss = ~CacheHit & (pipe_MemRead | pipe_MemWrite);
-
-assign mem_write_addr = pipe_mem_write_addr;
-assign mem_write_data = pipe_mem_write_data;
 
 DECODER_3_8 block_offset_decoder (
 	.id_in(block_offset[3:1]),
@@ -73,6 +62,18 @@ cache_fill_FSM cache_ctrl (
 	.write_tag_array(WriteTagArray),
 	.memory_address(cache_mem_read_addr[15:0])
 );
+assign addr[15:0] = (pipe_MemWrite)? pipe_mem_write_addr[15:0] : pipe_read_addr[15:0];
+
+assign tag = addr[15:11];
+assign set_index = addr[10:4];
+assign block_offset = CacheBusy? fsm_offset[3:0] : addr[3:0];
+
+assign CacheHit = meta_data_out[5] & (meta_data_out[4:0] == tag[4:0]);
+assign CacheMiss = ~CacheHit & (pipe_MemRead | pipe_MemWrite);
+
+assign mem_write_addr = pipe_mem_write_addr;
+assign mem_write_data = pipe_mem_write_data;
+
 
 assign meta_data_in[7:0] = {3'b1, tag[4:0]};
 
