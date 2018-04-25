@@ -95,6 +95,8 @@ wire stall_hazard;
 //------------------------------------------------------------------------------
 // I-MEM and  I-CACHE
 //------------------------------------------------------------------------------
+wire [15:0] pc_current, pc_plus_2;
+
 memory4c I_MEM(
 	.data_out(I_mem_data_out[15:0]), 
 	.data_in(16'h0000), 
@@ -135,7 +137,6 @@ CACHE cache_I(
 // IF: INSTRUCTION FETCH STAGE
 //------------------------------------------------------------------------------
 // branch signal from ID stage
-wire [15:0] pc_current, pc_plus_2;
 
 assign IF_pc_new = EX_Branch_current? EX_pc_branch_target : pc_plus_2;
 
