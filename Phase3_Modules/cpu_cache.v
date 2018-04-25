@@ -76,6 +76,7 @@ wire 		MemRead_I; // does cache want any data from mem?
 wire [15:0] mem_read_addr_I; // addr cache wants to read from mem when transferring data
 wire 		MemWrite_I; // Does the cache want to write to mem?
 wire 		stall_I; // 
+wire 		cachehit_I;
 
 // D_cache
 
@@ -94,7 +95,7 @@ wire 		MemRead_D; // does cache want any data from mem?
 wire [15:0] mem_read_addr_D; // addr cache wants to read from mem when transferring data
 wire 		MemWrite_D; // Does the cache want to write to mem?
 wire 		stall_D;
-
+wire  		cachehit_D;
 wire [1:0]S_out;
 wire stall_hazard;
 
@@ -158,7 +159,8 @@ CACHE cache_I(
 	.cache_MemRead(MemRead_I), // does cache want any data from mem?
 	.cache_mem_read_addr(mem_read_addr_I), // addr cache wants to read from mem when transferring data
 	.cache_MemWrite(MemWrite_I), // Does the cache want to write to mem?
-	.stall(stall_I) // Stall pipeline while cache is busy transferring data from mem
+	.stall(stall_I), // Stall pipeline while cache is busy transferring data from mem
+	.cachehit(cachehit_I)
 );
 CLA_16b pc_adder (
 	.A(pc_current[15:0]),
@@ -404,7 +406,8 @@ CACHE  cache_D(
 	.cache_MemRead(MemRead_D), // does cache want any data from mem?
 	.cache_MemWrite(MemWrite_D), // Does the cache want to write to mem?
 	.cache_mem_read_addr(mem_read_addr_D), // addr cache wants to read from mem when transferring data
-	.stall(stall_D) // Stall pipeline while cache is busy transferring data from mem
+	.stall(stall_D), // Stall pipeline while cache is busy transferring data from mem
+	.cachehit(cachehit_D)
 );
 
 assign pipe_MemRead_D = MemEnable & ~MEM_MemWrite;

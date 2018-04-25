@@ -170,9 +170,10 @@ module cpu_ptb();
    
       //   assign Halt = DUT.memory0.halt; //You won't need this because it's part of the main cpu interface
       // Is processor halted (1 bit signal)
-   
-   assign pipe_MemRead_I = DUT.pipe_MemRead_I; // does the pipeline want to read something from mem?
-   assign pipe_read_addr_I = DUT.pipe_read_addr_I; // PC for I-cache, mem_read_addr for D-cache
+   assign ICacheHit = DUT.cachehit_I;
+   assign DCacheHit = DUT.cachehit_D;
+   assign pipe_MemRead_I = DUT.pipe_MemRead_I; 
+   assign pipe_read_addr_I = DUT.pipe_read_addr_I;
    assign pipe_MemWrite_I = DUT.pipe_MemWrite_I; // always 0 for I-cache
    assign pipe_mem_write_addr_I = DUT.pipe_mem_write_addr_I; // mem addr the pipeline wants to write to
    assign pipe_mem_write_data_I= DUT.pipe_mem_write_data_I; // data the pipeline wants to write to mem

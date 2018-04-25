@@ -19,8 +19,9 @@ module CACHE (
 	output [15:0] cache_mem_read_addr, // addr cache wants to read from mem when transferring data
 
 	output [15:0] cache_data_out, // data read from the cache
-	output stall // Stall pipeline while cache is busy transferring data from mem
-);
+	output stall, // Stall pipeline while cache is busy transferring data from mem
+	output cachehit
+	);
 
 wire WriteTagArray, WriteDataArray, CacheMiss, CacheHit, CacheBusy;
 wire[15:0] addr;
@@ -34,7 +35,7 @@ wire[3:0] block_offset;
 
 wire[127:0] block_select_one_hot;	// one-hot selects the set index in cache
 wire[7:0] word_select_one_hot;		// one-hot selects word in a cache block
-wire[15:0] data_block_select_one_hot;
+wire[127:0] data_block_select_one_hot;
 
 assign addr[15:0] = (pipe_MemWrite)? pipe_mem_write_addr[15:0] : pipe_read_addr[15:0];
 
