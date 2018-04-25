@@ -61,7 +61,7 @@ wire 		memory4c_write;
 wire 		memory4c_datavalid;
 
 // I_cache
-wire 		pipe_MemRead_I; // does the pipeline want to read something from mem?
+//wire 		pipe_MemRead_I; // does the pipeline want to read something from mem?
 wire [15:0] pipe_read_addr_I; // PC for I-cache, mem_read_addr for D-cache
 wire 		pipe_MemWrite_I; // always 0 for I-cache
 wire [15:0] pipe_mem_write_addr_I; // mem addr the pipeline wants to write to
@@ -99,7 +99,7 @@ wire [1:0]S_out;
 wire stall_hazard;
 
 //------------------------------------------------------------------------------
-// MEMORY: INSTANCIATION OF MAIN MEMORY
+// MEMORY: INSTANTIATION OF MAIN MEMORY
 //------------------------------------------------------------------------------
 assign memory4c_enable = MemRead_I | MemWrite_I | MemRead_D | MemWrite_D;
 assign memory4c_write = MemWrite_D | MemWrite_I;
@@ -109,7 +109,7 @@ assign memory4c_address = (stall_I)? ((MemRead_I)? mem_read_addr_I: pipe_mem_wri
 
 
 
-memory4c memory4c(
+memory4c MEM(
 	.data_out(memory4c_dataout), 
 	.data_in(memory4c_datain), 
 	.addr(memory4c_address), 
@@ -136,30 +136,24 @@ state_reg pc_reg (
 	.state_current(pc_current[15:0])
 );
 
-assign pipe_MemRead_I = 1'b1;
-assign pipe_read_addr_I = pc_current[15:0];
-assign IF_instr = cache_data_out_I;
-assign MemDataValid_I = memory4c_datavalid;
-assign mem_read_data_I = memory4c_dataout;
-
-CACHE  cache_I(
+CACHE cache_I(
 	.clk(clk),
 	.rst(rst),
 
 	// PIPELINE Interface
-	.pipe_MemRead(pipe_MemRead_I), // does the pipeline want to read something from mem?
-	.pipe_read_addr(pipe_read_addr_I), // PC for I-cache, mem_read_addr for D-cache
+	.pipe_MemRead(1'b1), // does the pipeline want to read something from mem?
+	.pipe_read_addr(pc_current[15:0]), // PC for I-cache, mem_read_addr for D-cache
 	.pipe_MemWrite(1'b0), // always 0 for I-cache
 	.pipe_mem_write_addr(16'b0), // mem addr the pipeline wants to write to
 	.pipe_mem_write_data(16'b0), // data the pipeline wants to write to mem
 
-	.cache_data_out(cache_data_out_I), // data read from the cache
+	.cache_data_out(IF_instr), // data read from the cache
 
 	// MEMORY MODULE INTERFACE
 	// Interfaces with memory
 	// These come from pipeline registers MEM stage
-	.MemDataValid(MemDataValid_I),	// is data from memory valid?
-	.mem_read_data(mem_read_data_I), // data read from memory
+	.MemDataValid(memory4c_datavalid),	// is data from memory valid?
+	.mem_read_data(memory4c_dataout), // data read from memory
 
 	.cache_MemRead(MemRead_I), // does cache want any data from mem?
 	.cache_mem_read_addr(mem_read_addr_I), // addr cache wants to read from mem when transferring data
