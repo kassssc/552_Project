@@ -76,7 +76,7 @@ assign meta_data_in[7:0] = {3'b1, tag[4:0]};
 MetaDataArray meta (
 	.clk(clk),
 	.rst(rst),
-	.DataIn(,meta_data_in[7:0]),
+	.DataIn(meta_data_in[7:0]),
 	.Write(WriteTagArray),
 	.BlockEnable(block_select_one_hot[127:0]),
 	.DataOut(meta_data_out[7:0])
@@ -91,7 +91,7 @@ DataArray data (
 	.rst(rst),
 	.DataIn(cache_data_in[15:0]),
 	.Write(CacheWrite),
-	.BlockEnable(data_block_select_one_hot[127:0]),
+	.BlockEnable(data_block_select_one_hot[15:0]),
 	.WordEnable(word_select_one_hot[7:0]),
 	.DataOut(cache_data_out[15:0])
 );
