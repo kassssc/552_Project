@@ -163,16 +163,14 @@ module cpu_ptb();
       The internal module names and signal names will vary depending
       on your naming convention and your design */
 
-   // Edit the example below. You must change the signal
-   // names on the right hand side
+      // Edit the example below. You must change the signal
+      // names on the right hand side
     
-//   assign PC = DUT.fetch0.pcCurrent; //You won't need this because it's part of the main cpu interface
+      //   assign PC = DUT.fetch0.pcCurrent; //You won't need this because it's part of the main cpu interface
    
-//   assign Halt = DUT.memory0.halt; //You won't need this because it's part of the main cpu interface
-   // Is processor halted (1 bit signal)
+      //   assign Halt = DUT.memory0.halt; //You won't need this because it's part of the main cpu interface
+      // Is processor halted (1 bit signal)
    
-
-   // I_cache
    assign pipe_MemRead_I = DUT.pipe_MemRead_I; // does the pipeline want to read something from mem?
    assign pipe_read_addr_I = DUT.pipe_read_addr_I; // PC for I-cache, mem_read_addr for D-cache
    assign pipe_MemWrite_I = DUT.pipe_MemWrite_I; // always 0 for I-cache
