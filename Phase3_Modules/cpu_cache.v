@@ -78,7 +78,7 @@ wire [15:0] cache_data_out; // data out of cache to whereever needs it
 // Assign memory control signals
 assign mem_read_addr = I_mem_fetch? I_cache_mem_read_addr[15:0] :
 					   D_mem_fetch? D_cache_mem_read_addr[15:0] : 16'h0000;
-assign MemRead = I_mem_fetch ^ D_mem_fetch;
+assign MemRead = I_mem_fetch | D_mem_fetch;
 assign MemWrite = D_MemWrite;
 
 wire [15:0] pc_current, pc_plus_2;
