@@ -181,9 +181,6 @@ module cpu_ptb();
 
    // D_cache
    assign pipe_MemRead_D = DUT.MEM_MemToReg; // does the pipeline want to read something from mem?
-   assign pipe_read_addr_D = DUT.MEM_mem_addr; // PC for I-cache, mem_read_addr for D-cache
-   assign pipe_MemWrite_D = DUT.MEM_MemWrite; // always 0 for I-cache
-   assign pipe_mem_write_addr_D = DUT.MEM_mem_addr; // mem addr the pipeline wants to write to
    assign pipe_mem_write_data_D = DUT.mem_write_data; // data the pipeline wants to write to mem
 
 
