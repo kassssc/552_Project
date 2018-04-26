@@ -225,6 +225,7 @@ module cpu_ptb();
 
    assign stall = DUT.stall;
 
+   assign metadataout = DUT.metadataout
    /* Add anything else you want here */
 
    
