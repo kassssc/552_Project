@@ -170,14 +170,14 @@ module cpu_ptb();
    
       //   assign Halt = DUT.memory0.halt; //You won't need this because it's part of the main cpu interface
       // Is processor halted (1 bit signal)
-   assign ICacheHit = DUT.cachehit_I;
-   assign DCacheHit = DUT.cachehit_D;
+   //assign ICacheHit = DUT.cachehit_I;
+   //assign DCacheHit = DUT.cachehit_D;
    assign cache_data_out_I = DUT.IF_instr; // data read from the cache
 
-   assign MemDataValid_I= DUT.I_mem_datavalid; // is data from memory valid?
-   assign mem_read_data_I= DUT.I_mem_data_out; // data read from memory
+   assign MemDataValid = DUT.mem_DataValid; // is data from memory valid?
+   assign mem_read_data = DUT.mem_data_out; // data read from memory
 
-   assign stall_I= DUT.stall_I; //
+   assign I_CacheBusy = DUT.I_CacheBusy; //
 
    // D_cache
    assign pipe_MemRead_D = DUT.MEM_MemToReg; // does the pipeline want to read something from mem?
@@ -186,15 +186,12 @@ module cpu_ptb();
    assign pipe_mem_write_addr_D = DUT.MEM_mem_addr; // mem addr the pipeline wants to write to
    assign pipe_mem_write_data_D = DUT.mem_write_data; // data the pipeline wants to write to mem
 
-   assign cache_data_out_D = DUT.cache_data_out_D; // data read from the cache
 
-   assign MemDataValid_D = DUT.MemDataValid_D; // is data from memory valid?
-   assign mem_read_data_D = DUT.mem_read_data_D; // data read from memory
 
-   assign MemRead_D = DUT.MemRead_D; // does cache want any data from mem?
-   assign mem_read_addr_D = DUT.cache_mem_addr_D; // addr cache wants to read from mem when transferring data
-   assign MemWrite_D = DUT.MemWrite_D; // Does the cache want to write to mem?
-   assign stall_D = DUT.stall_D;
+   assign mem_read_addr_D = DUT.D_cache_mem_read_addr; // addr cache wants to read from mem when transferring data
+   assign mem_read_addr_I = DUT.I_cache_mem_read_addr;
+   assign MemWrite = DUT.MemWrite; // Does the cache want to write to mem?
+   assign D_CacheBusy = DUT.D_CacheBusy;
 
    assign Inst = DUT.IF_instr;
    //Instruction fetched in the current cycle
@@ -208,7 +205,7 @@ module cpu_ptb();
    assign WriteData = DUT.WB_reg_write_data;
    // If above is true, this should hold the Data being written to the register. (16 bits)
    
-   assign MemRead =  DUT.MEM_MemToReg;
+   assign MemRead =  DUT.MemRead;
    // Is memory being read from, in this cycle. one bit signal (1 means yes, 0 means no)
    
    assign MemWrite = DUT.MEM_MemWrite;

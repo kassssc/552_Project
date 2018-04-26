@@ -59,7 +59,7 @@ wire stall_hazard;
 // MEM and CACHE
 //------------------------------------------------------------------------------
 wire MemRead, MemWrite, mem_DataValid;
-wire[15:0] mem_data_out, mem_data_in, mem_read_addr;
+wire[15:0] mem_data_out, mem_data_in, mem_read_addr, mem_write_data;
 
 // cache busy means it "wants" to read from mem
 // X_mem_fetch == 0 means cache X is stalled from getting data from mem (if it wants to)
@@ -72,6 +72,8 @@ wire [15:0] I_cache_mem_read_addr;
 // D-CACHE
 wire D_mem_fetch, D_MemWrite, D_CacheBusy, D_CacheFinish;
 wire [15:0] D_cache_mem_read_addr;
+
+wire [15:0] mem_read_out;
 
 // Assign memory control signals
 assign mem_read_addr = I_mem_fetch? I_cache_mem_read_addr[15:0] :
@@ -160,7 +162,6 @@ CACHE D_CACHE(
 // IF: INSTRUCTION FETCH STAGE
 //------------------------------------------------------------------------------
 wire [15:0] pc_current, pc_plus_2;
-
 // branch signal from ID stage
 assign IF_pc_new = EX_Branch_current? EX_pc_branch_target : pc_plus_2;
 
@@ -379,7 +380,6 @@ EX_MEM EXMEM (
 // MEM: MEMORY STAGE
 //------------------------------------------------------------------------------
 wire MemEnable;
-wire [15:0] mem_read_out, mem_write_data;
 
 assign MEM_reg_write_data = MEM_MemToReg? mem_read_out[15:0] : MEM_EX_reg_write_data[15:0];
 assign mem_write_data[15:0] = MEM_ALU_in_1[15:0];
@@ -427,6 +427,6 @@ forward forwarder (
 assign rst = ~rst_n;
 assign flush = EX_Branch_current? 1'b1 : 1'b0;
 assign pc_out = pc_current;
-assign stall = I_stall | D_stall | stall_hazard;
+assign stall = I_CacheBusy | D_CacheBusy | stall_hazard;
 
 endmodule

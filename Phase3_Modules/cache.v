@@ -22,7 +22,7 @@ module CACHE (
 	output CacheBusy // does the cache want any data from mem?
 	);
 
-wire WriteTagArray, WriteDataArray, CacheMiss, CacheHit, CacheBusy;
+wire WriteTagArray, WriteDataArray, CacheMiss, CacheHit;
 wire[15:0] addr;
 
 wire[7:0] meta_data_in, meta_data_out;
