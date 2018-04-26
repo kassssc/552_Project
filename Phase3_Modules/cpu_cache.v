@@ -63,7 +63,7 @@ wire [15:0] cache_data_out_I; // data read from the cache
 wire 		MemRead_I; // does cache want any data from mem?
 wire [15:0] mem_read_addr_I; // addr cache wants to read from mem when transferring data
 wire 		MemWrite_I; // Does the cache want to write to mem?
-wire 		stall_I; // 
+wire 		stall_I; //
 wire 		cachehit_I;
 
 // D-mem signals
@@ -85,7 +85,7 @@ wire 		MemDataValid_D;	// is data from memory valid?
 wire [15:0] mem_read_data_D; // data read from memory
 
 wire 		MemRead_D; // does cache want any data from mem?
-wire [15:0] mem_read_addr_D; // addr cache wants to read from mem when transferring data
+wire [15:0] cache_mem_addr_D; // addr specified by cache
 wire 		MemWrite_D; // Does the cache want to write to mem?
 wire 		stall_D;
 wire  		cachehit_D;
@@ -98,13 +98,13 @@ wire stall_hazard;
 wire [15:0] pc_current, pc_plus_2;
 
 memory4c I_MEM(
-	.data_out(I_mem_data_out[15:0]), 
-	.data_in(16'h0000), 
-	.addr(I_mem_read_addr[15:0]), 
-	.enable(MemRead_I), 
-	.wr(1'b0), 
-	.clk(clk), 
-	.rst(rst), 
+	.data_out(I_mem_data_out[15:0]),
+	.data_in(16'h0000),
+	.addr(I_mem_read_addr[15:0]),
+	.enable(MemRead_I),
+	.wr(1'b0),
+	.clk(clk),
+	.rst(rst),
 	.data_valid(I_mem_datavalid)
 );
 CACHE cache_I(
@@ -380,21 +380,22 @@ CACHE D_CACHE(
 	.MemDataValid(MemDataValid_D),	// is data from memory valid?
 	.mem_read_data(mem_read_data_D[15:0]), // data read from memory
 
+	// CACHE memory control interface
 	.cache_MemRead(MemRead_D), // does cache want any data from mem?
 	.cache_MemWrite(MemWrite_D), // Does the cache want to write to mem?
-	.cache_mem_read_addr(mem_read_addr_D[15:0]), // addr cache wants to read from mem when transferring data
+	.cache_mem_addr(cache_mem_addr_D[15:0]), // addr specified for read/write by cache
 	.stall(stall_D), // Stall pipeline while cache is busy transferring data from mem
 	.cachehit(cachehit_D)
 );
 
 memory4c D_MEM(
-	.data_out(mem_read_data_D[15:0]), 
-	.data_in(mem_write_data[15:0]), 
-	.addr(mem_read_addr_D[15:0]), 
-	.enable(MemRead_D | MemWrite_D), 
-	.wr(MemWrite_D), 
-	.clk(clk), 
-	.rst(rst), 
+	.data_out(mem_read_data_D[15:0]),
+	.data_in(mem_write_data[15:0]),
+	.addr(cache_mem_addr_D[15:0]),
+	.enable(MemRead_D | MemWrite_D),
+	.wr(MemWrite_D),
+	.clk(clk),
+	.rst(rst),
 	.data_valid(MemDataValid_D)
 );
 
