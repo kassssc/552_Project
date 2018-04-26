@@ -26,8 +26,8 @@ wire cout;
 
 always@(if_id_instr) begin
     hlt_h = 1'b0;
-	casex (if_id_instr[15:12])
-		4'b1111: hlt_h =1'b1;
+	case (if_id_instr[15:12])
+		4'b1111: hlt_h = 1'b1;
 		default: hlt_h = 1'b0;
 	endcase
 end
@@ -74,7 +74,7 @@ dff hltff(
 
 wire if_id_rs;
 wire if_id_rt;
-wire id_ex_write_reg;
+reg [3:0]id_ex_write_reg;
 
 
 assign if_id_rs_out = if_id_rs;
@@ -85,19 +85,65 @@ wire data_hazard_internal;
 //assign if_id_rt = if_id_instr[3:0];
 //assign id_ex_write_reg = id_ex_instr[3:0];
 
+always@(id_ex_instr) begin
+	case(id_ex_instr)
+		4'b0000: id_ex_write_reg = 4'b0000;
+		4'b0001: id_ex_write_reg = 4'b0001;
+		4'b0010: id_ex_write_reg = 4'b0010;
+		4'b0011: id_ex_write_reg = 4'b0011;
+		4'b0100: id_ex_write_reg = 4'b0100;
+		4'b0101: id_ex_write_reg = 4'b0101;
+		4'b0110: id_ex_write_reg = 4'b0110;
+		4'b0111: id_ex_write_reg = 4'b0111;
+		4'b1000: id_ex_write_reg = 4'b1000;
+		4'b1001: id_ex_write_reg = 4'b1001;
+		4'b1010: id_ex_write_reg = 4'b1010;
+		4'b1011: id_ex_write_reg = 4'b1011;
+		4'b1100: id_ex_write_reg = 4'b1100;
+		4'b1101: id_ex_write_reg = 4'b1101;
+		4'b1110: id_ex_write_reg = 4'b1110;
+		4'b1111: id_ex_write_reg = 4'b1111;
+		default: id_ex_write_reg = 4'b1111;
+	endcase
+end
+		
+//assign id_ex_write_reg = id_ex_instr[11:8];
 
-assign id_ex_write_reg = id_ex_instr[11:8];
-
-wire ID_lhb, ID_llb, RegToMem, MemToReg;
+reg ID_lhb, ID_llb, RegToMem, MemToReg;
 wire reset;
 
-assign ID_lhb = (if_id_instr[15:12] == 4'b1010);
-assign ID_llb = (if_id_instr[15:12] == 4'b1011);
-assign MemToReg = (if_id_instr[15:12] == 4'b100); //LW
-assign RegToMem = (if_id_instr[15:12] == 4'b1001); //SW
+always@(if_id_instr) begin
+	ID_lhb = 1'b0;
+	ID_llb = 1'b0;
+	MemToReg = 1'b0;
+	RegToMem = 1'b0;
 
-assign if_id_rs = (RegToMem | ID_lhb | ID_llb)? if_id_instr[11:8] : if_id_instr[7:4];
-assign if_id_rt = (RegToMem | MemToReg)? if_id_instr[7:4] : if_id_instr[3:0];
+	case(if_id_instr)
+		4'b1010: ID_lhb = 1'b1;
+		4'b1011: ID_llb = 1'b1;
+		4'b1000: MemToReg = 1'b1;
+		4'b1001: RegToMem = 1'b1;
+		default: begin 
+				ID_lhb = 1'b0;
+				ID_llb = 1'b0;
+				MemToReg = 1'b0;
+				RegToMem = 1'b0;
+		end
+	endcase
+end
+		
+
+//assign ID_lhb = (if_id_instr[15:12] == 4'b1010);
+//assign ID_llb = (if_id_instr[15:12] == 4'b1011);
+//assign MemToReg = (if_id_instr[15:12] == 4'b1000); //LW
+//assign RegToMem = (if_id_instr[15:12] == 4'b1001); //SW
+
+assign if_id_rs = (RegToMem | ID_lhb | ID_llb | MemToReg)?
+							((RegToMem | ID_lhb | ID_llb)? if_id_instr[11:8]:if_id_instr[7:4]):
+							4'b0000;
+assign if_id_rt = (RegToMem | ID_lhb | ID_llb | MemToReg)?
+							((RegToMem | MemToReg)? if_id_instr[7:4] : if_id_instr[3:0]):
+							4'b0000;
 
 
 assign data_hazard_internal =   (~reset) ?  1'b0:
