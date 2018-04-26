@@ -51,12 +51,8 @@ cache_fill_FSM cache_ctrl (
 	.memory_address(cache_mem_read_addr[15:0])
 );
 
-<<<<<<< 92aa447991d5fa3895de47689dc07e5d77dc7688
-assign addr = (pipe_MemWrite)? pipe_mem_write_addr[15:0] : pipe_read_addr[15:0];
-=======
 assign cache_mem_addr = CacheBusy? cache_mem_read_addr[15:0] : cache_MemWrite? pipe_mem_write_addr[15:0] : pipe_read_addr[15:0];
 assign addr[15:0] = (pipe_MemWrite)? pipe_mem_write_addr[15:0] : pipe_read_addr[15:0];
->>>>>>> fix simulation erros
 
 // addr : tttt tsss ssss bbbb
 assign tag = addr[15:11];
