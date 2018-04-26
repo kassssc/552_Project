@@ -14,13 +14,12 @@ module CACHE (
 	input [15:0] mem_read_data, // data read from memory
 
 	// Cache controls Memory module (when it wants to)
-	output cache_MemRead, // does cache want any data from mem?
 	output cache_MemWrite, // Does the cache want to write to mem?
 	output [15:0] cache_mem_addr, // addr cache specifies in mem control
 
 	output [15:0] cache_data_out, // data read from the cache
-	output stall, // Stall pipeline while cache is busy transferring data from mem
-	output cachehit
+	output CacheFinish,
+	output CacheBusy // does the cache want any data from mem?
 	);
 
 wire WriteTagArray, WriteDataArray, CacheMiss, CacheHit, CacheBusy;
@@ -48,7 +47,8 @@ cache_fill_FSM cache_ctrl (
 	.fsm_offset(fsm_offset[3:0]),
 	.write_data_array(WriteDataArray),
 	.write_tag_array(WriteTagArray),
-	.memory_address(cache_mem_read_addr[15:0])
+	.memory_address(cache_mem_read_addr[15:0]),
+	.finished(CacheFinish)
 );
 
 assign cache_mem_addr = CacheBusy? cache_mem_read_addr[15:0] : cache_MemWrite? pipe_mem_write_addr[15:0] : pipe_read_addr[15:0];
@@ -99,10 +99,7 @@ DataArray data (
 );
 
 // Memory control signals
-assign cache_MemWrite = CacheWrite;	// Write to mem also when writing to cache
-assign cache_MemRead = CacheBusy;
+assign cache_MemWrite = pipe_MemWrite;	// Write to mem also when writing to cache
 assign cache_mem_addr = CacheBusy? cache_mem_read_addr[15:0] : cache_MemWrite? pipe_mem_write_addr[15:0] : pipe_read_addr[15:0];
-
-assign stall = CacheBusy; // Stall if transferring data from memory
 
 endmodule

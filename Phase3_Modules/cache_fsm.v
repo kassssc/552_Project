@@ -9,7 +9,8 @@ module cache_fill_FSM (
 	output[3:0] fsm_offset, // offset added to the address when transferring blocks
 	output write_data_array, // write enable to cache data array to signal when filling with memory_data
 	output write_tag_array, // write enable to cache tag array to write tag and valid bit once all words are filled in to data array
-	output[15:0] memory_address // address to read from memory
+	output[15:0] memory_address, // address to read from memory
+	output finished
 );
 
 wire fsm_busy_new, fsm_busy_curr, finish_data_transfer;
@@ -24,6 +25,8 @@ assign block_offset_16b = {{12{1'b0}}, block_offset_curr[3:0]};
 
 // current block offset
 assign fsm_offset = block_offset_curr[3:0];
+
+assign Finished = finish_data_transfer;
 
 
 // Store the current state of the cache "is it busy transferring data from mem?"

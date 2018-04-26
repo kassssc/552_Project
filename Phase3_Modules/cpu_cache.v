@@ -56,22 +56,52 @@ wire [1:0]S_out;
 wire stall_hazard;
 
 //------------------------------------------------------------------------------
-// I-MEM and  I-CACHE
+// MEM and CACHE
 //------------------------------------------------------------------------------
 wire MemRead, MemWrite, mem_DataValid;
 wire[15:0] mem_data_out, mem_data_in, mem_read_addr;
+
+// cache busy means it "wants" to read from mem
+
+// I-CACHE
+wire I_mem_fetch, I_CacheBusy, I_CacheFinish;
+wire [15:0] I_cache_mem_read_addr;
+
+// D-CACHE
+wire D_mem_fetch, D_MemWrite, D_CacheBusy, D_CacheFinish;
+wire [15:0] D_cache_mem_read_addr;
+
+assign mem_read_addr = I_mem_fetch? I_cache_mem_read_addr[15:0] :
+					   D_mem_fetch? D_cache_mem_read_addr[15:0] : 16'h0000;
+assign MemRead = I_mem_fetch ^ D_mem_fetch;
+assign MemWrite = D_MemWrite;
 
 memory4c MAIN_MEM(
 	.clk(clk),
 	.rst(rst),
 
-	.data_in(mem_data_in[15:0]),
+	.data_in(mem_write_data[15:0]), // from MEM stage
 	.addr(mem_read_addr[15:0]),
-	.enable(MemRead),
+	.enable(MemRead | MemWrite),
 	.wr(MemWrite),
 
 	.data_out(mem_data_out[15:0]),
 	.data_valid(mem_DataValid)
+);
+
+mem_control_fsm mem_ctrl (
+	.clk(clk),
+	.rst(rst),
+
+	// Inputs
+	.I_CacheBusy(I_CacheBusy),
+	.D_CacheBusy(D_CacheBusy),
+	.I_cache_finished(I_CacheFinish),
+	.D_cache_finished(D_CacheFinish),
+
+	// Mem ctrl signals
+	.I_mem_fetch(I_mem_fetch),
+	.D_mem_fetch(D_mem_fetch)
 );
 
 CACHE cache_I(
@@ -88,16 +118,14 @@ CACHE cache_I(
 	.cache_data_out(IF_instr[15:0]), // INSTR
 
 	// MEMORY MODULE INTERFACE
-	// These come from pipeline registers MEM stage
-	.MemDataValid(mem_DataValid),	// is data from memory valid?
+	.MemDataValid(I_mem_fetch & mem_DataValid),	// is data from memory valid?
 	.mem_read_data(mem_data_out[15:0]), // data read from memory
 
-	.cache_MemRead(I_MemRead), // does cache want any data from mem?
 	.cache_mem_addr(I_cache_mem_read_addr[15:0]), // addr cache wants to read from mem when transferring data
 	.cache_MemWrite(), // Does the cache want to write to mem?
 
-	.stall(I_stall), // Stall pipeline while cache is busy transferring data from mem
-	.cache_miss(I_CacheMiss)
+	.CacheFinish(I_CacheFinish),
+	.CacheBusy(I_CacheBusy) // Stall pipeline while cache is busy transferring data from mem
 );
 CACHE D_CACHE(
 	.clk(clk),
@@ -114,16 +142,15 @@ CACHE D_CACHE(
 
 	// MEMORY MODULE INTERFACE
 	// These come from pipeline registers MEM stage
-	.MemDataValid(mem_DataValid),	// is data from memory valid?
+	.MemDataValid(D_mem_fetch & mem_DataValid),	// is data from memory valid?
 	.mem_read_data(mem_data_out[15:0]), // data read from memory
 
 	// CACHE memory control interface
-	.cache_MemRead(D_MemRead), // does cache want any data from mem?
 	.cache_MemWrite(D_MemWrite), // Does the cache want to write to mem?
 	.cache_mem_addr(D_cache_mem_read_addr[15:0]), // addr specified for read/write by cache
 
-	.stall(D_stall), // Stall pipeline while cache is busy transferring data from mem
-	.cache_miss(D_CacheMiss)
+	.CacheFinish(D_CacheFinish),
+	.CacheBusy(D_CacheBusy) // Stall pipeline while cache is busy transferring data from mem
 );
 
 //------------------------------------------------------------------------------
