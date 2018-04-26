@@ -51,8 +51,7 @@ cache_fill_FSM cache_ctrl (
 	.finished(CacheFinish)
 );
 
-assign cache_mem_addr = CacheBusy? cache_mem_read_addr[15:0] : cache_MemWrite? pipe_mem_write_addr[15:0] : pipe_read_addr[15:0];
-assign addr[15:0] = (pipe_MemWrite)? pipe_mem_write_addr[15:0] : pipe_read_addr[15:0];
+assign addr[15:0] = pipe_MemWrite? pipe_mem_write_addr[15:0] : pipe_read_addr[15:0];
 
 // addr : tttt tsss ssss bbbb
 assign tag = addr[15:11];
@@ -100,6 +99,7 @@ DataArray data (
 
 // Memory control signals
 assign cache_MemWrite = pipe_MemWrite;	// Write to mem also when writing to cache
-assign cache_mem_addr = CacheBusy? cache_mem_read_addr[15:0] : cache_MemWrite? pipe_mem_write_addr[15:0] : pipe_read_addr[15:0];
+assign cache_mem_addr = CacheBusy? cache_mem_read_addr[15:0] :
+						cache_MemWrite? pipe_mem_write_addr[15:0] : pipe_read_addr[15:0];
 
 endmodule
