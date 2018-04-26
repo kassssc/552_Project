@@ -73,7 +73,7 @@ wire [15:0] I_cache_mem_read_addr;
 wire D_mem_fetch, D_MemWrite, D_CacheBusy, D_CacheFinish;
 wire [15:0] D_cache_mem_read_addr;
 
-wire [15:0] mem_read_out;
+wire [15:0] cache_data_out; // data out of cache to whereever needs it
 
 // Assign memory control signals
 assign mem_read_addr = I_mem_fetch? I_cache_mem_read_addr[15:0] :
@@ -145,7 +145,7 @@ CACHE D_CACHE(
 	.pipe_mem_write_addr(MEM_mem_addr[15:0]), // mem addr the pipeline wants to write to
 	.pipe_mem_write_data(mem_write_data[15:0]), // data the pipeline wants to write to mem
 
-	.cache_data_out(mem_read_out[15:0]), // data read from the cache
+	.cache_data_out(cache_data_out[15:0]), // data read from the cache
 
 	// MEMORY MODULE INTERFACE
 	// These come from pipeline registers MEM stage
@@ -382,7 +382,7 @@ EX_MEM EXMEM (
 //------------------------------------------------------------------------------
 wire MemEnable;
 
-assign MEM_reg_write_data = MEM_MemToReg? mem_read_out[15:0] : MEM_EX_reg_write_data[15:0];
+assign MEM_reg_write_data = MEM_MemToReg? cache_data_out[15:0] : MEM_EX_reg_write_data[15:0];
 assign mem_write_data[15:0] = MEM_ALU_in_1[15:0];
 
 //------------------------------------------------------------------------------
