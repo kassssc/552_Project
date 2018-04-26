@@ -192,7 +192,7 @@ module cpu_ptb();
    assign mem_read_data_D = DUT.mem_read_data_D; // data read from memory
 
    assign MemRead_D = DUT.MemRead_D; // does cache want any data from mem?
-   assign mem_read_addr_D = DUT.mem_read_addr_D; // addr cache wants to read from mem when transferring data
+   assign mem_read_addr_D = DUT.cache_mem_addr_D; // addr cache wants to read from mem when transferring data
    assign MemWrite_D = DUT.MemWrite_D; // Does the cache want to write to mem?
    assign stall_D = DUT.stall_D;
 
@@ -225,8 +225,6 @@ module cpu_ptb();
 
    assign stall = DUT.stall;
 
-   assign metadataout = DUT.metadataout
    /* Add anything else you want here */
-
    
 endmodule

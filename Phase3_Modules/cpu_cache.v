@@ -126,7 +126,7 @@ CACHE cache_I(
 	.mem_read_data(I_mem_data_out[15:0]), // data read from memory
 
 	.cache_MemRead(MemRead_I), // does cache want any data from mem?
-	.cache_mem_read_addr(I_mem_read_addr[15:0]), // addr cache wants to read from mem when transferring data
+	.cache_mem_addr(I_mem_read_addr[15:0]), // addr cache wants to read from mem when transferring data
 	.cache_MemWrite(), // Does the cache want to write to mem?
 	.stall(stall_I), // Stall pipeline while cache is busy transferring data from mem
 	.cachehit(cachehit_I)
