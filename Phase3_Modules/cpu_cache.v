@@ -115,8 +115,8 @@ CACHE cache_I(
 	.pipe_MemRead(1'b1), // does the pipeline want to read something from mem?
 	.pipe_read_addr(pc_current[15:0]), // PC for I-cache, mem_read_addr for D-cache
 	.pipe_MemWrite(1'b0), // always 0 for I-cache
-	.pipe_mem_write_addr(16'b0), // mem addr the pipeline wants to write to
-	.pipe_mem_write_data(16'b0), // data the pipeline wants to write to mem
+	.pipe_mem_write_addr(16'h0000), // mem addr the pipeline wants to write to
+	.pipe_mem_write_data(16'b0000), // data the pipeline wants to write to mem
 
 	.cache_data_out(IF_instr[15:0]), // data read from the cache
 
