@@ -4,7 +4,6 @@ module cache_fill_FSM (
 	input miss_detected, // active high when tag match logic detects a miss
 	input memory_data_valid, // active high indicates valid data returning on memory bus
 	input[15:0] miss_address, // address that missed the cache
-	input[15:0] memory_data, // data returned by memory (after  delay)
 	output fsm_busy, // asserted while FSM is busy handling the miss (can be used as pipeline stall signal)
 	output[3:0] fsm_offset,
 	output write_data_array, // write enable to cache data array to signal when filling with memory_data
