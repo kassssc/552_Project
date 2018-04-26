@@ -57,7 +57,7 @@ assign addr[15:0] = (pipe_MemWrite)? pipe_mem_write_addr[15:0] : pipe_read_addr[
 // addr : tttt tsss ssss bbbb
 assign tag = addr[15:11];
 assign set_index = addr[10:4];
-assign block_offset = CacheBusy? fsm_offset[3:0] : addr[3:0];
+assign block_offset = CacheBusy? (fsm_offset[3:0] >> 1) : addr[3:0];
 
 assign CacheHit = meta_data_out[5] & (meta_data_out[4:0] == tag[4:0]);
 assign CacheMiss = ~CacheHit & (pipe_MemRead | pipe_MemWrite);
@@ -101,7 +101,7 @@ DataArray data (
 // Memory control signals
 assign cache_MemWrite = CacheWrite;	// Write to mem also when writing to cache
 assign cache_MemRead = CacheBusy;
-assign cache_mem_addr = CacheBusy? cache_mem_read_addr[15:0] : cache_MemWrite? pipe_mem_write_addr[15:0] : pipe_read_addr[15:0]
+assign cache_mem_addr = CacheBusy? cache_mem_read_addr[15:0] : cache_MemWrite? pipe_mem_write_addr[15:0] : pipe_read_addr[15:0];
 
 assign stall = CacheBusy; // Stall if transferring data from memory
 
