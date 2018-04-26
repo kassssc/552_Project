@@ -172,21 +172,21 @@ module cpu_ptb();
       // Is processor halted (1 bit signal)
    //assign ICacheHit = DUT.cachehit_I;
    //assign DCacheHit = DUT.cachehit_D;
-   assign cache_data_out_I = DUT.IF_instr; // data read from the cache
+   assign cache_data_out_D = DUT.cache_data_out; // data read from the cache
 
-   assign MemDataValid = DUT.mem_DataValid; // is data from memory valid?
-   assign cache_data_ = DUT.mem_data_out; // data read from memory
+   assign mem_DataValid = DUT.mem_DataValid; // is data from memory valid?
+   assign mem_data_out = DUT.mem_data_out; // data read from memory
 
    assign I_CacheBusy = DUT.I_CacheBusy; //
 
    // D_cache
-   assign pipe_MemRead_D = DUT.MEM_MemToReg; // does the pipeline want to read something from mem?
-   assign pipe_mem_write_data_D = DUT.mem_write_data; // data the pipeline wants to write to mem
+   assign MEM_MemToReg = DUT.MEM_MemToReg; // does the pipeline want to read something from mem?
+   assign mem_write_data = DUT.mem_write_data; // data the pipeline wants to write to mem
 
 
 
-   assign mem_read_addr_D = DUT.D_cache_mem_read_addr; // addr cache wants to read from mem when transferring data
-   assign mem_read_addr_I = DUT.I_cache_mem_read_addr;
+   assign D_cache_mem_read_addr = DUT.D_cache_mem_read_addr; // addr cache wants to read from mem when transferring data
+   assign I_cache_mem_read_addr = DUT.I_cache_mem_read_addr;
    assign MemWrite = DUT.MemWrite; // Does the cache want to write to mem?
    assign D_CacheBusy = DUT.D_CacheBusy;
 
