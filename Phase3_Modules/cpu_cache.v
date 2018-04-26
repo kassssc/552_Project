@@ -81,6 +81,8 @@ assign mem_read_addr = I_mem_fetch? I_cache_mem_read_addr[15:0] :
 assign MemRead = I_mem_fetch ^ D_mem_fetch;
 assign MemWrite = D_MemWrite;
 
+wire [15:0] pc_current, pc_plus_2;
+
 memory4c MAIN_MEM(
 	.clk(clk),
 	.rst(rst),
@@ -161,7 +163,6 @@ CACHE D_CACHE(
 //------------------------------------------------------------------------------
 // IF: INSTRUCTION FETCH STAGE
 //------------------------------------------------------------------------------
-wire [15:0] pc_current, pc_plus_2;
 // branch signal from ID stage
 assign IF_pc_new = EX_Branch_current? EX_pc_branch_target : pc_plus_2;
 
