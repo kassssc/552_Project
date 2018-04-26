@@ -69,7 +69,6 @@ wire 		cachehit_I;
 // D-mem signals
 wire [15:0] D_mem_data_out;
 wire [15:0] D_mem_data_in;
-wire [15:0] D_mem_read_addr;
 wire 		D_mem_datavalid, D_MemRead, D_MemWrite;
 
 // D_cache

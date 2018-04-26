@@ -38,16 +38,6 @@ wire[7:0] word_select_one_hot;		// one-hot selects word in a cache block
 wire[127:0] data_block_select_one_hot;
 wire[3:0] fsm_offset;
 
-
-DECODER_3_8 block_offset_decoder (
-	.id_in(block_offset[3:1]),
-	.one_hot_out(word_select_one_hot[7:0])
-);
-DECODER_7_128 set_index_decoder (
-	.id_in(set_index[6:0]),
-	.one_hot_out(block_select_one_hot[127:0])
-);
-
 cache_fill_FSM cache_ctrl (
 	.clk(clk),
 	.rst(rst),
@@ -61,9 +51,9 @@ cache_fill_FSM cache_ctrl (
 	.memory_address(cache_mem_read_addr[15:0])
 );
 
-assign cache_mem_addr = CacheBusy? cache_mem_read_addr[15:0] : cache_MemWrite? pipe_mem_write_addr[15:0] : pipe_read_addr[15:0]
-assign addr[15:0] = (pipe_MemWrite)? pipe_mem_write_addr[15:0] : pipe_read_addr[15:0];
+assign addr = (pipe_MemWrite)? pipe_mem_write_addr[15:0] : pipe_read_addr[15:0];
 
+// addr : tttt tsss ssss bbbb
 assign tag = addr[15:11];
 assign set_index = addr[10:4];
 assign block_offset = CacheBusy? fsm_offset[3:0] : addr[3:0];
@@ -74,6 +64,15 @@ assign CacheMiss = ~CacheHit & (pipe_MemRead | pipe_MemWrite);
 assign cachehit = CacheHit;
 
 assign meta_data_in[7:0] = {3'b1, tag[4:0]};
+
+DECODER_3_8 block_offset_decoder (
+	.id_in(block_offset[3:1]),
+	.one_hot_out(word_select_one_hot[7:0])
+);
+DECODER_7_128 set_index_decoder (
+	.id_in(set_index[6:0]),
+	.one_hot_out(block_select_one_hot[127:0])
+);
 
 MetaDataArray meta (
 	.clk(clk),
@@ -86,7 +85,7 @@ MetaDataArray meta (
 
 assign data_block_select_one_hot = (CacheHit | CacheBusy)? block_select_one_hot[127:0] : 128'b0;
 assign CacheWrite = WriteDataArray | pipe_MemWrite;
-assign cache_data_in = MemDataValid? mem_read_data[15:0] : pipe_mem_write_data[15:0];
+assign cache_data_in = CacheBusy? mem_read_data[15:0] : pipe_mem_write_data[15:0];
 
 DataArray data (
 	.clk(clk),
@@ -98,8 +97,11 @@ DataArray data (
 	.DataOut(cache_data_out[15:0])
 );
 
+// Memory control signals
 assign cache_MemWrite = CacheWrite;	// Write to mem also when writing to cache
-assign stall = CacheBusy; // Stall if transferring data from memory
 assign cache_MemRead = CacheBusy;
+assign cache_mem_addr = CacheBusy? cache_mem_read_addr[15:0] : cache_MemWrite? pipe_mem_write_addr[15:0] : pipe_read_addr[15:0]
+
+assign stall = CacheBusy; // Stall if transferring data from memory
 
 endmodule
