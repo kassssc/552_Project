@@ -3,7 +3,7 @@ module mem_control_fsm(
 	input rst,
 	input I_cacheBusy,
 	input D_cacheBusy,
-	input I_cache_finished
+	input I_cache_finished,
 	input D_cache_finished,
 	output I_mem_fetch,
 	output D_mem_fetch
@@ -19,7 +19,7 @@ assign D_mem_fetch = (state == 2'b10)? 1'b1:1'b0;
 
 
 always@(*) begin
-	casex(I_cacheBusy,  I_cached_finshed, D_cacheBusy, D_cache_finished, state_current)
+	casex ({I_cacheBusy, I_cache_finished, D_cacheBusy, D_cache_finished, state})
 		6'b000000: state_new = 2'b00;
 		6'b1xxx00: state_new = 2'b01;
 		6'b10xx01: state_new = 2'b01;
