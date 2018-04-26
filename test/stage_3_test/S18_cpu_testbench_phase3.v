@@ -175,7 +175,7 @@ module cpu_ptb();
    assign cache_data_out_I = DUT.IF_instr; // data read from the cache
 
    assign MemDataValid = DUT.mem_DataValid; // is data from memory valid?
-   assign mem_read_data = DUT.mem_data_out; // data read from memory
+   assign cache_data_ = DUT.mem_data_out; // data read from memory
 
    assign I_CacheBusy = DUT.I_CacheBusy; //
 
@@ -214,7 +214,7 @@ module cpu_ptb();
    assign MemDataIn = DUT.MEM_ALU_in_1;
    // If there's a memory write in this cycle, this is the Data being written to memory (16 bits)
    
-   assign MemDataOut = DUT.mem_read_out;
+   assign MemDataOut = DUT.mem_data_out;
    // If there's a memory read in this cycle, this is the data being read out of memory (16 bits)
 
    assign stall = DUT.stall;
