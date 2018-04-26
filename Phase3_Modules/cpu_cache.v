@@ -62,6 +62,8 @@ wire MemRead, MemWrite, mem_DataValid;
 wire[15:0] mem_data_out, mem_data_in, mem_read_addr;
 
 // cache busy means it "wants" to read from mem
+// X_mem_fetch == 0 means cache X is stalled from getting data from mem (if it wants to)
+// X_mem_fetch == 1 means cache X is allowed to grab data from memory
 
 // I-CACHE
 wire I_mem_fetch, I_CacheBusy, I_CacheFinish;
@@ -71,6 +73,7 @@ wire [15:0] I_cache_mem_read_addr;
 wire D_mem_fetch, D_MemWrite, D_CacheBusy, D_CacheFinish;
 wire [15:0] D_cache_mem_read_addr;
 
+// Assign memory control signals
 assign mem_read_addr = I_mem_fetch? I_cache_mem_read_addr[15:0] :
 					   D_mem_fetch? D_cache_mem_read_addr[15:0] : 16'h0000;
 assign MemRead = I_mem_fetch ^ D_mem_fetch;
