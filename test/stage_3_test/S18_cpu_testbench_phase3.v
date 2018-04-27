@@ -1,5 +1,5 @@
 module cpu_ptb();
-  
+
 
    wire [15:0] PC;
    wire [15:0] Inst;           /* This should be the 15 bits of the FF that
@@ -17,19 +17,24 @@ module cpu_ptb();
    wire        ICacheHit;
    wire        DCacheReq;
    wire        ICacheReq;
-   wire [1:0]  fwd_alu_B;
-   wire [15:0] EX_instr;
-   wire [15:0] EX_reg_data_2;
-   wire [15:0] ID_instr;
-   wire [15:0] EX_ALU_in_2;
 
-
-   wire I_mem_fetch;
-   wire D_mem_fetch;
    wire mem_DataValid;
+   wire I_CacheBusy, D_CacheBusy, I_mem_fetch, D_mem_fetch;
+   wire [15:0] cache_data_out;
+
+   wire [15:0] EX_instr, ID_instr;
+   wire [15:0] EX_reg_data_2, EX_ALU_in_2;
+
+   wire [1:0]  fwd_alu_B;
+
+   wire Branch_curr, Branch_new;
+   wire [2:0] Flags;
+
+   wire [15:0] EX_reg_write_data, MEM_reg_write_data;
+
 
    wire        Halt;         /* Halt executed and in Memory or writeback stage */
-        
+
    integer     inst_count;
    integer     cycle_count;
 
@@ -46,10 +51,10 @@ module cpu_ptb();
    reg clk; /* Clock input */
    reg rst_n; /* (Active low) Reset input */
 
-     
+
 
    cpu DUT(.clk(clk), .rst_n(rst_n), .pc_out(PC), .hlt(Halt)); /* Instantiate your processor */
-   
+
 
 
 
@@ -68,7 +73,7 @@ module cpu_ptb();
 
       trace_file = $fopen("verilogsim.ptrace");
       sim_log_file = $fopen("verilogsim.plog");
-      
+
    end
 
 
@@ -90,7 +95,7 @@ module cpu_ptb();
     always #50 begin   // delay 1/2 clock period each time thru loop
       clk = ~clk;
     end
-	
+
     always @(posedge clk) begin
     	cycle_count = cycle_count + 1;
 	if (cycle_count > 100000) begin
@@ -113,17 +118,17 @@ module cpu_ptb();
             inst_count = inst_count + 1;
          end
 	 if (DCacheHit) begin
-            DCacheHit_count = DCacheHit_count + 1;	 	
-         end	
+            DCacheHit_count = DCacheHit_count + 1;
+         end
 	 if (ICacheHit) begin
-            ICacheHit_count = ICacheHit_count + 1;	 	
-	 end    
+            ICacheHit_count = ICacheHit_count + 1;
+	 end
 	 if (DCacheReq) begin
-            DCacheReq_count = DCacheReq_count + 1;	 	
-         end	
+            DCacheReq_count = DCacheReq_count + 1;
+         end
 	 if (ICacheReq) begin
-            ICacheReq_count = ICacheReq_count + 1;	 	
-	 end 
+            ICacheReq_count = ICacheReq_count + 1;
+	 end
 
          $fdisplay(sim_log_file, "SIMLOG:: Cycle %d PC: %8x I: %8x R: %d %3d %8x M: %d %d %8x %8x %8x",
                   cycle_count,
@@ -140,7 +145,7 @@ module cpu_ptb();
          if (RegWrite) begin
             $fdisplay(trace_file,"REG: %d VALUE: 0x%04x",
                       WriteRegister,
-                      WriteData );            
+                      WriteData );
          end
          if (MemRead) begin
             $fdisplay(trace_file,"LOAD: ADDR: 0x%04x VALUE: 0x%04x",
@@ -165,9 +170,9 @@ module cpu_ptb();
             $fclose(sim_log_file);
 	    #5;
             $finish;
-         end 
+         end
       end
-      
+
    end
    /* Assign internal signals to top level wires
       The internal module names and signal names will vary depending
@@ -175,70 +180,75 @@ module cpu_ptb();
 
       // Edit the example below. You must change the signal
       // names on the right hand side
-    
+
       //   assign PC = DUT.fetch0.pcCurrent; //You won't need this because it's part of the main cpu interface
-   
+
       //   assign Halt = DUT.memory0.halt; //You won't need this because it's part of the main cpu interface
       // Is processor halted (1 bit signal)
-   //assign ICacheHit = DUT.cachehit_I;
-   //assign DCacheHit = DUT.cachehit_D;
-   assign cache_data_out_D = DUT.cache_data_out; // data read from the cache
 
-   assign mem_DataValid = DUT.mem_DataValid; // is data from memory valid?
+   assign ICacheHit = DUT.I_CacheHit;
+   assign DCacheHit = DUT.D_CacheHit;
+   assign I_CacheBusy = DUT.I_CacheBusy;
+   assign D_CacheBusy = DUT.D_CacheBusy;
+   assign I_mem_fetch = DUT.I_mem_fetch;
+   assign D_mem_fetch = DUT.D_mem_fetch;
+   assign D_cache_mem_addr = DUT.D_cache_mem_addr; // addr cache wants to read from mem when transferring data
+   assign I_cache_mem_addr = DUT.I_cache_mem_addr;
 
-   assign I_CacheBusy = DUT.I_CacheBusy; //
+   assign cache_data_out = DUT.cache_data_out; // data read from the cache
 
    // D_cache
    assign MEM_MemToReg = DUT.MEM_MemToReg; // does the pipeline want to read something from mem?
+   assign MEM_reg_write_data = DUT.MEM_reg_write_data;
+   assign mem_DataValid = DUT.mem_DataValid; // is data from memory valid?
    assign mem_write_data = DUT.mem_write_data; // data the pipeline wants to write to mem
 
 
-
-   assign D_cache_mem_read_addr = DUT.D_cache_mem_read_addr; // addr cache wants to read from mem when transferring data
-   assign I_cache_mem_read_addr = DUT.I_cache_mem_read_addr;
-   assign MemWrite = DUT.MemWrite; // Does the cache want to write to mem?
-   assign D_CacheBusy = DUT.D_CacheBusy;
-
    assign Inst = DUT.IF_instr;
    //Instruction fetched in the current cycle
-   
+
    assign RegWrite = DUT.WB_RegWrite;
    // Is register file being written to in this cycle, one bit signal (1 means yes, 0 means no)
-  
+
    assign WriteRegister = DUT.WB_reg_write_select;
    // If above is true, this should hold the name of the register being written to. (4 bit signal)
-   
+
    assign WriteData = DUT.WB_reg_write_data;
    // If above is true, this should hold the Data being written to the register. (16 bits)
-   
+
    assign MemRead =  DUT.MemRead;
    // Is memory being read from, in this cycle. one bit signal (1 means yes, 0 means no)
-   
-   assign MemWrite = DUT.MEM_MemWrite;
+
+   assign MemWrite = DUT.MemWrite; // Does the cache want to write to mem?
    // Is memory being written to, in this cycle (1 bit signal)
-   
-   assign MemAddress = DUT.MEM_mem_addr;
+
+   assign MemAddress = DUT.mem_addr;
    // If there's a memory access this cycle, this should hold the address to access memory with (for both reads and writes to memory, 16 bits)
-   
-   assign MemDataIn = DUT.MEM_ALU_in_1;
+
+   assign MemDataIn = DUT.mem_write_data;
    // If there's a memory write in this cycle, this is the Data being written to memory (16 bits)
-   
+
    assign MemDataOut = DUT.mem_data_out;
    // If there's a memory read in this cycle, this is the data being read out of memory (16 bits)
+
+   assign stall = DUT.stall;
 
    assign fwd_alu_B = DUT.fwd_alu_B;
 
    assign EX_ALU_in_2 = DUT.EX_ALU_in_2;
 
-   assign EX_instr = EX_instr;
-   assign EX_reg_data_2 = EX_reg_data_2;
+   assign EX_instr = DUT.EX_instr;
    assign ID_instr = DUT.ID_instr;
+   assign EX_reg_data_2 = DUT.EX_reg_data_2;
 
-   assign I_mem_fetch = DUT.I_mem_fetch;
-   assign D_mem_fetch = DUT.D_mem_fetch;
-   assign mem_DataValid = DUT.mem_DataValid;
-   assign stall = DUT.stall;
+   assign Branch_curr = DUT.EX_Branch_current;
+   assign Branch_new = DUT.EX_Branch_new;
+   assign Flags = DUT.flag_current;
+
+   assign EX_reg_write_data = DUT.EX_reg_write_data;
+   assign MEM_reg_write_data = DUT.MEM_reg_write_data;
+
 
    /* Add anything else you want here */
-   
+
 endmodule

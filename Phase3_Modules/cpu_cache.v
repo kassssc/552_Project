@@ -52,33 +52,28 @@ wire WB_RegWrite;
 wire [15:0] WB_reg_write_data;
 wire [3:0] WB_reg_write_select;
 
-wire [1:0]S_out;
 wire stall_hazard;
 
 //------------------------------------------------------------------------------
 // MEM and CACHE
 //------------------------------------------------------------------------------
 
-// cache busy means it "wants" to read from mem
-// X_mem_fetch == 0 means cache X is stalled from getting data from mem (if it wants to)
-// X_mem_fetch == 1 means cache X is allowed to grab data from memory
-
 // I-CACHE
-wire I_mem_fetch, I_CacheBusy, I_CacheFinish, I_MemRead;
-wire [15:0] I_cache_mem_read_addr;
+wire I_mem_fetch, I_CacheBusy, I_CacheFinish, I_MemRead, I_CacheHit, I_CacheMiss;
+wire [15:0] I_cache_mem_addr;
 
 // D-CACHE
-wire D_mem_fetch, D_MemWrite, D_CacheBusy, D_CacheFinish, D_MemRead;
-wire [15:0] D_cache_mem_read_addr;
+wire D_mem_fetch, D_MemWrite, D_CacheBusy, D_CacheFinish, D_MemRead, D_CacheHit, I_CacheHit;
+wire [15:0] D_cache_mem_addr;
 
 wire [15:0] cache_data_out; // data out of cache to whereever needs it
 
 wire MemRead, MemWrite, mem_DataValid;
-wire[15:0] mem_data_out, mem_data_in, mem_read_addr, mem_write_data;
+wire[15:0] mem_data_out, mem_data_in, mem__addr, mem_write_data;
 
 // Assign memory control signals
-assign mem_read_addr = I_mem_fetch? I_cache_mem_read_addr[15:0] :
-					   D_mem_fetch? D_cache_mem_read_addr[15:0] : 16'h0000;
+assign mem_addr = I_mem_fetch? I_cache_mem_addr[15:0] :
+				  D_mem_fetch? D_cache_mem_addr[15:0] : MEM_mem_addr[15:0];
 assign MemRead = I_mem_fetch | D_mem_fetch;
 assign MemWrite = D_MemWrite;
 
@@ -87,7 +82,7 @@ memory4c MAIN_MEM(
 	.rst(rst),
 
 	.data_in(mem_write_data[15:0]), // from MEM stage
-	.addr(mem_read_addr[15:0]),
+	.addr(mem_addr[15:0]),
 	.enable(MemRead | MemWrite),
 	.wr(MemWrite),
 
@@ -126,10 +121,12 @@ CACHE cache_I(
 	.MemDataValid(I_mem_fetch & mem_DataValid),	// is data from memory valid?
 	.mem_read_data(mem_data_out[15:0]), // data read from memory
 
-	.cache_mem_addr(I_cache_mem_read_addr[15:0]), // addr cache wants to read from mem when transferring data
+	.cache_mem_addr(I_cache_mem_addr[15:0]), // addr cache wants to read from mem when transferring data
 	.cache_MemRead(I_MemRead),
 	.cache_MemWrite(), // Does the cache want to write to mem?
 
+	.CacheHit(I_CacheHit),
+	.CacheMiss(I_CacheMiss),
 	.CacheFinish(I_CacheFinish),
 	.CacheBusy(I_CacheBusy) // Stall pipeline while cache is busy transferring data from mem
 );
@@ -152,10 +149,12 @@ CACHE D_CACHE(
 	.mem_read_data(mem_data_out[15:0]), // data read from memory
 
 	// CACHE memory control interface
-	.cache_MemWrite(D_MemWrite), // Does the cache want to write to mem?
+	.cache_mem_addr(D_cache_mem_addr[15:0]), // addr specified for read/write by cache
 	.cache_MemRead(D_MemRead),
-	.cache_mem_addr(D_cache_mem_read_addr[15:0]), // addr specified for read/write by cache
+	.cache_MemWrite(D_MemWrite), // Does the cache want to write to mem?
 
+	.CacheHit(D_CacheHit),
+	.CacheMiss(I_CacheMiss),
 	.CacheFinish(D_CacheFinish),
 	.CacheBusy(D_CacheBusy) // Stall pipeline while cache is busy transferring data from mem
 );
@@ -384,7 +383,6 @@ EX_MEM EXMEM (
 //------------------------------------------------------------------------------
 // MEM: MEMORY STAGE
 //------------------------------------------------------------------------------
-wire MemEnable;
 
 assign MEM_reg_write_data = MEM_MemToReg? cache_data_out[15:0] : MEM_EX_reg_write_data[15:0];
 assign mem_write_data[15:0] = MEM_ALU_in_1[15:0];

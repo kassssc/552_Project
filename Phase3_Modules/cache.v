@@ -19,11 +19,13 @@ module CACHE (
 	output [15:0] cache_mem_addr, // addr cache specifies in mem control
 
 	output [15:0] cache_data_out, // data read from the cache
+	output CacheHit,
+	output CacheMiss,
 	output CacheFinish,	// Is the cache done transferring data from mem?
 	output CacheBusy // Is the cache transferring data form mem?
 );
 
-wire WriteTagArray, WriteDataArray, CacheMiss, CacheHit;
+wire WriteTagArray, WriteDataArray, CacheMiss;
 wire[15:0] addr, base_addr;
 
 wire[7:0] meta_data_in, meta_data_out;
@@ -55,6 +57,16 @@ cache_fill_FSM cache_ctrl (
 	.base_addr(base_addr[15:0])
 );
 
+assign CacheHit = meta_data_out[5] & (meta_data_out[4:0] == tag[4:0]) & (pipe_MemRead | pipe_MemWrite);
+assign CacheMiss = ~CacheHit & (pipe_MemRead | pipe_MemWrite) & ~CacheBusy;
+
+// Memory control signals
+assign cache_MemWrite = pipe_MemWrite;	// Write to mem also when writing to cache
+assign cache_mem_addr = cache_MemRead? cache_mem_read_addr[15:0] :
+						cache_MemWrite? pipe_mem_write_addr[15:0] : pipe_read_addr[15:0];
+assign CacheFinish = WriteTagArray;
+
+
 assign addr[15:0] = WriteDataArray? base_addr[15:0] :
 					pipe_MemWrite? pipe_mem_write_addr[15:0] : pipe_read_addr[15:0];
 
@@ -62,11 +74,6 @@ assign addr[15:0] = WriteDataArray? base_addr[15:0] :
 assign tag = addr[15:11];
 assign block_index = addr[10:4];
 assign block_offset = WriteDataArray? cache_write_block_offset[3:0] : addr[3:0];
-
-assign CacheHit = meta_data_out[5] & (meta_data_out[4:0] == tag[4:0]);
-assign CacheMiss = ~CacheHit & (pipe_MemRead | pipe_MemWrite);
-
-assign meta_data_in[7:0] = {3'b1, tag[4:0]};
 
 DECODER_3_8 block_offset_decoder (
 	.id_in(block_offset[3:1]),
@@ -76,6 +83,8 @@ DECODER_7_128 block_index_decoder (
 	.id_in(block_index[6:0]),
 	.one_hot_out(block_select_one_hot[127:0])
 );
+
+assign meta_data_in[7:0] = {3'b1, tag[4:0]};
 
 MetaDataArray meta (
 	.clk(clk),
@@ -98,11 +107,5 @@ DataArray data (
 	.WordEnable(word_select_one_hot[7:0]),
 	.DataOut(cache_data_out[15:0])
 );
-
-// Memory control signals
-assign cache_MemWrite = pipe_MemWrite;	// Write to mem also when writing to cache
-assign cache_mem_addr = cache_MemRead? cache_mem_read_addr[15:0] :
-						cache_MemWrite? pipe_mem_write_addr[15:0] : pipe_read_addr[15:0];
-assign CacheFinish = WriteTagArray;
 
 endmodule
