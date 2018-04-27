@@ -21,10 +21,11 @@ module CACHE (
 	output [15:0] cache_data_out, // data read from the cache
 	output CacheFinish,
 	output CacheHit,
+	output CacheMiss,
 	output CacheBusy // does the cache want any data from mem?
 );
 
-wire WriteTagArray, WriteDataArray, CacheMiss;
+wire WriteTagArray, WriteDataArray, CacheMiss_internal;
 wire[15:0] addr, base_addr;
 
 wire[7:0] meta_data_in, meta_data_out;
@@ -41,7 +42,7 @@ wire[127:0] data_block_select_one_hot;
 cache_fill_FSM cache_ctrl (
 	.clk(clk),
 	.rst(rst),
-	.miss_detected(CacheMiss),
+	.miss_detected(CacheMiss_internal),
 	.memory_data_valid(MemDataValid),
 	.miss_addr(addr[15:0]),
 
@@ -66,8 +67,7 @@ assign block_offset = WriteDataArray? cache_write_block_offset[3:0] : addr[3:0];
 
 assign CacheHit = meta_data_out[5] & (meta_data_out[4:0] == tag[4:0]);
 assign CacheMiss = ~CacheHit & (pipe_MemRead | pipe_MemWrite);
-
-assign cachehit = CacheHit;
+assign CacheMiss_internal = CacheMiss;
 
 assign meta_data_in[7:0] = {3'b1, tag[4:0]};
 
