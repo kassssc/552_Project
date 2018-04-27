@@ -19,7 +19,7 @@ module CACHE (
 	output [15:0] cache_mem_addr, // addr cache specifies in mem control
 
 	output [15:0] cache_data_out, // data read from the cache
-	output CacheFinish,
+	output CacheDone,
 	output CacheHit,
 	output CacheMiss,
 	output CacheBusy // does the cache want any data from mem?
@@ -106,6 +106,13 @@ DataArray data (
 assign cache_MemWrite = pipe_MemWrite;	// Write to mem also when writing to cache
 assign cache_mem_addr = cache_MemRead? cache_mem_read_addr[15:0] :
 						cache_MemWrite? pipe_mem_write_addr[15:0] : pipe_read_addr[15:0];
-assign CacheFinish = WriteTagArray;
+
+wire CacheDone_internal;
+dff cache_finish_cycledelay(
+	.q(CacheDone_internal), .d(1'b1),
+	.wen(WriteTagArray), .clk(clk), .rst(rst | CacheDone_internal)
+);
+
+assign CacheDone = CacheDone_internal;
 
 endmodule
