@@ -23,6 +23,9 @@ module cpu_ptb();
    wire [15:0] ID_instr;
    wire [15:0] EX_ALU_in_2;
 
+   wire [15:0] D_cache_mem_read_addr;
+   wire [15:0] I_cache_mem_read_addr;
+
 
    wire I_mem_fetch;
    wire D_mem_fetch;

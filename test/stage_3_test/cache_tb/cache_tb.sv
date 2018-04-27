@@ -20,7 +20,7 @@ module Cache_tb();
 	logic [15:0] cache_mem_addr; // addr cache specifies in mem control
 
 	logic [15:0] cache_data_out; // data read from the cache
-	logic CacheFinish;
+	logic CacheDone;
 	logic CacheBusy; // does the cache want any data from mem?
 
 	wire CacheHit;
@@ -46,7 +46,7 @@ CACHE DUT(
 	.cache_mem_addr(cache_mem_addr), // addr cache specifies in mem control
 
 	.cache_data_out(cache_data_out), // data read from the cache
-	.CacheFinish(CacheFinish),
+	.CacheDone(CacheDone),
 	.CacheHit(CacheHit),
 	.CacheBusy(CacheBusy) // does the cache want any data from mem?
 );

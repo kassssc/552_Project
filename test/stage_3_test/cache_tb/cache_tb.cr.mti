@@ -1,0 +1,108 @@
+C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/cache.v {1 {vlog -work work -stats=none C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/cache.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module CACHE
+
+Top level modules:
+	CACHE
+
+} {} {}} C:/Users/liuya/Desktop/CPU_Stage1/552_Project/test/stage_3_test/cache_tb/cache_tb.sv {1 {vlog -work work -sv -stats=none C:/Users/liuya/Desktop/CPU_Stage1/552_Project/test/stage_3_test/cache_tb/cache_tb.sv
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module Cache_tb
+
+Top level modules:
+	Cache_tb
+
+} {} {}} C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/dff.v {1 {vlog -work work -stats=none C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/dff.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module dff
+
+Top level modules:
+	dff
+
+} {} {}} C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/cache_fsm.v {1 {vlog -work work -stats=none C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/cache_fsm.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module cache_fill_FSM
+
+Top level modules:
+	cache_fill_FSM
+
+} {} {}} C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/DataArray.v {1 {vlog -work work -stats=none C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/DataArray.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module DataArray
+-- Compiling module Block
+-- Compiling module DWord
+-- Compiling module DCell
+
+Top level modules:
+	DataArray
+
+} {} {}} C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/decoders.v {1 {vlog -work work -stats=none C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/decoders.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module DECODER_3_8
+-- Compiling module DECODER_7_128
+
+Top level modules:
+	DECODER_3_8
+	DECODER_7_128
+
+} {} {}} C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/multicycle_memory.v {1 {vlog -work work -stats=none C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/multicycle_memory.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module memory4c
+
+Top level modules:
+	memory4c
+
+} {} {}} C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/mem_control_fsm.v {1 {vlog -work work -stats=none C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/mem_control_fsm.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module mem_control_fsm
+
+Top level modules:
+	mem_control_fsm
+
+} {} {}} C:/Users/liuya/Desktop/CPU_Stage1/552_Project/CLA.v {1 {vlog -work work -stats=none C:/Users/liuya/Desktop/CPU_Stage1/552_Project/CLA.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module CLA_1b
+-- Compiling module CLA_4b
+-- Compiling module CLA_16b
+
+Top level modules:
+	CLA_16b
+
+} {} {}} C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/MetaDataArray.v {1 {vlog -work work -stats=none C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/MetaDataArray.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module MetaDataArray
+-- Compiling module MBlock
+-- Compiling module MCell
+
+Top level modules:
+	MetaDataArray
+
+} {} {}} C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/regs.v {1 {vlog -work work -stats=none C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/regs.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module reg_4b
+-- Compiling module reg_16b
+-- Compiling module reg_1bit
+-- Compiling module reg_4bit
+-- Compiling module state_reg
+
+Top level modules:
+	reg_4b
+	reg_16b
+	reg_1bit
+	reg_4bit
+	state_reg
+
+} {} {}} C:/Users/liuya/Desktop/CPU_Stage1/552_Project/fulladders.v {1 {vlog -work work -stats=none C:/Users/liuya/Desktop/CPU_Stage1/552_Project/fulladders.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module full_adder_1b
+-- Compiling module full_adder_2b
+-- Compiling module full_adder_3b
+-- Compiling module full_adder_4b
+-- Compiling module full_adder_16b
+
+Top level modules:
+	full_adder_2b
+	full_adder_3b
+	full_adder_16b
+
+} {} {}}
