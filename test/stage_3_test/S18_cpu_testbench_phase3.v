@@ -17,6 +17,11 @@ module cpu_ptb();
    wire        ICacheHit;
    wire        DCacheReq;
    wire        ICacheReq;
+   wire [1:0]  fwd_alu_B;
+   wire [15:0] EX_instr;
+   wire [15:0] EX_reg_data_2;
+   wire [15:0] ID_instr;
+   wire [15:0] EX_ALU_in_2;
 
    wire        Halt;         /* Halt executed and in Memory or writeback stage */
         
@@ -216,6 +221,14 @@ module cpu_ptb();
    
    assign MemDataOut = DUT.mem_data_out;
    // If there's a memory read in this cycle, this is the data being read out of memory (16 bits)
+
+   assign fwd_alu_B = DUT.fwd_alu_B;
+
+   assign EX_ALU_in_2 = DUT.EX_ALU_in_2;
+
+   assign EX_instr = EX_instr;
+   assign EX_reg_data_2 = EX_reg_data_2;
+   assign ID_instr = DUT.ID_instr;
 
    assign stall = DUT.stall;
 
