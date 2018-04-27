@@ -27,7 +27,7 @@ wire fsm_busy_curr, CacheFinish_curr, CacheFinish_new;
 assign base_addr = base_address;
 
 // Is it currently busy? if yes and not finished waitinf for mem latency, it stays busy, otherwise busy if cache miss
-assign fsm_busy_new = fsm_busy_curr? (~CacheFinish_curr) : miss_detected;
+assign fsm_busy_new = fsm_busy_curr? (~CacheFinish_new) : miss_detected;
 // Store the current state of the cache "is it busy transferring data from mem?"
 dff state_fsm_busy (
 	.d(fsm_busy_new),
@@ -94,7 +94,7 @@ full_adder_4b write_cache_block_offset_adder (
 );
 
 dff cache_finish(
-	.q(CacheFinish_curr), .d(CacheFinish_new),
+	.q(CacheFinish_curr), .d(1'b1),
 	.wen(CacheFinish_new), .clk(clk), .rst(rst | CacheFinish_curr)
 );
 
