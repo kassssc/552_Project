@@ -23,6 +23,8 @@ module Cache_tb();
 	logic CacheFinish;
 	logic CacheBusy; // does the cache want any data from mem?
 
+	wire CacheHit;
+
 CACHE DUT(
 	.clk(clk),
 	.rst(rst),
@@ -45,10 +47,13 @@ CACHE DUT(
 
 	.cache_data_out(cache_data_out), // data read from the cache
 	.CacheFinish(CacheFinish),
+	.CacheHit(CacheHit),
 	.CacheBusy(CacheBusy) // does the cache want any data from mem?
 );
 
 always #5 clk = ~clk;
+
+assign WriteTagArray = DUT.WriteTagArray;
 
 `ifdef DUMPFSDB
     initial begin
@@ -106,7 +111,7 @@ initial begin
 	MemDataValid = 0;
 
 	#10
-	pipe_read_addr = 7;
+	pipe_read_addr = 8;
 
 	#10
 	pipe_read_addr = 10;
