@@ -19,8 +19,8 @@ module CACHE (
 	output [15:0] cache_mem_addr, // addr cache specifies in mem control
 
 	output [15:0] cache_data_out, // data read from the cache
-	output CacheFinish,
-	output CacheBusy // does the cache want any data from mem?
+	output CacheFinish,	// Is the cache done transferring data from mem?
+	output CacheBusy // Is the cache transferring data form mem?
 );
 
 wire WriteTagArray, WriteDataArray, CacheMiss, CacheHit;
@@ -30,7 +30,7 @@ wire[7:0] meta_data_in, meta_data_out;
 wire[15:0] cache_data_in, cache_mem_read_addr;
 
 wire[4:0] tag;
-wire[6:0] set_index;
+wire[6:0] block_index;
 wire[3:0] block_offset, cache_write_block_offset;
 
 wire[127:0] block_select_one_hot;	// one-hot selects the set index in cache
@@ -60,13 +60,11 @@ assign addr[15:0] = WriteDataArray? base_addr[15:0] :
 
 // addr : tttt tsss ssss bbbb
 assign tag = addr[15:11];
-assign set_index = addr[10:4];
+assign block_index = addr[10:4];
 assign block_offset = WriteDataArray? cache_write_block_offset[3:0] : addr[3:0];
 
 assign CacheHit = meta_data_out[5] & (meta_data_out[4:0] == tag[4:0]);
 assign CacheMiss = ~CacheHit & (pipe_MemRead | pipe_MemWrite);
-
-assign cachehit = CacheHit;
 
 assign meta_data_in[7:0] = {3'b1, tag[4:0]};
 
@@ -74,8 +72,8 @@ DECODER_3_8 block_offset_decoder (
 	.id_in(block_offset[3:1]),
 	.one_hot_out(word_select_one_hot[7:0])
 );
-DECODER_7_128 set_index_decoder (
-	.id_in(set_index[6:0]),
+DECODER_7_128 block_index_decoder (
+	.id_in(block_index[6:0]),
 	.one_hot_out(block_select_one_hot[127:0])
 );
 

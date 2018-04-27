@@ -74,7 +74,7 @@ m mem(
 	.memwrite_current(memwrite_current)
 );
 
-reg_4bit reg_write_select(
+reg_4b reg_write_select(
 	.reg_new(reg_write_select_new),
 	.wen(wen),
 	.clk(clk),
@@ -82,7 +82,7 @@ reg_4bit reg_write_select(
 	.reg_current(reg_write_select_current)
 );
 
-reg_4bit sel_reg_1(
+reg_4b sel_reg_1(
 	.reg_new(sel_reg_1_new),
 	.wen(wen),
 	.clk(clk),
@@ -90,7 +90,7 @@ reg_4bit sel_reg_1(
 	.reg_current(sel_reg_1_current)
 );
 
-reg_4bit sel_reg_2(
+reg_4b sel_reg_2(
 	.reg_new(sel_reg_2_new),
 	.wen(wen),
 	.clk(clk),

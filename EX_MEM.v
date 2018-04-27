@@ -42,7 +42,7 @@ state_reg reg_write_data(
 	.wen(wen)
 );
 
-reg_4bit reg_write_select(
+reg_4b reg_write_select(
 	.reg_new(reg_write_select_new[3:0]),
 	.clk(clk),
 	.rst(rst),

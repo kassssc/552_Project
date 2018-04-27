@@ -58,8 +58,6 @@ wire stall_hazard;
 //------------------------------------------------------------------------------
 // MEM and CACHE
 //------------------------------------------------------------------------------
-wire MemRead, MemWrite, mem_DataValid;
-wire[15:0] mem_data_out, mem_data_in, mem_read_addr, mem_write_data;
 
 // cache busy means it "wants" to read from mem
 // X_mem_fetch == 0 means cache X is stalled from getting data from mem (if it wants to)
@@ -75,13 +73,14 @@ wire [15:0] D_cache_mem_read_addr;
 
 wire [15:0] cache_data_out; // data out of cache to whereever needs it
 
+wire MemRead, MemWrite, mem_DataValid;
+wire[15:0] mem_data_out, mem_data_in, mem_read_addr, mem_write_data;
+
 // Assign memory control signals
 assign mem_read_addr = I_mem_fetch? I_cache_mem_read_addr[15:0] :
 					   D_mem_fetch? D_cache_mem_read_addr[15:0] : 16'h0000;
 assign MemRead = I_mem_fetch | D_mem_fetch;
 assign MemWrite = D_MemWrite;
-
-wire [15:0] pc_current, pc_plus_2;
 
 memory4c MAIN_MEM(
 	.clk(clk),
@@ -100,7 +99,6 @@ mem_control_fsm mem_ctrl (
 	.clk(clk),
 	.rst(rst),
 
-	// Inputs
 	.I_CacheBusy(I_MemRead),
 	.D_CacheBusy(D_MemRead),
 	.I_cache_finished(I_CacheFinish),
@@ -165,6 +163,7 @@ CACHE D_CACHE(
 //------------------------------------------------------------------------------
 // IF: INSTRUCTION FETCH STAGE
 //------------------------------------------------------------------------------
+wire [15:0] pc_current, pc_plus_2;
 // branch signal from ID stage
 assign IF_pc_new = EX_Branch_current? EX_pc_branch_target : pc_plus_2;
 
@@ -177,7 +176,7 @@ state_reg pc_reg (
 );
 
 wire [15:0] pc_add;
-assign pc_add = rst? 16'h0000: 16'h0002; 
+assign pc_add = rst? 16'h0000: 16'h0002;
 
 CLA_16b pc_adder (
 	.A(pc_current[15:0]),
