@@ -63,7 +63,7 @@ assign WriteTagArray = DUT.WriteTagArray;
  `endif
 
 initial begin
-	clk = 0;
+	clk = 1;
 	rst = 1;
 	pipe_MemRead = 0;
 	pipe_read_addr = 0;
@@ -76,13 +76,10 @@ initial begin
 	#10
 	rst = 0;
 	pipe_MemRead = 1;
-	pipe_read_addr = 4;
-
-	#10
-	pipe_MemRead = 1;
+	pipe_read_addr = 0;
 
 
-	#50 
+	#40 
 	MemDataValid = 1;
 	mem_read_data = 1;
 
@@ -111,10 +108,32 @@ initial begin
 	MemDataValid = 0;
 
 	#10
+	pipe_read_addr = 0;
+
+	#10
+	pipe_read_addr = 2;
+
+	#10
+	pipe_read_addr = 4;
+
+	#10
+	pipe_read_addr = 6;
+
+	#10
 	pipe_read_addr = 8;
 
 	#10
 	pipe_read_addr = 10;
+
+	#10
+	pipe_read_addr = 12;
+
+	#10
+	pipe_read_addr = 14;
+
+	#10
+	pipe_read_addr = 16;
+
 
 	#100
 	$stop;
