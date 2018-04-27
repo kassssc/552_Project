@@ -180,7 +180,6 @@ module cpu_ptb();
    assign cache_data_out_D = DUT.cache_data_out; // data read from the cache
 
    assign mem_DataValid = DUT.mem_DataValid; // is data from memory valid?
-   assign mem_data_out = DUT.mem_data_out; // data read from memory
 
    assign I_CacheBusy = DUT.I_CacheBusy; //
 
