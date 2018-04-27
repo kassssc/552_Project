@@ -15,6 +15,7 @@ module CACHE (
 
 	// Cache controls Memory module (when it wants to)
 	output cache_MemWrite, // Does the cache want to write to mem?
+	output cache_MemRead,
 	output [15:0] cache_mem_addr, // addr cache specifies in mem control
 
 	output [15:0] cache_data_out, // data read from the cache
@@ -49,6 +50,7 @@ cache_fill_FSM cache_ctrl (
 	.write_data_array(WriteDataArray),
 	.write_tag_array(WriteTagArray),
 	.memory_address(cache_mem_read_addr[15:0]),
+	.mem_read(cache_MemRead),
 	.finished(CacheFinish)
 );
 

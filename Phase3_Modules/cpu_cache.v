@@ -66,11 +66,11 @@ wire[15:0] mem_data_out, mem_data_in, mem_read_addr, mem_write_data;
 // X_mem_fetch == 1 means cache X is allowed to grab data from memory
 
 // I-CACHE
-wire I_mem_fetch, I_CacheBusy, I_CacheFinish;
+wire I_mem_fetch, I_CacheBusy, I_CacheFinish, I_MemRead;
 wire [15:0] I_cache_mem_read_addr;
 
 // D-CACHE
-wire D_mem_fetch, D_MemWrite, D_CacheBusy, D_CacheFinish;
+wire D_mem_fetch, D_MemWrite, D_CacheBusy, D_CacheFinish, D_MemRead;
 wire [15:0] D_cache_mem_read_addr;
 
 wire [15:0] cache_data_out; // data out of cache to whereever needs it
@@ -103,8 +103,8 @@ mem_control_fsm mem_ctrl (
 	// Inputs
 	.I_CacheBusy(I_CacheBusy),
 	.D_CacheBusy(D_CacheBusy),
-	.I_cache_finished(I_CacheFinish),
-	.D_cache_finished(D_CacheFinish),
+	.I_cache_finished(I_MemRead),
+	.D_cache_finished(D_MemRead),
 
 	// Mem ctrl signals
 	.I_mem_fetch(I_mem_fetch),
@@ -129,6 +129,7 @@ CACHE cache_I(
 	.mem_read_data(mem_data_out[15:0]), // data read from memory
 
 	.cache_mem_addr(I_cache_mem_read_addr[15:0]), // addr cache wants to read from mem when transferring data
+	.cache_MemRead(I_MemRead),
 	.cache_MemWrite(), // Does the cache want to write to mem?
 
 	.CacheFinish(I_CacheFinish),
@@ -154,6 +155,7 @@ CACHE D_CACHE(
 
 	// CACHE memory control interface
 	.cache_MemWrite(D_MemWrite), // Does the cache want to write to mem?
+	.cache_MemRead(D_MemRead),
 	.cache_mem_addr(D_cache_mem_read_addr[15:0]), // addr specified for read/write by cache
 
 	.CacheFinish(D_CacheFinish),
