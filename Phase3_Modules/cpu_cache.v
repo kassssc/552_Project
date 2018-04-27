@@ -101,10 +101,10 @@ mem_control_fsm mem_ctrl (
 	.rst(rst),
 
 	// Inputs
-	.I_CacheBusy(I_CacheBusy),
-	.D_CacheBusy(D_CacheBusy),
-	.I_cache_finished(I_MemRead),
-	.D_cache_finished(D_MemRead),
+	.I_CacheBusy(I_MemRead),
+	.D_CacheBusy(D_MemRead),
+	.I_cache_finished(I_CacheFinish),
+	.D_cache_finished(D_CacheFinish),
 
 	// Mem ctrl signals
 	.I_mem_fetch(I_mem_fetch),
