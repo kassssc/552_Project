@@ -239,6 +239,13 @@ module cpu_ptb();
    assign mem_DataValid = DUT.mem_DataValid;
    assign stall = DUT.stall;
 
+   // WriteRegister[3:0] & RegWrite[15:0] 
+   assign For_MEM_RegWrite = DUT.MEM_RegWrite;
+   assign For_MEM_reg_write_select = DUT.MEM_reg_write_select;
+   assign For_EX_reg_read_select_1 = DUT.EX_reg_read_select_1;
+   assign For_EX_reg_read_select_2 = DUT.EX_reg_read_select_2;
+
+
    /* Add anything else you want here */
    
 endmodule
