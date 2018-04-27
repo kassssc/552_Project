@@ -26,7 +26,7 @@ assign block_offset_16b = {{12{1'b0}}, block_offset_curr[3:0]};
 // current block offset
 assign fsm_offset = block_offset_curr[3:0];
 
-assign Finished = finish_data_transfer;
+assign finished = finish_data_transfer;
 
 
 // Store the current state of the cache "is it busy transferring data from mem?"
