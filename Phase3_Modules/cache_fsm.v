@@ -22,7 +22,7 @@ wire [3:0] block_offset_curr, block_offset_new;
 wire [15:0] read_block_offset_16b;
 wire finish_cache_write, finish_mem_read;
 wire [15:0] base_address;
-wire fsm_busy_curr;
+wire fsm_busy_curr, CacheFinish_curr, CacheFinish_new;
 
 assign base_addr = base_address;
 
@@ -57,7 +57,7 @@ reg_4b read_block_offset_counter (
 	.reg_current(read_block_offset_curr[3:0]),
 	.wen(fsm_busy_curr & ~finish_mem_read),
 	.clk(clk),
-	.rst(rst | finish_cache_write)// reset when data transfer done
+	.rst(rst | CacheFinish_curr)// reset when data transfer done
 );
 // Adds 2 to the block offset every cycle, reset to 0 when data transfer done
 full_adder_4b block_offset_adder (
@@ -80,18 +80,23 @@ reg_4b cache_write_block_offset_counter (
 	.reg_current(cache_write_block_offset_curr[3:0]),
 	.wen(write_data_array),
 	.clk(clk),
-	.rst(rst | finish_cache_write)// reset when data transfer done
+	.rst(rst | CacheFinish_curr)// reset when data transfer done
 );
 // Adds 2 to the block offset every cycle, reset to 0 when data transfer done
 full_adder_4b write_cache_block_offset_adder (
 	.A(cache_write_block_offset_curr[3:0]),	.B(4'b0010), .cin(1'b0),
-	.S(cache_write_block_offset_new[3:0]),	.cout(finish_cache_write)
+	.S(cache_write_block_offset_new[3:0]),	.cout(CacheFinish_new)
+);
+
+dff cache_finish(
+	.q(CacheFinish_curr), .d(CacheFinish_new),
+	.wen(1'b1), .clk(clk), .rst(rst)
 );
 
 assign cache_write_block_offset = cache_write_block_offset_curr[3:0];
 
 assign fsm_busy = fsm_busy_curr;
 assign write_data_array = fsm_busy_curr & memory_data_valid;
-assign write_tag_array = fsm_busy_curr & finish_cache_write;
+assign write_tag_array = fsm_busy_curr & CacheFinish_curr;
 
 endmodule
