@@ -63,13 +63,15 @@ wire I_mem_fetch, I_CacheBusy, I_CacheFinish, I_MemRead, I_CacheHit, I_CacheMiss
 wire [15:0] I_cache_mem_addr;
 
 // D-CACHE
-wire D_mem_fetch, D_MemWrite, D_CacheBusy, D_CacheFinish, D_MemRead, D_CacheHit, I_CacheHit;
+wire D_mem_fetch, D_MemWrite, D_CacheBusy, D_CacheFinish, D_MemRead, D_CacheHit;
 wire [15:0] D_cache_mem_addr;
 
 wire [15:0] cache_data_out; // data out of cache to whereever needs it
 
 wire MemRead, MemWrite, mem_DataValid;
-wire[15:0] mem_data_out, mem_data_in, mem__addr, mem_write_data;
+wire[15:0] mem_data_out, mem_data_in, mem_addr, mem_write_data;
+
+wire [15:0] pc_current, pc_plus_2;
 
 // Assign memory control signals
 assign mem_addr = I_mem_fetch? I_cache_mem_addr[15:0] :
@@ -162,7 +164,6 @@ CACHE D_CACHE(
 //------------------------------------------------------------------------------
 // IF: INSTRUCTION FETCH STAGE
 //------------------------------------------------------------------------------
-wire [15:0] pc_current, pc_plus_2;
 // branch signal from ID stage
 assign IF_pc_new = EX_Branch_current? EX_pc_branch_target : pc_plus_2;
 

@@ -238,6 +238,9 @@ module cpu_ptb();
    assign EX_ALU_in_2 = DUT.EX_ALU_in_2;
 
    assign EX_instr = DUT.EX_instr;
+
+   assign EX_reg_data_2 = DUT.EX_reg_data_2;
+
    assign ID_instr = DUT.ID_instr;
    assign EX_reg_data_2 = DUT.EX_reg_data_2;
 

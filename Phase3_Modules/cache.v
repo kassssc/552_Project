@@ -25,7 +25,7 @@ module CACHE (
 	output CacheBusy // Is the cache transferring data form mem?
 );
 
-wire WriteTagArray, WriteDataArray, CacheMiss;
+wire WriteTagArray, WriteDataArray;
 wire[15:0] addr, base_addr;
 
 wire[7:0] meta_data_in, meta_data_out;
