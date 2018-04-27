@@ -31,7 +31,7 @@ wire[15:0] cache_data_in, cache_mem_read_addr;
 
 wire[4:0] tag;
 wire[6:0] set_index;
-wire[3:0] block_offset;
+wire[3:0] block_offset, cache_write_block_offset;
 
 wire[127:0] block_select_one_hot;	// one-hot selects the set index in cache
 wire[7:0] word_select_one_hot;		// one-hot selects word in a cache block
