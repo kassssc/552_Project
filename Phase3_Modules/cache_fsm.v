@@ -71,8 +71,8 @@ CLA_16b addsub_16b (
 );
 
 dff finish_mem_read(
-	.q(FinishMemRead_curr), .d(FinishMemRead_new),
-	.wen(1'b1), .clk(clk), .rst(rst)
+	.q(FinishMemRead_curr), .d(1'b1),
+	.wen(FinishMemRead_new), .clk(clk), .rst(rst)
 );
 assign mem_read = ~FinishMemRead_curr & fsm_busy_curr;
 
