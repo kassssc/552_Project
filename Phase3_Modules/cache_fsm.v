@@ -78,7 +78,7 @@ assign mem_read = ~finish_mem_read & fsm_busy_curr;
 reg_4b cache_write_block_offset_counter (
 	.reg_new(cache_write_block_offset_new[3:0]),
 	.reg_current(cache_write_block_offset_curr[3:0]),
-	.wen(write_data_array & finish_mem_read),
+	.wen(write_data_array),
 	.clk(clk),
 	.rst(rst | CacheFinish_curr)// reset when data transfer done
 );
