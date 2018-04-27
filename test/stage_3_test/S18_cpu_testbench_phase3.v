@@ -23,6 +23,11 @@ module cpu_ptb();
    wire [15:0] ID_instr;
    wire [15:0] EX_ALU_in_2;
 
+
+   wire I_mem_fetch;
+   wire D_mem_fetch;
+   wire mem_DataValid;
+
    wire        Halt;         /* Halt executed and in Memory or writeback stage */
         
    integer     inst_count;
@@ -229,6 +234,9 @@ module cpu_ptb();
    assign EX_reg_data_2 = EX_reg_data_2;
    assign ID_instr = DUT.ID_instr;
 
+   assign I_mem_fetch = DUT.I_mem_fetch;
+   assign D_mem_fetch = DUT.D_mem_fetch;
+   assign mem_DataValid = DUT.mem_DataValid;
    assign stall = DUT.stall;
 
    /* Add anything else you want here */
