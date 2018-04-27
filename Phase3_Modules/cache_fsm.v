@@ -69,7 +69,7 @@ CLA_16b addsub_16b (
 	.A(base_address[15:0]),		.B(read_block_offset_16b[15:0]),	.sub(1'b0),
 	.S(mem_read_addr[15:0]),	.ovfl(), .neg()
 );
-assign mem_read = ~finish_mem_read;
+assign mem_read = ~finish_mem_read & fsm_busy_curr;
 
 //******************************************************************************
 // WRITE TO CACHE INDEX
