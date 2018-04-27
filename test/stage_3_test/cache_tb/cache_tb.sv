@@ -71,7 +71,7 @@ initial begin
 	#10
 	rst = 0;
 	pipe_MemRead = 1;
-	pipe_read_addr = 5;
+	pipe_read_addr = 4;
 
 	#10
 	pipe_MemRead = 1;
