@@ -18,8 +18,13 @@ module cache_fill_FSM (
 );
 
 wire [3:0] read_block_offset_new, read_block_offset_curr, cache_write_block_offset_new, cache_write_block_offset_curr;
+wire [3:0] block_offset_curr, block_offset_new;
 wire [15:0] read_block_offset_16b;
 wire finish_cache_write, finish_mem_read;
+wire [15:0] base_address;
+wire fsm_busy_curr;
+
+assign base_addr = base_address;
 
 // Is it currently busy? if yes and not finished waitinf for mem latency, it stays busy, otherwise busy if cache miss
 assign fsm_busy_new = fsm_busy_curr? (~finish_cache_write) : miss_detected;
@@ -35,7 +40,7 @@ dff state_fsm_busy (
 // Stores the base address of the block, the offset adds to this address
 reg_16b mem_addr (
 	.reg_new(miss_addr[15:0]),
-	.reg_current(base_addr[15:0]),
+	.reg_current(base_address[15:0]),
 	.wen(~fsm_busy_curr & miss_detected),
 	.clk(clk),
 	.rst(rst | finish_cache_write)

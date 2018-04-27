@@ -42,7 +42,7 @@ cache_fill_FSM cache_ctrl (
 	.rst(rst),
 	.miss_detected(CacheMiss),
 	.memory_data_valid(MemDataValid),
-	.miss_address(addr[15:0]),
+	.miss_addr(addr[15:0]),
 
 	.write_tag_array(WriteTagArray),
 	.fsm_busy(CacheBusy),
