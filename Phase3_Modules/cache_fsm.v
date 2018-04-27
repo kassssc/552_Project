@@ -13,8 +13,8 @@ module cache_fill_FSM (
 	output finished
 );
 
-wire fsm_busy_new, fsm_busy_curr, finish_data_transfer, mem_latency_wait_done;
-wire [3:0] block_offset_new, block_offset_curr, mem_latency_wait_curr, mem_latency_wait_new;
+wire fsm_busy_new, fsm_busy_curr, finish_data_transfer;
+wire [3:0] block_offset_new, block_offset_curr;
 wire [15:0] base_address, block_offset_16b;
 
 // Is it currently busy? if yes and not finished trasferring data, it stays busy, otherwise busy if cache miss
@@ -42,24 +42,40 @@ dff state_fsm_busy (
 reg_4b block_offset_counter (
 	.reg_new(block_offset_new[3:0]),
 	.reg_current(block_offset_curr[3:0]),
-	.wen(mem_latency_wait_done & fsm_busy_curr & memory_data_valid),
+	.wen(mem_latency_done & fsm_busy_curr & memory_data_valid),
 	.clk(clk),
 	.rst(rst | finish_data_transfer)// reset when data transfer done
 );
 
-// counter to wait for mem latency
-reg_4b mem_latency_wait (
-	.reg_new(mem_latency_wait_new[3:0]),
-	.reg_current(mem_latency_wait_curr[3:0]),
-	.wen(fsm_busy_curr & ~mem_latency_wait_done),
-	.clk(clk),
-	.rst(rst | finish_data_transfer)// reset when data transfer done
-);
+wire mem_latency_1, mem_latency_2, mem_latency_3, mem_latency_done;
 
-// Adds 2 to the block offset every cycle, reset to 0 when data transfer done
-full_adder_3b mem_latency_wait_adder (
-	.A(mem_latency_wait_curr[2:0]),	.B(3'b001), .cin(1'b0),
-	.S(mem_latency_wait_new[3:0]),	.cout(mem_latency_wait_done)
+dff mem_latency_counter_1(
+	.d(miss_detected),
+	.q(mem_latency_1),
+	.wen(1'b1),
+	.clk(clk),
+	.rst(rst | finish_data_transfer)
+);
+dff mem_latency_counter_2(
+	.d(mem_latency_1),
+	.q(mem_latency_2),
+	.wen(1'b1),
+	.clk(clk),
+	.rst(rst | finish_data_transfer)
+);
+dff mem_latency_counter_3(
+	.d(mem_latency_2),
+	.q(mem_latency_3),
+	.wen(1'b1),
+	.clk(clk),
+	.rst(rst | finish_data_transfer)
+);
+dff mem_latency_counter_4(
+	.d(mem_latency_3),
+	.q(mem_latency_done),
+	.wen(1'b1),
+	.clk(clk),
+	.rst(rst | finish_data_transfer)
 );
 
 // Stores the base address of the block, the offset adds to this address
