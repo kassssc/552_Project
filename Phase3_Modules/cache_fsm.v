@@ -55,7 +55,7 @@ reg_16b mem_addr (
 reg_4b block_offset_counter (
 	.reg_new(block_offset_new[3:0]),
 	.reg_current(block_offset_curr[3:0]),
-	.wen(fsm_busy_curr & memory_data_valid & ~finish_mem_latency_wait),
+	.wen(fsm_busy_curr & memory_data_valid & ~finish_data_transfer),
 	.clk(clk),
 	.rst(rst | finish_mem_latency_wait)// reset when data transfer done
 );
@@ -70,7 +70,7 @@ full_adder_4b block_offset_adder (
 reg_4b mem_latency_wait (
 	.reg_new(mem_latency_wait_counter_new[3:0]),
 	.reg_current(mem_latency_wait_counter_curr[3:0]),
-	.wen(mem_latency_wait_done & fsm_busy_curr & memory_data_valid),
+	.wen(~finish_mem_latency_wait & fsm_busy_curr & memory_data_valid),
 	.clk(clk),
 	.rst(rst | finish_mem_latency_wait)// reset when data transfer done
 );
