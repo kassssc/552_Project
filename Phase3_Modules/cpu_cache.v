@@ -176,9 +176,12 @@ state_reg pc_reg (
 	.state_current(pc_current[15:0])
 );
 
+wire [15:0] pc_add;
+assign pc_add = rst? 16'h0000: 16'h0002; 
+
 CLA_16b pc_adder (
 	.A(pc_current[15:0]),
-	.B(16'h0002),
+	.B(pc_add),
 	.sub(1'b0),
 	.S(pc_plus_2[15:0]),
 	.ovfl(),
