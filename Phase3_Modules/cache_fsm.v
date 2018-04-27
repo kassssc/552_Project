@@ -13,8 +13,8 @@ module cache_fill_FSM (
 	output finished
 );
 
-wire fsm_busy_new, fsm_busy_curr, finish_data_transfer;
-wire [3:0] block_offset_new, block_offset_curr;
+wire fsm_busy_new, fsm_busy_curr, finish_data_transfer, mem_latency_wait_done;
+wire [3:0] block_offset_new, block_offset_curr, mem_latency_wait_curr, mem_latency_wait_new;
 wire [15:0] base_address, block_offset_16b;
 
 // Is it currently busy? if yes and not finished trasferring data, it stays busy, otherwise busy if cache miss
@@ -42,9 +42,24 @@ dff state_fsm_busy (
 reg_4b block_offset_counter (
 	.reg_new(block_offset_new[3:0]),
 	.reg_current(block_offset_curr[3:0]),
-	.wen(fsm_busy_curr & memory_data_valid),
+	.wen(mem_latency_wait_done & fsm_busy_curr & memory_data_valid),
 	.clk(clk),
 	.rst(rst | finish_data_transfer)// reset when data transfer done
+);
+
+// counter to wait for mem latency
+reg_4b mem_latency_wait (
+	.reg_new(mem_latency_wait_new[3:0]),
+	.reg_current(mem_latency_wait_curr[3:0]),
+	.wen(fsm_busy_curr & ~mem_latency_wait_done),
+	.clk(clk),
+	.rst(rst | finish_data_transfer)// reset when data transfer done
+);
+
+// Adds 2 to the block offset every cycle, reset to 0 when data transfer done
+full_adder_3b mem_latency_wait_adder (
+	.A(mem_latency_wait_curr[2:0]),	.B(3'b001), .cin(1'b0),
+	.S(mem_latency_wait_new[3:0]),	.cout(mem_latency_wait_done)
 );
 
 // Stores the base address of the block, the offset adds to this address

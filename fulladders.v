@@ -19,19 +19,51 @@ module full_adder_2b (A, B, cin, S, cout);
 	assign cout = inter[1];
 
 	full_adder_1b FA0(.a(A[0]),
-						.b(B[0]), 
-						.cin(cin), 
-						.s(S[0]), 
+						.b(B[0]),
+						.cin(cin),
+						.s(S[0]),
 						.cout(inter[0])
 						);
-						
-	full_adder_1b FA1(.a(A[1]),
-						.b(B[1]), 
-						.cin(inter[0]), 
-						.s(S[1]), 
-						.cout(inter[1])
-						);				
 
+	full_adder_1b FA1(.a(A[1]),
+						.b(B[1]),
+						.cin(inter[0]),
+						.s(S[1]),
+						.cout(inter[1])
+						);
+
+endmodule
+
+module full_adder_3b (A, B, cin, S, cout);
+
+	input cin;
+	input[2:0] A, B;
+	output[2:0] S;
+	output cout;
+
+	wire[2:0] inter;
+	assign cout = inter[2];
+
+	full_adder_1b FA0(.a(A[0]),
+						.b(B[0]),
+						.cin(cin),
+						.s(S[0]),
+						.cout(inter[0])
+						);
+
+	full_adder_1b FA1(.a(A[1]),
+						.b(B[1]),
+						.cin(inter[0]),
+						.s(S[1]),
+						.cout(inter[1])
+						);
+
+	full_adder_1b FA2(.a(A[2]),
+						.b(B[2]),
+						.cin(inter[1]),
+						.s(S[2]),
+						.cout(inter[2])
+						);
 endmodule
 
 module full_adder_4b (A, B, cin, S, cout);
@@ -45,33 +77,33 @@ module full_adder_4b (A, B, cin, S, cout);
 	assign cout = inter[3];
 
 	full_adder_1b FA0(.a(A[0]),
-						.b(B[0]), 
-						.cin(cin), 
-						.s(S[0]), 
+						.b(B[0]),
+						.cin(cin),
+						.s(S[0]),
 						.cout(inter[0])
 						);
-						
+
 	full_adder_1b FA1(.a(A[1]),
-						.b(B[1]), 
-						.cin(inter[0]), 
-						.s(S[1]), 
+						.b(B[1]),
+						.cin(inter[0]),
+						.s(S[1]),
 						.cout(inter[1])
-						);					
-						
+						);
+
 	full_adder_1b FA2(.a(A[2]),
-						.b(B[2]), 
-						.cin(inter[1]), 
-						.s(S[2]), 
+						.b(B[2]),
+						.cin(inter[1]),
+						.s(S[2]),
 						.cout(inter[2])
-						);					
-						
+						);
+
 	full_adder_1b FA3(.a(A[3]),
-						.b(B[3]), 
-						.cin(inter[2]), 
-						.s(S[3]), 
+						.b(B[3]),
+						.cin(inter[2]),
+						.s(S[3]),
 						.cout(inter[3])
-						);					
-					
+						);
+
 endmodule
 
 module full_adder_16b(A, B, cin, Sum, cout);
@@ -85,30 +117,30 @@ module full_adder_16b(A, B, cin, Sum, cout);
 	assign cout = inter[3];
 
 	full_adder_4b FA0(.A(A[3:0]),
-						.B(B[3:0]), 
-						.cin(cin), 
-						.S(Sum[3:0]), 
+						.B(B[3:0]),
+						.cin(cin),
+						.S(Sum[3:0]),
 						.cout(inter[0])
 						);
 
 	full_adder_4b FA1(.A(A[7:4]),
-						.B(B[7:4]), 
-						.cin(inter[0]), 
-						.S(Sum[7:4]), 
+						.B(B[7:4]),
+						.cin(inter[0]),
+						.S(Sum[7:4]),
 						.cout(inter[1])
 						);
 
 	full_adder_4b FA2(.A(A[11:8]),
-						.B(B[11:8]), 
-						.cin(inter[1]), 
-						.S(Sum[11:8]), 
+						.B(B[11:8]),
+						.cin(inter[1]),
+						.S(Sum[11:8]),
 						.cout(inter[2])
 						);
 
 	full_adder_4b FA3(.A(A[15:12]),
-						.B(B[15:12]), 
-						.cin(inter[2]), 
-						.S(Sum[15:12]), 
+						.B(B[15:12]),
+						.cin(inter[2]),
+						.S(Sum[15:12]),
 						.cout(inter[3])
 						);
 
