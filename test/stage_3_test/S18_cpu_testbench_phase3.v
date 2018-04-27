@@ -238,6 +238,9 @@ module cpu_ptb();
    assign D_mem_fetch = DUT.D_mem_fetch;
    assign mem_DataValid = DUT.mem_DataValid;
    assign stall = DUT.stall;
+   assign I_CacheHit = DUT.I_CacheHit;
+   assign D_CacheHit = DUT.D_CacheHit;
+
 
    // WriteRegister[3:0] & RegWrite[15:0] 
    assign For_MEM_RegWrite = DUT.MEM_RegWrite;
