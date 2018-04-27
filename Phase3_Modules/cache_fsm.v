@@ -20,7 +20,7 @@ module cache_fill_FSM (
 wire [3:0] read_block_offset_new, read_block_offset_curr, cache_write_block_offset_new, cache_write_block_offset_curr;
 wire [3:0] block_offset_curr, block_offset_new;
 wire [15:0] read_block_offset_16b;
-wire  finish_mem_read;
+wire FinishMemRead_curr, FinishMemRead_new;
 wire [15:0] base_address;
 wire fsm_busy_curr, CacheFinish_curr, CacheFinish_new;
 
@@ -55,21 +55,26 @@ assign read_block_offset_16b = {{12{1'b0}}, read_block_offset_curr[3:0]};
 reg_4b read_block_offset_counter (
 	.reg_new(read_block_offset_new[3:0]),
 	.reg_current(read_block_offset_curr[3:0]),
-	.wen(fsm_busy_curr & ~finish_mem_read),
+	.wen(fsm_busy_curr & ~FinishMemRead_curr),
 	.clk(clk),
 	.rst(rst | CacheFinish_curr)// reset when data transfer done
 );
 // Adds 2 to the block offset every cycle, reset to 0 when data transfer done
 full_adder_4b block_offset_adder (
 	.A(read_block_offset_curr[3:0]),	.B(4'b0010), .cin(1'b0),
-	.S(read_block_offset_new[3:0]),		.cout(finish_mem_read)
+	.S(read_block_offset_new[3:0]),		.cout(FinishMemRead_new)
 );
 // adds the offset to the base block addr
 CLA_16b addsub_16b (
 	.A(base_address[15:0]),		.B(read_block_offset_16b[15:0]),	.sub(1'b0),
 	.S(mem_read_addr[15:0]),	.ovfl(), .neg()
 );
-assign mem_read = ~finish_mem_read & fsm_busy_curr;
+
+dff finish_mem_read(
+	.q(FinishMemRead_curr), .d(FinishMemRead_new),
+	.wen(1'b1), .clk(clk), .rst(rst)
+);
+assign mem_read = ~FinishMemRead_curr & fsm_busy_curr;
 
 //******************************************************************************
 // WRITE TO CACHE INDEX
