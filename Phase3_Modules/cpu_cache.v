@@ -66,11 +66,11 @@ wire[15:0] mem_data_out, mem_data_in, mem_read_addr, mem_write_data;
 // X_mem_fetch == 1 means cache X is allowed to grab data from memory
 
 // I-CACHE
-wire I_mem_fetch, I_CacheBusy, I_CacheFinish, I_MemRead;
+wire I_mem_fetch, I_CacheBusy, I_CacheFinish, I_MemRead, I_CacheHit;
 wire [15:0] I_cache_mem_read_addr;
 
 // D-CACHE
-wire D_mem_fetch, D_MemWrite, D_CacheBusy, D_CacheFinish, D_MemRead;
+wire D_mem_fetch, D_MemWrite, D_CacheBusy, D_CacheFinish, D_MemRead, D_CacheHit;
 wire [15:0] D_cache_mem_read_addr;
 
 wire [15:0] cache_data_out; // data out of cache to whereever needs it
@@ -132,6 +132,7 @@ CACHE cache_I(
 	.cache_MemRead(I_MemRead),
 	.cache_MemWrite(), // Does the cache want to write to mem?
 
+	.CacheHit(I_CacheHit),
 	.CacheFinish(I_CacheFinish),
 	.CacheBusy(I_CacheBusy) // Stall pipeline while cache is busy transferring data from mem
 );
@@ -158,6 +159,7 @@ CACHE D_CACHE(
 	.cache_MemRead(D_MemRead),
 	.cache_mem_addr(D_cache_mem_read_addr[15:0]), // addr specified for read/write by cache
 
+	.CacheHit(D_CacheHit),
 	.CacheFinish(D_CacheFinish),
 	.CacheBusy(D_CacheBusy) // Stall pipeline while cache is busy transferring data from mem
 );
@@ -177,7 +179,7 @@ state_reg pc_reg (
 );
 
 wire [15:0] pc_add;
-assign pc_add = rst? 16'h0000: 16'h0002; 
+assign pc_add = rst? 16'h0000: 16'h0002;
 
 CLA_16b pc_adder (
 	.A(pc_current[15:0]),

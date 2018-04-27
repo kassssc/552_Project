@@ -20,10 +20,11 @@ module CACHE (
 
 	output [15:0] cache_data_out, // data read from the cache
 	output CacheFinish,
+	output CacheHit,
 	output CacheBusy // does the cache want any data from mem?
 );
 
-wire WriteTagArray, WriteDataArray, CacheMiss, CacheHit;
+wire WriteTagArray, WriteDataArray, CacheMiss;
 wire[15:0] addr, base_addr;
 
 wire[7:0] meta_data_in, meta_data_out;
