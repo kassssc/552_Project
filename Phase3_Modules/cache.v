@@ -15,7 +15,7 @@ module CACHE (
 
 	// Cache controls Memory module (when it wants to)
 	output cache_MemWrite, // Does the cache want to write to mem?
-	output cache_MemRead,
+	output cache_MemRead, // Does the cache want to read from mem
 	output [15:0] cache_mem_addr, // addr cache specifies in mem control
 
 	output [15:0] cache_data_out, // data read from the cache
@@ -24,7 +24,7 @@ module CACHE (
 );
 
 wire WriteTagArray, WriteDataArray, CacheMiss, CacheHit;
-wire[15:0] addr;
+wire[15:0] addr, base_addr;
 
 wire[7:0] meta_data_in, meta_data_out;
 wire[15:0] cache_data_in, cache_mem_read_addr;
@@ -36,7 +36,6 @@ wire[3:0] block_offset;
 wire[127:0] block_select_one_hot;	// one-hot selects the set index in cache
 wire[7:0] word_select_one_hot;		// one-hot selects word in a cache block
 wire[127:0] data_block_select_one_hot;
-wire[3:0] fsm_offset;
 
 cache_fill_FSM cache_ctrl (
 	.clk(clk),
@@ -45,21 +44,24 @@ cache_fill_FSM cache_ctrl (
 	.memory_data_valid(MemDataValid),
 	.miss_address(addr[15:0]),
 
-	.fsm_busy(CacheBusy),
-	.fsm_offset(fsm_offset[3:0]),
-	.write_data_array(WriteDataArray),
 	.write_tag_array(WriteTagArray),
-	.memory_address(cache_mem_read_addr[15:0]),
+	.fsm_busy(CacheBusy),
+
 	.mem_read(cache_MemRead),
-	.finished(CacheFinish)
+	.mem_read_addr(cache_mem_read_addr[15:0]),
+
+	.write_data_array(WriteDataArray),
+	.cache_write_block_offset(cache_write_block_offset[3:0]),
+	.base_addr(base_addr[15:0])
 );
 
-assign addr[15:0] = pipe_MemWrite? pipe_mem_write_addr[15:0] : pipe_read_addr[15:0];
+assign addr[15:0] = WriteDataArray? base_addr[15:0] :
+					pipe_MemWrite? pipe_mem_write_addr[15:0] : pipe_read_addr[15:0];
 
 // addr : tttt tsss ssss bbbb
 assign tag = addr[15:11];
 assign set_index = addr[10:4];
-assign block_offset = CacheBusy? (fsm_offset[3:0] >> 1) : addr[3:0];
+assign block_offset = WriteDataArray? cache_write_block_offset[3:0] : addr[3:0];
 
 assign CacheHit = meta_data_out[5] & (meta_data_out[4:0] == tag[4:0]);
 assign CacheMiss = ~CacheHit & (pipe_MemRead | pipe_MemWrite);
@@ -69,7 +71,7 @@ assign cachehit = CacheHit;
 assign meta_data_in[7:0] = {3'b1, tag[4:0]};
 
 DECODER_3_8 block_offset_decoder (
-	.id_in(block_offset[2:0]),
+	.id_in(block_offset[3:1]),
 	.one_hot_out(word_select_one_hot[7:0])
 );
 DECODER_7_128 set_index_decoder (
@@ -86,15 +88,14 @@ MetaDataArray meta (
 	.DataOut(meta_data_out[7:0])
 );
 
-assign data_block_select_one_hot = (CacheHit | CacheBusy)? block_select_one_hot[127:0] : 128'b0;
-assign CacheWrite = WriteDataArray | pipe_MemWrite;
-assign cache_data_in = CacheBusy? mem_read_data[15:0] : pipe_mem_write_data[15:0];
+assign data_block_select_one_hot = (CacheHit | WriteDataArray)? block_select_one_hot[127:0] : 128'b0;
+assign cache_data_in = WriteDataArray? mem_read_data[15:0] : pipe_mem_write_data[15:0];
 
 DataArray data (
 	.clk(clk),
 	.rst(rst),
 	.DataIn(cache_data_in[15:0]),
-	.Write(CacheWrite),
+	.Write(WriteDataArray | pipe_MemWrite),
 	.BlockEnable(data_block_select_one_hot[127:0]),
 	.WordEnable(word_select_one_hot[7:0]),
 	.DataOut(cache_data_out[15:0])
@@ -102,7 +103,8 @@ DataArray data (
 
 // Memory control signals
 assign cache_MemWrite = pipe_MemWrite;	// Write to mem also when writing to cache
-assign cache_mem_addr = CacheBusy? cache_mem_read_addr[15:0] :
+assign cache_mem_addr = cache_MemRead? cache_mem_read_addr[15:0] :
 						cache_MemWrite? pipe_mem_write_addr[15:0] : pipe_read_addr[15:0];
+assign CacheFinish = WriteTagArray;
 
 endmodule
