@@ -43,6 +43,7 @@ cache_fill_FSM cache_ctrl (
 	.miss_detected(CacheMiss),
 	.memory_data_valid(MemDataValid),
 	.miss_address(addr[15:0]),
+
 	.fsm_busy(CacheBusy),
 	.fsm_offset(fsm_offset[3:0]),
 	.write_data_array(WriteDataArray),
@@ -66,7 +67,7 @@ assign cachehit = CacheHit;
 assign meta_data_in[7:0] = {3'b1, tag[4:0]};
 
 DECODER_3_8 block_offset_decoder (
-	.id_in(block_offset[3:1]),
+	.id_in(block_offset[2:0]),
 	.one_hot_out(word_select_one_hot[7:0])
 );
 DECODER_7_128 set_index_decoder (
