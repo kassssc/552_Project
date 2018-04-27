@@ -180,8 +180,11 @@ module cpu_ptb();
    
       //   assign Halt = DUT.memory0.halt; //You won't need this because it's part of the main cpu interface
       // Is processor halted (1 bit signal)
-   //assign ICacheHit = DUT.cachehit_I;
-   //assign DCacheHit = DUT.cachehit_D;
+   assign ICacheHit = DUT.I_CacheHit;
+   assign DCacheHit = DUT.D_CacheHit;
+
+
+
    assign cache_data_out_D = DUT.cache_data_out; // data read from the cache
 
    assign mem_DataValid = DUT.mem_DataValid; // is data from memory valid?
@@ -230,16 +233,15 @@ module cpu_ptb();
 
    assign EX_ALU_in_2 = DUT.EX_ALU_in_2;
 
-   assign EX_instr = EX_instr;
-   assign EX_reg_data_2 = EX_reg_data_2;
+   assign EX_instr = DUT.EX_instr;
+   assign EX_reg_data_2 = DUT.EX_reg_data_2;
    assign ID_instr = DUT.ID_instr;
 
    assign I_mem_fetch = DUT.I_mem_fetch;
    assign D_mem_fetch = DUT.D_mem_fetch;
    assign mem_DataValid = DUT.mem_DataValid;
    assign stall = DUT.stall;
-   assign I_CacheHit = DUT.I_CacheHit;
-   assign D_CacheHit = DUT.D_CacheHit;
+
 
 
    // WriteRegister[3:0] & RegWrite[15:0] 
