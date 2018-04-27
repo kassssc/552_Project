@@ -72,7 +72,7 @@ CLA_16b addsub_16b (
 
 dff finish_mem_read(
 	.q(FinishMemRead_curr), .d(1'b1),
-	.wen(FinishMemRead_new), .clk(clk), .rst(rst)
+	.wen(FinishMemRead_new), .clk(clk), .rst(rst | CacheFinish_curr)
 );
 assign mem_read = ~FinishMemRead_curr & fsm_busy_curr;
 
@@ -94,7 +94,7 @@ full_adder_4b write_cache_block_offset_adder (
 );
 
 dff cache_finish(
-	.q(CacheFinish_curr), .d(1'b1),
+	.q(CacheFinish_curr), .d(CacheFinish_new),
 	.wen(CacheFinish_new), .clk(clk), .rst(rst | CacheFinish_curr)
 );
 
