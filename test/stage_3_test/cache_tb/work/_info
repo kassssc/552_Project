@@ -1,0 +1,616 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/Users/liuya/Desktop/CPU_Stage1
+vBlock
+Z0 !s110 1524849525
+!i10b 1
+!s100 >=A9@Vi>n<]`WS86Na5dR1
+IDYC3DBac=7X8NbI;D:mYP3
+Z1 VDg1SIo80bB@j0V0VzS_@n1
+Z2 dC:/Users/liuya/Desktop/CPU_Stage1/552_Project/test/stage_3_test/cache_tb
+Z3 w1524338528
+Z4 8C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/DataArray.v
+Z5 FC:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/DataArray.v
+Z6 L0 11
+Z7 OP;L;10.4a;61
+r1
+!s85 0
+31
+Z8 !s108 1524849525.000000
+Z9 !s107 C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/DataArray.v|
+Z10 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/DataArray.v|
+!s101 -O0
+!i113 1
+Z11 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact -O0
+n@block
+vCACHE
+R0
+!i10b 1
+!s100 JRZT2zBzm2YfS9f:6z^<?1
+IkBof8_ej`h7LTgn1Eg1>V1
+R1
+R2
+Z12 w1524848639
+8C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/cache.v
+FC:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/cache.v
+L0 1
+R7
+r1
+!s85 0
+31
+R8
+!s107 C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/cache.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/cache.v|
+!s101 -O0
+!i113 1
+R11
+n@c@a@c@h@e
+vcache_fill_FSM
+R0
+!i10b 1
+!s100 m<eDJ4UmafCdZeVGiZ^:>0
+IZCl[=k6QB9XB44329El_K3
+R1
+R2
+w1524802336
+8C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/cache_fsm.v
+FC:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/cache_fsm.v
+L0 1
+R7
+r1
+!s85 0
+31
+R8
+!s107 C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/cache_fsm.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/cache_fsm.v|
+!s101 -O0
+!i113 1
+R11
+ncache_fill_@f@s@m
+vCache_tb
+DXx6 sv_std 3 std 0 22 WmjPaeP=7F5?QFXzJ>D[Q2
+!s110 1524850554
+!i10b 1
+!s100 64[eleOQ`IjSeaj7LaV]W2
+Ini:f3WD7Z:A0=b;kz[Abg2
+R1
+!s105 cache_tb_sv_unit
+S1
+R2
+w1524850503
+8C:\Users\liuya\Desktop\CPU_Stage1\552_Project\test\stage_3_test\cache_tb\cache_tb.sv
+FC:\Users\liuya\Desktop\CPU_Stage1\552_Project\test\stage_3_test\cache_tb\cache_tb.sv
+L0 1
+R7
+r1
+!s85 0
+31
+!s108 1524850554.000000
+!s107 C:\Users\liuya\Desktop\CPU_Stage1\552_Project\test\stage_3_test\cache_tb\cache_tb.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:\Users\liuya\Desktop\CPU_Stage1\552_Project\test\stage_3_test\cache_tb\cache_tb.sv|
+!s101 -O0
+!i113 1
+o-work work -sv -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact -O0
+n@cache_tb
+vCLA_16b
+Z13 !s110 1524850605
+!i10b 1
+!s100 ;WL7mJYE5OCbkjFC>dd^X0
+I22`c[FoA=FBzO:h1F?0_S2
+R1
+R2
+Z14 w1521394642
+Z15 8C:/Users/liuya/Desktop/CPU_Stage1/552_Project/CLA.v
+Z16 FC:/Users/liuya/Desktop/CPU_Stage1/552_Project/CLA.v
+L0 44
+R7
+r1
+!s85 0
+31
+Z17 !s108 1524850605.000000
+Z18 !s107 C:/Users/liuya/Desktop/CPU_Stage1/552_Project/CLA.v|
+Z19 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/liuya/Desktop/CPU_Stage1/552_Project/CLA.v|
+!s101 -O0
+!i113 1
+R11
+n@c@l@a_16b
+vCLA_1b
+R13
+!i10b 1
+!s100 W:60gk9P?@Kl>cmXVm9_h1
+IPk:GbcFk[7?;nFZehJ`a=0
+R1
+R2
+R14
+R15
+R16
+L0 1
+R7
+r1
+!s85 0
+31
+R17
+R18
+R19
+!s101 -O0
+!i113 1
+R11
+n@c@l@a_1b
+vCLA_4b
+R13
+!i10b 1
+!s100 ]lc>A3P;KB1Ea_jSSZm1z1
+IM^9eC`cN]BnChIo0n:K671
+R1
+R2
+R14
+R15
+R16
+L0 12
+R7
+r1
+!s85 0
+31
+R17
+R18
+R19
+!s101 -O0
+!i113 1
+R11
+n@c@l@a_4b
+vDataArray
+R0
+!i10b 1
+!s100 N?]IT^VD;Y?biHRif>zHe0
+IG_Z^K45DXcb6L;I^]g<N:2
+R1
+R2
+R3
+R4
+R5
+L0 6
+R7
+r1
+!s85 0
+31
+R8
+R9
+R10
+!s101 -O0
+!i113 1
+R11
+n@data@array
+vDCell
+R0
+!i10b 1
+!s100 WkTPVMNC4]E[>Jjfm0[?:0
+IYWfKjhmhLHm8ie7<RIN^43
+R1
+R2
+R3
+R4
+R5
+Z20 L0 24
+R7
+r1
+!s85 0
+31
+R8
+R9
+R10
+!s101 -O0
+!i113 1
+R11
+n@d@cell
+vDECODER_3_8
+R0
+!i10b 1
+!s100 RzAWADTFn^c3OYbJlHJBE0
+I^D>2El5Kma7?>jb[aZ`5]3
+R1
+R2
+R12
+Z21 8C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/decoders.v
+Z22 FC:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/decoders.v
+L0 1
+R7
+r1
+!s85 0
+31
+R8
+Z23 !s107 C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/decoders.v|
+Z24 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/decoders.v|
+!s101 -O0
+!i113 1
+R11
+n@d@e@c@o@d@e@r_3_8
+vDECODER_7_128
+R0
+!i10b 1
+!s100 ]>K^CNi6Ab8k_G:<_1U1F3
+I^oJTT3>V0GOO0U^PB;^ah3
+R1
+R2
+R12
+R21
+R22
+R20
+R7
+r1
+!s85 0
+31
+R8
+R23
+R24
+!s101 -O0
+!i113 1
+R11
+n@d@e@c@o@d@e@r_7_128
+vdff
+R0
+!i10b 1
+!s100 PV_CoVVQ]?nI;J@mj=Gn=3
+IUgUJ;iHbJTGPK1?0=9ZH70
+R1
+R2
+R3
+8C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/dff.v
+FC:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/dff.v
+L0 3
+R7
+r1
+!s85 0
+31
+R8
+!s107 C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/dff.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/dff.v|
+!s101 -O0
+!i113 1
+R11
+vDWord
+R0
+!i10b 1
+!s100 CMU0BU[`5ZIMGMl00XYVG3
+IGHn3z?zOG1oFQ2==aeIz[2
+R1
+R2
+R3
+R4
+R5
+L0 19
+R7
+r1
+!s85 0
+31
+R8
+R9
+R10
+!s101 -O0
+!i113 1
+R11
+n@d@word
+vfull_adder_16b
+R13
+!i10b 1
+!s100 WoMIAX;icl;XgS`j1Yhh[0
+I8S9m:9m=<hjY`mGd<XGee1
+R1
+R2
+Z25 w1524801642
+Z26 8C:/Users/liuya/Desktop/CPU_Stage1/552_Project/fulladders.v
+Z27 FC:/Users/liuya/Desktop/CPU_Stage1/552_Project/fulladders.v
+L0 110
+R7
+r1
+!s85 0
+31
+R17
+Z28 !s107 C:/Users/liuya/Desktop/CPU_Stage1/552_Project/fulladders.v|
+Z29 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/liuya/Desktop/CPU_Stage1/552_Project/fulladders.v|
+!s101 -O0
+!i113 1
+R11
+vfull_adder_1b
+R13
+!i10b 1
+!s100 R7RZ;S6Dj42mf5lI2mPJ91
+Im8NXT@Qz=DZo>XaSX_0R[1
+R1
+R2
+R25
+R26
+R27
+L0 1
+R7
+r1
+!s85 0
+31
+R17
+R28
+R29
+!s101 -O0
+!i113 1
+R11
+vfull_adder_2b
+R13
+!i10b 1
+!s100 `AEe=hXQTXN=SgEXE;PPM3
+ICX`jM`eDkfW05GV6?goC<2
+R1
+R2
+R25
+R26
+R27
+R6
+R7
+r1
+!s85 0
+31
+R17
+R28
+R29
+!s101 -O0
+!i113 1
+R11
+vfull_adder_3b
+R13
+!i10b 1
+!s100 <R^9=P_TVd:_gD0?E=V:[2
+IRDa:5JgQ@ZzXF94Q@OJN?3
+R1
+R2
+R25
+R26
+R27
+L0 37
+R7
+r1
+!s85 0
+31
+R17
+R28
+R29
+!s101 -O0
+!i113 1
+R11
+vfull_adder_4b
+R13
+!i10b 1
+!s100 JFgDmf_:ck8Tz72Mi8?_R3
+I5J1W:cFPLg;Z[lgH;Ok833
+R1
+R2
+R25
+R26
+R27
+L0 70
+R7
+r1
+!s85 0
+31
+R17
+R28
+R29
+!s101 -O0
+!i113 1
+R11
+vMBlock
+R0
+!i10b 1
+!s100 L4iL:[ZBSjOWR]1NQ;04W3
+I;ecd@76S3bZP257X8MN]L1
+R1
+R2
+R3
+Z30 8C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/MetaDataArray.v
+Z31 FC:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/MetaDataArray.v
+L0 10
+R7
+r1
+!s85 0
+31
+R8
+Z32 !s107 C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/MetaDataArray.v|
+Z33 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/MetaDataArray.v|
+!s101 -O0
+!i113 1
+R11
+n@m@block
+vMCell
+R0
+!i10b 1
+!s100 nhE=ef3;anUYKjdi>25`f1
+IUhle3WYk<@IUBAXP9`@dW0
+R1
+R2
+R3
+R30
+R31
+L0 14
+R7
+r1
+!s85 0
+31
+R8
+R32
+R33
+!s101 -O0
+!i113 1
+R11
+n@m@cell
+vmem_control_fsm
+R0
+!i10b 1
+!s100 GlWo6KK_][]a0OhIj;U_A3
+IR^LfL`91[J3UnZS?7gd@T3
+R1
+R2
+w1524790424
+8C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/mem_control_fsm.v
+FC:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/mem_control_fsm.v
+L0 1
+R7
+r1
+!s85 0
+31
+R8
+!s107 C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/mem_control_fsm.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/mem_control_fsm.v|
+!s101 -O0
+!i113 1
+R11
+vmemory4c
+R0
+!i10b 1
+!s100 lc]^l:IYd9z?3@UA8LLEi2
+IbT70SG@6dCJTCYM4c5ELQ2
+R1
+R2
+w1524692803
+8C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/multicycle_memory.v
+FC:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/multicycle_memory.v
+R20
+R7
+r1
+!s85 0
+31
+R8
+!s107 C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/multicycle_memory.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/multicycle_memory.v|
+!s101 -O0
+!i113 1
+R11
+vMetaDataArray
+R0
+!i10b 1
+!s100 3UQR43kB3ci=79^b4@L4M3
+IYY:GWRAgNGke=4DBlJTbI0
+R1
+R2
+R3
+R30
+R31
+L0 6
+R7
+r1
+!s85 0
+31
+R8
+R32
+R33
+!s101 -O0
+!i113 1
+R11
+n@meta@data@array
+vreg_16b
+R0
+!i10b 1
+!s100 4YoE9XAGAZ11m7K?YleE:0
+I@IkcYKVDZiKo@L_@e@U1Q0
+R1
+R2
+R12
+Z34 8C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/regs.v
+Z35 FC:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/regs.v
+R20
+R7
+r1
+!s85 0
+31
+Z36 !s108 1524849524.000000
+Z37 !s107 C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/regs.v|
+Z38 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/liuya/Desktop/CPU_Stage1/552_Project/Phase3_Modules/regs.v|
+!s101 -O0
+!i113 1
+R11
+vreg_1bit
+R0
+!i10b 1
+!s100 Xk@hcXX6Z[DE;SVAAoB2V0
+I?=hYz]CDo5`n^W10c>B6]3
+R1
+R2
+R12
+R34
+R35
+L0 83
+R7
+r1
+!s85 0
+31
+R36
+R37
+R38
+!s101 -O0
+!i113 1
+R11
+vreg_4b
+!s110 1524849524
+!i10b 1
+!s100 KGUm[f0M2WM^RP_@n=>_B1
+IeDNzO7hGf;CPLRhlYZPo:3
+R1
+R2
+R12
+R34
+R35
+L0 1
+R7
+r1
+!s85 0
+31
+R36
+R37
+R38
+!s101 -O0
+!i113 1
+R11
+vreg_4bit
+R0
+!i10b 1
+!s100 n?i_HBSb=_J6VEdDR:hmA0
+IJiDZ@VMASG^GnMFGXa?Bl0
+R1
+R2
+R12
+R34
+R35
+L0 101
+R7
+r1
+!s85 0
+31
+R36
+R37
+R38
+!s101 -O0
+!i113 1
+R11
+vstate_reg
+R0
+!i10b 1
+!s100 ORfCZQn_?eV]g@XDTa;4M0
+IFmCf393<?<NUWRNR<fEkn0
+R1
+R2
+R12
+R34
+R35
+L0 143
+R7
+r1
+!s85 0
+31
+R36
+R37
+R38
+!s101 -O0
+!i113 1
+R11
