@@ -56,8 +56,8 @@ reg_4b read_block_offset_counter (
 );
 // Adds 2 to the block offset every cycle, reset to 0 when data transfer done
 full_adder_4b block_offset_adder (
-	.A(block_offset_curr[3:0]),	.B(4'b0010), .cin(1'b0),
-	.S(block_offset_new[3:0]),	.cout(finish_mem_read)
+	.A(read_block_offset_curr[3:0]),	.B(4'b0010), .cin(1'b0),
+	.S(read_block_offset_new[3:0]),		.cout(finish_mem_read)
 );
 // adds the offset to the base block addr
 CLA_16b addsub_16b (
