@@ -9,13 +9,10 @@ module mem_control_fsm(
 	output D_mem_fetch
 );
 
-wire I_is_8, D_is_8;
 
 wire [1:0] state;
 reg [1:0] state_new;
 
-assign I_mem_fetch = (state == 2'b01)? 1'b1:1'b0;
-assign D_mem_fetch = (state == 2'b10)? 1'b1:1'b0;
 
 
 always@(*) begin
@@ -31,6 +28,10 @@ always@(*) begin
 		6'b1x1110: state_new = 2'b01;
 	endcase
 end // always@(*)
+
+assign I_mem_fetch = (state_new == 2'b01)? 1'b1:1'b0;
+assign D_mem_fetch = (state_new == 2'b10)? 1'b1:1'b0;
+
 
 dff ff0(.d(state_new[0]), .q(state[0]), .wen(1'b1), .clk(clk), .rst(rst));
 dff ff1(.d(state_new[1]), .q(state[1]), .wen(1'b1), .clk(clk), .rst(rst));
