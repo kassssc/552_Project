@@ -66,11 +66,11 @@ wire[15:0] mem_data_out, mem_data_in, mem_read_addr, mem_write_data;
 // X_mem_fetch == 1 means cache X is allowed to grab data from memory
 
 // I-CACHE
-wire I_mem_fetch, I_CacheBusy, I_CacheFinish, I_MemRead, I_CacheHit, I_CacheMiss;
+wire I_mem_fetch, I_CacheBusy, I_CacheDone, I_MemRead, I_CacheHit, I_CacheMiss;
 wire [15:0] I_cache_mem_read_addr;
 
 // D-CACHE
-wire D_mem_fetch, D_MemWrite, D_CacheBusy, D_CacheFinish, D_MemRead, D_CacheHit, D_CacheMiss;
+wire D_mem_fetch, D_MemWrite, D_CacheBusy, D_CacheDone, D_MemRead, D_CacheHit, D_CacheMiss;
 wire [15:0] D_cache_mem_read_addr;
 
 wire [15:0] cache_data_out; // data out of cache to whereever needs it
@@ -103,8 +103,8 @@ mem_control_fsm mem_ctrl (
 	// Inputs
 	.I_CacheBusy(I_MemRead),
 	.D_CacheBusy(D_MemRead),
-	.I_cache_finished(I_CacheFinish),
-	.D_cache_finished(D_CacheFinish),
+	.I_cache_finished(I_CacheDone),
+	.D_cache_finished(D_CacheDone),
 
 	// Mem ctrl signals
 	.I_mem_fetch(I_mem_fetch),
@@ -134,7 +134,7 @@ CACHE cache_I(
 
 	.CacheHit(I_CacheHit),
 	.CacheMiss(I_CacheMiss),
-	.CacheFinish(I_CacheFinish),
+	.CacheDone(I_CacheDone),
 	.CacheBusy(I_CacheBusy) // Stall pipeline while cache is busy transferring data from mem
 );
 CACHE D_CACHE(
@@ -162,7 +162,7 @@ CACHE D_CACHE(
 
 	.CacheHit(D_CacheHit),
 	.CacheMiss(D_CacheMiss),
-	.CacheFinish(D_CacheFinish),
+	.CacheDone(D_CacheDone),
 	.CacheBusy(D_CacheBusy) // Stall pipeline while cache is busy transferring data from mem
 );
 
