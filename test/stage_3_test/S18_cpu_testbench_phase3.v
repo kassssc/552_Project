@@ -26,10 +26,15 @@ module cpu_ptb();
    wire [15:0] D_cache_mem_read_addr;
    wire [15:0] I_cache_mem_read_addr;
 
+   wire [1:0] state_out;
+
 
    wire I_mem_fetch;
    wire D_mem_fetch;
    wire mem_DataValid;
+
+   wire I_MemRead;
+   wire D_MemRead;
 
    wire        Halt;         /* Halt executed and in Memory or writeback stage */
         
@@ -245,6 +250,10 @@ module cpu_ptb();
    assign mem_DataValid = DUT.mem_DataValid;
    assign stall = DUT.stall;
 
+   assign I_MemRead = DUT.I_MemRead;
+   assign D_MemRead = DUT.D_MemRead;
+
+   assign 
 
 
    // WriteRegister[3:0] & RegWrite[15:0] 

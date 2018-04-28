@@ -6,7 +6,8 @@ module mem_control_fsm(
 	input I_cache_finished,
 	input D_cache_finished,
 	output I_mem_fetch,
-	output D_mem_fetch
+	output D_mem_fetch,
+	output [1:0]state_out
 );
 
 
@@ -31,6 +32,7 @@ end // always@(*)
 
 assign I_mem_fetch = (state_new == 2'b01)? 1'b1:1'b0;
 assign D_mem_fetch = (state_new == 2'b10)? 1'b1:1'b0;
+assign state_out = state_out;
 
 
 dff ff0(.d(state_new[0]), .q(state[0]), .wen(1'b1), .clk(clk), .rst(rst));

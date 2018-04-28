@@ -55,6 +55,8 @@ wire [3:0] WB_reg_write_select;
 wire [1:0]S_out;
 wire stall_hazard;
 
+wire [1:0] state_out;
+
 //------------------------------------------------------------------------------
 // MEM and CACHE
 //------------------------------------------------------------------------------
@@ -108,7 +110,8 @@ mem_control_fsm mem_ctrl (
 
 	// Mem ctrl signals
 	.I_mem_fetch(I_mem_fetch),
-	.D_mem_fetch(D_mem_fetch)
+	.D_mem_fetch(D_mem_fetch),
+	.state_out(state_out)
 );
 
 CACHE cache_I(
