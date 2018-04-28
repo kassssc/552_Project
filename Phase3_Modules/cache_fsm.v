@@ -73,7 +73,7 @@ CLA_16b addsub_16b (
 
 dff finish_mem_read(
 	.q(FinishMemRead_curr), .d(1'b1),
-	.wen(FinishMemRead_new), .clk(clk), .rst(rst)
+	.wen(FinishMemRead_new), .clk(clk), .rst(rst | ~fsm_busy_curr)
 );
 assign mem_read = ~FinishMemRead_curr & fsm_busy_curr;
 
@@ -86,7 +86,7 @@ reg_4b cache_write_block_offset_counter (
 	.reg_current(cache_write_block_offset_curr[3:0]),
 	.wen(write_data_array),
 	.clk(clk),
-	.rst(rst | CacheFinish_curr)// reset when data transfer done
+	.rst(rst | CacheFinish_curr | ~fsm_busy_curr)// reset when data transfer done
 );
 // Adds 2 to the block offset every cycle, reset to 0 when data transfer done
 full_adder_4b write_cache_block_offset_adder (
@@ -96,7 +96,7 @@ full_adder_4b write_cache_block_offset_adder (
 
 dff cache_finish(
 	.q(CacheFinish_curr), .d(1'b1),
-	.wen(CacheFinish_new), .clk(clk), .rst(rst | CacheFinish_curr)
+	.wen(CacheFinish_new), .clk(clk), .rst(rst | CacheFinish_curr | ~fsm_busy_curr)
 );
 
 assign cache_write_block_offset = cache_write_block_offset_curr[3:0];
