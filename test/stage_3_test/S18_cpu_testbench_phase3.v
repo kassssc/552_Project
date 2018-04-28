@@ -253,8 +253,10 @@ module cpu_ptb();
    assign I_MemRead = DUT.I_MemRead;
    assign D_MemRead = DUT.D_MemRead;
 
-   assign 
+   assign state_out = DUT.state_out;
 
+   assign I_cachedone = DUT.I_CacheDone;
+   assign D_cachedone = DUT.D_CacheDone;
 
    // WriteRegister[3:0] & RegWrite[15:0] 
    assign For_MEM_RegWrite = DUT.MEM_RegWrite;
