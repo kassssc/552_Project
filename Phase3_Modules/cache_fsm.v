@@ -96,7 +96,7 @@ full_adder_4b write_cache_block_offset_adder (
 
 dff cache_finish(
 	.q(CacheFinish_curr), .d(1'b1),
-	.wen(CacheFinish_new), .clk(clk), .rst(rst | CacheFinish_curr | ~fsm_busy_curr)
+	.wen(CacheFinish_new), .clk(clk), .rst(rst | CacheFinish_curr)
 );
 
 assign cache_write_block_offset = cache_write_block_offset_curr[3:0];
