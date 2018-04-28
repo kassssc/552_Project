@@ -22,12 +22,15 @@ module CACHE (
 	output CacheDone,
 	output CacheHit,
 	output CacheMiss,
-	output CacheBusy // does the cache want any data from mem?
+	output CacheBusy, // does the cache want any data from mem?
+	output WriteTagArray_out
 );
 
 wire WriteTagArray, WriteDataArray, CacheMiss_internal;
 wire[15:0] addr, base_addr;
 
+
+assign WriteTagArray_out = WriteTagArray;
 wire[7:0] meta_data_in, meta_data_out;
 wire[15:0] cache_data_in, cache_mem_read_addr;
 

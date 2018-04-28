@@ -56,6 +56,7 @@ wire [1:0]S_out;
 wire stall_hazard;
 
 wire [1:0] state_out;
+wire WriteTagArray;
 
 //------------------------------------------------------------------------------
 // MEM and CACHE
@@ -138,7 +139,8 @@ CACHE cache_I(
 	.CacheHit(I_CacheHit),
 	.CacheMiss(I_CacheMiss),
 	.CacheDone(I_CacheDone),
-	.CacheBusy(I_CacheBusy) // Stall pipeline while cache is busy transferring data from mem
+	.CacheBusy(I_CacheBusy), // Stall pipeline while cache is busy transferring data from mem
+	.WriteTagArray_out(WriteTagArray)
 );
 CACHE D_CACHE(
 	.clk(clk),

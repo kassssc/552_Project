@@ -33,8 +33,8 @@ end // always@(*)
 
 
 
-assign I_mem_fetch = (state_new == 2'b01)? 1'b1:1'b0;
-assign D_mem_fetch = (state_new == 2'b10)? 1'b1:1'b0;
+assign I_mem_fetch = (state == 2'b01)? 1'b1:1'b0;
+assign D_mem_fetch = (state == 2'b10)? 1'b1:1'b0;
 assign state_out = state_new;
 
 
