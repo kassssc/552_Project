@@ -23,11 +23,13 @@ module cpu_ptb();
    wire [15:0] ID_instr;
    wire [15:0] EX_ALU_in_2;
 
+
    wire [15:0] D_cache_mem_read_addr;
    wire [15:0] I_cache_mem_read_addr;
 
    wire [1:0] state_out;
 
+   wire WriteTagArray;
 
    wire I_mem_fetch;
    wire D_mem_fetch;
@@ -257,6 +259,8 @@ module cpu_ptb();
 
    assign I_cachedone = DUT.I_CacheDone;
    assign D_cachedone = DUT.D_CacheDone;
+
+   assign WriteTagArray = DUT.WriteTagArray;
 
    // WriteRegister[3:0] & RegWrite[15:0] 
    assign For_MEM_RegWrite = DUT.MEM_RegWrite;
