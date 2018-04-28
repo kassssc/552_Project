@@ -442,6 +442,6 @@ forward forwarder (
 assign rst = ~rst_n;
 assign flush = EX_Branch_current? 1'b1 : 1'b0;
 assign pc_out = pc_current;
-assign stall = I_CacheMiss | D_CacheMiss | I_CacheBusy | D_CacheBusy | stall_hazard;
+assign stall = I_CacheBusy | D_CacheBusy | stall_hazard;
 
 endmodule
