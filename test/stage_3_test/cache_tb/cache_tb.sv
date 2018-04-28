@@ -134,6 +134,35 @@ initial begin
 	#10
 	pipe_read_addr = 16;
 
+	#40 
+	MemDataValid = 1;
+	mem_read_data = 1;
+
+	#10
+	mem_read_data = 16;
+
+	#10
+	mem_read_data = 17;
+
+
+	#10
+	mem_read_data = 18;
+
+
+	#10
+	mem_read_data = 19;
+
+	#10
+	mem_read_data = 20;
+
+	#10
+	mem_read_data = 21;
+
+
+	#10
+	mem_read_data = 22;
+
+
 
 	#100
 	$stop;
