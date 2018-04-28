@@ -253,7 +253,7 @@ module cpu_ptb();
    assign I_MemRead = DUT.I_MemRead;
    assign D_MemRead = DUT.D_MemRead;
 
-   assign 
+ 
 
 
    // WriteRegister[3:0] & RegWrite[15:0] 
